@@ -13,8 +13,35 @@
     <h1>Benvenuto nella Dashboard</h1>
     <p id="user-info"></p>
 
-    <!-- Pulsante per gli Admin (Nascosto di default) -->
+    <!-- Pulsante Admin (solo per ADMIN) -->
     <button id="admin-btn" style="display: none;" onclick="goToAdminPanel()">Vai al Pannello Admin</button>
+
+    <!-- Sezione Squadra -->
+    <h2>La tua Squadra</h2>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Nome Squadra</th>
+            <th>Giocatore 1</th>
+            <th>Giocatore 2</th>
+            <th>Giocatore 3</th>
+            <th>Giocatore 4</th>
+            <th>Giocatore 5</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input type="text" id="squadra-nome" placeholder="Nome Squadra"></td>
+            <td><input type="text" id="player1" placeholder="Giocatore 1"></td>
+            <td><input type="text" id="player2" placeholder="Giocatore 2"></td>
+            <td><input type="text" id="player3" placeholder="Giocatore 3"></td>
+            <td><input type="text" id="player4" placeholder="Giocatore 4"></td>
+            <td><input type="text" id="player5" placeholder="Giocatore 5"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <button id="save-team-btn" onclick="saveTeam()">Salva Squadra</button>
 
     <button onclick="logout()">Logout</button>
 </div>

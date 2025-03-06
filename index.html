@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+
+<script src="api.js"></script>
+
 <body>
 
 <h2>Login</h2>
@@ -9,42 +12,19 @@
       <label for="password">Password:</label>
     <input type="password" id="password" placeholder="Inserisci la tua password">
     <br>
-    <button onclick="getData()">Invia</button>
-
-    <script>
-        async function getData() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            console.log("Email:", email);
-            console.log("Password:", password);
-            
-            try {
-
-              fetch('https://customfantabe.onrender.com/create-user', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                  username: 'test',
-                  mail: email,
-                  password: password
-                })
-              })
-                .then(response => response.json())
-                .then(data => console.log('Successo:', data))
-                .catch(error => console.error('Errore:', error));
-
-    
-            } catch (error) {
-                console.error("Errore:", error);
-            }
-        }
-    </script>
+    <button onclick="createUser()">Invia</button>
 
 
-  
+
+    <label for="email-log">Email:</label>
+    <input type="email" id="email-log" placeholder="Inserisci la tua email">
+    <br>
+      <label for="password-log">Password:</label>
+    <input type="password" id="password-log" placeholder="Inserisci la tua password">
+    <br>
+    <button onclick="makeLogin()">login</button>
+
+
 </body>
 
   

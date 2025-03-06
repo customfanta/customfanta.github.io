@@ -1,5 +1,5 @@
 async function handleRegister(event) {
-    event.preventDefault(); // Evita il refresh della pagina
+    event.preventDefault();
 
     const form = event.target;
     const username = form.username.value;
@@ -18,7 +18,7 @@ async function handleRegister(event) {
 
         if (response.ok) {
             alert("Registrazione completata con successo!");
-            window.location.href = "index.html"; // Vai alla pagina di login
+            window.location.href = "index.html";
         } else {
             alert("Errore nella registrazione: " + (data.message || "Controlla i dati inseriti."));
         }
@@ -30,7 +30,7 @@ async function handleRegister(event) {
 }
 
 async function handleLogin(event) {
-    event.preventDefault(); // Evita il refresh della pagina
+    event.preventDefault();
 
     const form = event.target;
     const username = form.username.value;
@@ -47,7 +47,6 @@ async function handleLogin(event) {
         const data = await response.json();
 
         if (response.ok) {
-            // Salviamo i dati dell'utente nel localStorage
             localStorage.setItem('user', JSON.stringify(data));
 
             window.location.href = "dashboard.html"; // Reindirizza alla dashboard

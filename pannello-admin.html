@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pannello Admin</title>
     <link rel="stylesheet" href="style.css">
+    <script src="pannello-admin.js" defer></script>
 </head>
 <body>
 
@@ -12,6 +13,16 @@
         <h1>Pannello Admin</h1>
         <p>Benvenuto nell'area riservata agli amministratori.</p>
         <button onclick="window.location.href='dashboard.html'">Torna alla Dashboard</button>
+
+        <button onclick="readAllUser()">readAllUser</button>
+        <button onclick="deleteAllUser()">deleteAllUsers</button>
+        <button onclick="createAdminUser()">createUserAdmin</button>
+
+        <form onsubmit="deleteUserById(event)">
+            <label for="usernameToDelete">Username to delete:</label>
+            <input type="text" id="usernameToDelete" name="usernameToDelete" required>
+            <button type="submit">deleteUserById</button>
+        </form>
     </div>
 
 </body>

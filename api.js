@@ -25,7 +25,6 @@ async function handleRegister(event) {
 
     } catch (error) {
         console.error("Errore:", error);
-        alert("Errore durante la registrazione.");
     }
 }
 
@@ -49,14 +48,11 @@ async function handleLogin(event) {
         if (response.ok) {
             localStorage.setItem('user', JSON.stringify(data));
 
-            window.location.href = "dashboard.html"; // Reindirizza alla dashboard
-        } else {
-            alert("Errore nel login: " + (data.message || "Credenziali errate."));
+            window.location.href = "dashboard.html";
         }
 
     } catch (error) {
         console.error("Errore:", error);
-        alert("Errore durante il login.");
     }
 }
 

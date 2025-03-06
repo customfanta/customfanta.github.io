@@ -1,4 +1,6 @@
 async function createUser() {
+    const username = document.getElementById('username').value;
+    const nome = document.getElementById('nome').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
         
@@ -10,9 +12,10 @@ async function createUser() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          username: 'test',
-          mail: email,
-          password: password
+            username: username,
+            nome: nome,
+            mail: email,
+            password: password
         })
       })
         .then(response => response.json())
@@ -27,6 +30,7 @@ async function createUser() {
 
 
 async function makeLogin() {
+  const username = document.getElementById('username-log').value;
   const email = document.getElementById('email-log').value;
   const password = document.getElementById('password-log').value;
   
@@ -38,7 +42,7 @@ async function makeLogin() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: 'test',
+        username: username,
         mail: email,
         password: password
       })

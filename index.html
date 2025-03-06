@@ -11,16 +11,18 @@
 
 <div class="container">
     <h2>Login</h2>
-    <label for="username-log">Username:</label>
-    <input type="text" id="username-log" placeholder="Inserisci il tuo username">
+    <form onsubmit="handleLogin(event)">
+        <label for="username-log">Username:</label>
+        <input type="text" id="username-log" name="username" required>
 
-    <label for="email-log">Email:</label>
-    <input type="email" id="email-log" placeholder="Inserisci la tua email">
+        <label for="email-log">Email:</label>
+        <input type="email" id="email-log" name="email" required>
 
-    <label for="password-log">Password:</label>
-    <input type="password" id="password-log" placeholder="Inserisci la tua password">
+        <label for="password-log">Password:</label>
+        <input type="password" id="password-log" name="password" required>
 
-    <button onclick="makeLogin()">Login</button>
+        <button type="submit">Login</button>
+    </form>
 
     <p>Non hai un account? <a href="register.html">Registrati qui</a></p>
 </div>

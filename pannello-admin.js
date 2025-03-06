@@ -50,10 +50,10 @@ async function deleteUserById(event) {
 async function createAdminUser() {
         event.preventDefault();
 
-        const username = "Antonio98";
-        const nome = "Antonio";
-        const email = "anto.pelle98@gmail.com";
-        const password = "Password2025!";
+        const username = "username";
+        const nome = "nome";
+        const email = "email";
+        const password = "password";
 
         try {
             const response = await fetch('https://customfantabe.onrender.com/create-admin-user', {

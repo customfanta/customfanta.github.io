@@ -1,43 +1,29 @@
 <!DOCTYPE html>
-<html>
-
-<script src="api.js"></script>
-
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="api.js" defer></script>
+</head>
 <body>
 
-<h2>Crea Utente</h2>
-<label for="username">Username:</label>
-<input type="text" id="username" placeholder="Inserisci la tua email">
-<br>
-<label for="nome">Nome:</label>
-<input type="text" id="nome" placeholder="Inserisci la tua email">
-<br>
-    <label for="email">Email:</label>
-    <input type="email" id="email" placeholder="Inserisci la tua email">
-    <br>
-      <label for="password">Password:</label>
-    <input type="password" id="password" placeholder="Inserisci la tua password">
-    <br>
-    <button onclick="createUser()">Invia</button>
+<div class="container">
+    <h2>Login</h2>
+    <label for="username-log">Username:</label>
+    <input type="text" id="username-log" placeholder="Inserisci il tuo username">
 
-
-<br> <br>
-
-<h2>Login</h2>
-<label for="username-log">Username:</label>
-<input type="text" id="username-log" placeholder="Inserisci la tua email">
-<br>
     <label for="email-log">Email:</label>
     <input type="email" id="email-log" placeholder="Inserisci la tua email">
-    <br>
-      <label for="password-log">Password:</label>
-    <input type="password" id="password-log" placeholder="Inserisci la tua password">
-    <br>
-    <button onclick="makeLogin()">login</button>
 
+    <label for="password-log">Password:</label>
+    <input type="password" id="password-log" placeholder="Inserisci la tua password">
+
+    <button onclick="makeLogin()">Login</button>
+
+    <p>Non hai un account? <a href="register.html">Registrati qui</a></p>
+</div>
 
 </body>
-
-  
-
 </html>

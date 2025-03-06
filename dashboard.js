@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         return;
     }
 
-    document.getElementById("user-info").textContent = `Ciao, ${user.nome} (${user.username})`;
+    document.getElementById("user-info").textContent = `Ciao ${user.username}`;
 
     if (user.profile === "ADMIN") {
         document.getElementById("admin-btn").style.display = "block";

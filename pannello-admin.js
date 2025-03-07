@@ -10,7 +10,7 @@ readAllCharacters();
 /** Recupera tutti gli utenti */
 async function readAllUser() {
     try {
-        const response = await fetch(basePath + '/read-all-user');
+        const response = await fetch(basePath + '/read-all-user', { method: 'GET', credentials: "include" });
         const data = await response.json();
         const tableBody = document.querySelector("#user-table tbody");
         tableBody.innerHTML = "";
@@ -32,7 +32,7 @@ async function readAllUser() {
 
 async function makeUserAdmin(username) {
     try {
-        await fetch(basePath + '/make-user-admin/'+ username, { method: 'GET', headers: { 'profilo': 'ADMIN' } });
+        await fetch(basePath + '/make-user-admin/'+ username, { method: 'GET', credentials: "include" });
         readAllUser();
     } catch (error) {
         console.error("Errore nell'eliminazione utente:", error);
@@ -42,7 +42,7 @@ async function makeUserAdmin(username) {
 /** Elimina un utente per ID (dalla tabella) */
 async function deleteUserByIdFromList(username) {
     try {
-        await fetch(basePath + '/delete-user/'+ username, { method: 'GET', headers: { 'profilo': 'ADMIN' } });
+        await fetch(basePath + '/delete-user/'+ username, { method: 'GET', credentials: "include" });
         readAllUser();
     } catch (error) {
         console.error("Errore nell'eliminazione utente:", error);
@@ -52,7 +52,7 @@ async function deleteUserByIdFromList(username) {
 /** Recupera tutte le azioni */
 async function readAllActions() {
     try {
-        const response = await fetch(basePath + '/read-all-azioni');
+        const response = await fetch(basePath + '/read-all-azioni', { method: 'GET', credentials: "include" });
         availableActions = await response.json();
         const tableBody = document.querySelector("#action-table tbody");
         tableBody.innerHTML = "";
@@ -80,6 +80,7 @@ async function createAction(event) {
     try {
         await fetch(basePath + '/create-azione', {
             method: 'POST',
+            credentials: "include",
             headers: { 'Content-Type': 'application/json', 'profilo': 'ADMIN' },
             body: JSON.stringify({ azione, descrizione, punteggio })
         });
@@ -92,7 +93,7 @@ async function createAction(event) {
 /** Recupera tutti i personaggi */
 async function readAllCharacters() {
     try {
-        const response = await fetch(basePath + '/read-personaggi');
+        const response = await fetch(basePath + '/read-personaggi', { method: 'GET', credentials: "include" });
         const data = await response.json();
         const tableBody = document.querySelector("#character-table tbody");
         tableBody.innerHTML = "";
@@ -121,6 +122,7 @@ async function createPersonaggio(event) {
     try {
         await fetch(basePath + '/create-personaggio', {
             method: 'POST',
+            credentials: "include",
             headers: { 'Content-Type': 'application/json', 'profilo': 'ADMIN' },
             body: JSON.stringify({ nominativo, descrizione, costo })
         });

@@ -13,6 +13,7 @@ async function handleRegister(event) {
     try {
         const response = await fetch(basePath + '/create-user', {
             method: 'POST',
+            credentials: "include",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, nome, mail: email, password })
         });
@@ -42,6 +43,7 @@ async function handleLogin(event) {
     try {
         const response = await fetch(basePath + '/make-login', {
             method: 'POST',
+            credentials: "include",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, mail: email, password })
         });

@@ -1,3 +1,6 @@
+const basePath = "https://customfantabe.onrender.com";
+//const basePath = "http://localhost:8080";
+
 async function handleRegister(event) {
     event.preventDefault();
 
@@ -8,7 +11,7 @@ async function handleRegister(event) {
     const password = form.password.value;
 
     try {
-        const response = await fetch('https://customfantabe.onrender.com/create-user', {
+        const response = await fetch(basePath + '/create-user', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, nome, mail: email, password })
@@ -37,7 +40,7 @@ async function handleLogin(event) {
     const password = form.password.value;
 
     try {
-        const response = await fetch('https://customfantabe.onrender.com/make-login', {
+        const response = await fetch(basePath + '/make-login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, mail: email, password })

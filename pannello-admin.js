@@ -1,3 +1,6 @@
+const basePath = "https://customfantabe.onrender.com";
+//const basePath = "http://localhost:8080";
+
 let availableActions = [];
 
 readAllUser();
@@ -7,7 +10,7 @@ readAllCharacters();
 /** Recupera tutti gli utenti */
 async function readAllUser() {
     try {
-        const response = await fetch('https://customfantabe.onrender.com/read-all-user');
+        const response = await fetch(basePath + '/read-all-user');
         const data = await response.json();
         const tableBody = document.querySelector("#user-table tbody");
         tableBody.innerHTML = "";
@@ -35,7 +38,7 @@ async function deleteUserById(event) {
 /** Elimina un utente per ID (dalla tabella) */
 async function deleteUserByIdFromList(username) {
     try {
-        await fetch('https://customfantabe.onrender.com/delete-user/'+ username, { method: 'GET', headers: { 'profilo': 'ADMIN' } });
+        await fetch(basePath + '/delete-user/'+ username, { method: 'GET', headers: { 'profilo': 'ADMIN' } });
         alert("Utente eliminato!");
         readAllUser();
     } catch (error) {
@@ -46,7 +49,7 @@ async function deleteUserByIdFromList(username) {
 /** Recupera tutte le azioni */
 async function readAllActions() {
     try {
-        const response = await fetch('https://customfantabe.onrender.com/read-all-azioni');
+        const response = await fetch(basePath + '/read-all-azioni');
         availableActions = await response.json();
         const tableBody = document.querySelector("#action-table tbody");
         tableBody.innerHTML = "";
@@ -72,7 +75,7 @@ async function createAction(event) {
     const punteggio = document.getElementById("new-action-punteggio").value;
 
     try {
-        await fetch('https://customfantabe.onrender.com/create-azione', {
+        await fetch(basePath + '/create-azione', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'profilo': 'ADMIN' },
             body: JSON.stringify({ azione, descrizione, punteggio })
@@ -88,7 +91,7 @@ async function createAction(event) {
 /** Recupera tutti i personaggi */
 async function readAllCharacters() {
     try {
-        const response = await fetch('https://customfantabe.onrender.com/read-personaggi');
+        const response = await fetch(basePath + '/read-personaggi');
         const data = await response.json();
         const tableBody = document.querySelector("#character-table tbody");
         tableBody.innerHTML = "";
@@ -115,7 +118,7 @@ async function createPersonaggio(event) {
     const costo = document.getElementById("new-personaggio-costo").value;
 
     try {
-        await fetch('https://customfantabe.onrender.com/create-personaggio', {
+        await fetch(basePath + '/create-personaggio', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'profilo': 'ADMIN' },
             body: JSON.stringify({ nominativo, descrizione, costo })
@@ -133,7 +136,7 @@ async function createPersonaggio(event) {
 //    const selectedAction = document.querySelector(`#action-select-${characterId}`).value;
 //
 //    try {
-//        await fetch('https://customfantabe.onrender.com/assign-action', {
+//        await fetch(basePath + '/assign-action', {
 //            method: 'POST',
 //            headers: { 'Content-Type': 'application/json' },
 //            body: JSON.stringify({ characterId, actionName: selectedAction })

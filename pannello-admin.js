@@ -43,17 +43,6 @@ async function deleteUserByIdFromList(username) {
     }
 }
 
-/** Elimina tutti gli utenti */
-async function deleteAllUser() {
-    try {
-        await fetch('https://customfantabe.onrender.com/delete-all-user', { method: 'GET', headers: { 'profilo': 'ADMIN' } });
-        alert("Tutti gli utenti eliminati!");
-        readAllUser();
-    } catch (error) {
-        console.error("Errore nell'eliminazione utenti:", error);
-    }
-}
-
 /** Recupera tutte le azioni */
 async function readAllActions() {
     try {

@@ -19,6 +19,7 @@ async function readAllUser() {
             const row = `<tr>
                 <td>${user.username}</td>
                 <td><button onclick="deleteUserByIdFromList('${user.username}')">❌</button></td>
+                <td><button onclick="makeUserAdmin('${user.username}')">AddAdmin</button></td>
             </tr>`;
             tableBody.innerHTML += row;
         });
@@ -28,18 +29,20 @@ async function readAllUser() {
     }
 }
 
-/** Elimina un utente per ID (dal form) */
-async function deleteUserById(event) {
-    event.preventDefault();
-    const username = document.getElementById("usernameToDelete").value;
-    deleteUserByIdFromList(username);
+
+async function makeUserAdmin(username) {
+    try {
+        await fetch(basePath + '/make-user-admin/'+ username, { method: 'GET', headers: { 'profilo': 'ADMIN' } });
+        readAllUser();
+    } catch (error) {
+        console.error("Errore nell'eliminazione utente:", error);
+    }
 }
 
 /** Elimina un utente per ID (dalla tabella) */
 async function deleteUserByIdFromList(username) {
     try {
         await fetch(basePath + '/delete-user/'+ username, { method: 'GET', headers: { 'profilo': 'ADMIN' } });
-        alert("Utente eliminato!");
         readAllUser();
     } catch (error) {
         console.error("Errore nell'eliminazione utente:", error);
@@ -80,8 +83,6 @@ async function createAction(event) {
             headers: { 'Content-Type': 'application/json', 'profilo': 'ADMIN' },
             body: JSON.stringify({ azione, descrizione, punteggio })
         });
-
-        alert("Azione creata!");
         readAllActions();
     } catch (error) {
         console.error("Errore nella creazione azione:", error);
@@ -123,8 +124,6 @@ async function createPersonaggio(event) {
             headers: { 'Content-Type': 'application/json', 'profilo': 'ADMIN' },
             body: JSON.stringify({ nominativo, descrizione, costo })
         });
-
-        alert("Personaggio creato!");
         readAllCharacters();
     } catch (error) {
         console.error("Errore nella creazione azione:", error);

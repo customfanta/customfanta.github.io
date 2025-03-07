@@ -1,67 +1,93 @@
+/* STILE GENERALE */
 body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     background-color: #f4f4f4;
     margin: 0;
+    padding: 20px;
 }
 
+/* CONTAINER PRINCIPALE */
 .container {
     background: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 350px;
+    width: 80%;
+    max-width: 1200px;
 }
 
-.container-dashboard {
+/* SEZIONE WIDGET */
+.widgets-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.widget {
     background: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
     text-align: center;
-    width: 1200px;
+}
+
+
+.widget h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* STILE TABELE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
 }
 
 table, th, td {
-  border: 1px solid;
-}
-
-table {
-  border-collapse: collapse;
+    border: 1px solid #ddd;
 }
 
 th, td {
-  text-align: left;
-  padding: 5px;
+    text-align: left;
+    padding: 8px;
 }
 
 th {
-  height: 40px;
+    background-color: #007bff;
+    color: white;
+    height: 40px;
 }
 
 td {
-  height: 50px;
+    height: 50px;
 }
 
-h2 {
-    margin-bottom: 20px;
+tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
 
-input {
-    width: 100%;
+/* STILE INPUT */
+input, select {
+    width: calc(100% - 20px);
     padding: 8px;
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
+/* BOTTONI */
 button {
-    width: 100%;
-    padding: 10px;
+    width: auto;
+    padding: 10px 15px;
     background-color: #28a745;
     color: white;
     border: none;
@@ -74,10 +100,41 @@ button:hover {
     background-color: #218838;
 }
 
-p {
-    margin-top: 15px;
+/* BOTTONI SPECIALI */
+button.delete {
+    background-color: #dc3545;
 }
 
+button.delete:hover {
+    background-color: #c82333;
+}
+
+button.admin {
+    background-color: #ffc107;
+    color: black;
+}
+
+button.admin:hover {
+    background-color: #e0a800;
+}
+
+/* ELEMENTI UTENTI, PERSONAGGI, AZIONI */
+.user-item, .character-item, .action-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.user-item span, .character-item span, .action-item span {
+    flex: 1;
+    color: #333;
+}
+
+/* LINK */
 a {
     color: #007bff;
     text-decoration: none;

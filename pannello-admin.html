@@ -9,21 +9,90 @@
 </head>
 <body>
 
-    <div class="container">
-        <h1>Pannello Admin</h1>
-        <p>Benvenuto nell'area riservata agli amministratori.</p>
-        <button onclick="window.location.href='dashboard.html'">Torna alla Dashboard</button>
+<div class="container">
+    <h1>Pannello Admin</h1>
+    <p>Benvenuto nell'area riservata agli amministratori.</p>
+    <button onclick="window.location.href='dashboard.html'">Torna alla Dashboard</button>
 
-        <button onclick="readAllUser()">readAllUser</button>
-        <button onclick="deleteAllUser()">deleteAllUsers</button>
-        <button onclick="createAdminUser()">createUserAdmin</button>
+    <div class="widgets-container">
 
-        <form onsubmit="deleteUserById(event)">
-            <label for="usernameToDelete">Username to delete:</label>
-            <input type="text" id="usernameToDelete" name="usernameToDelete" required>
-            <button type="submit">deleteUserById</button>
-        </form>
+        <!-- Widget: Gestione Utenti -->
+        <div class="widget">
+            <h2>Gestione Utenti</h2>
+<!--            meglio tenerlo disattivo-->
+<!--            <button onclick="deleteAllUser()">Elimina Tutti</button>-->
+            <table id="user-table">
+                <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>CTA</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- Widget: Gestione Azioni -->
+        <div class="widget">
+            <h2>Gestione Azioni</h2>
+            <form onsubmit="createAction(event)">
+                <input type="text" id="new-action-name" placeholder="Nome Azione" required>
+                <input type="text" id="new-action-description" placeholder="Descrizione Azione">
+                <input type="number" id="new-action-punteggio" placeholder="Punteggio Azione" required>
+                <button type="submit">Crea Azione</button>
+            </form>
+            <table id="action-table">
+                <thead>
+                <tr>
+                    <th>Nome Azione</th>
+                    <th>Descrizione</th>
+                    <th>Punteggio</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- Widget: Gestione Personaggi -->
+        <div class="widget">
+            <h2>Gestione Personaggi</h2>
+            <form onsubmit="createPersonaggio(event)">
+                <input type="text" id="new-personaggio-name" placeholder="Nome Personaggio" required>
+                <input type="text" id="new-personaggio-description" placeholder="Descrizione Personaggio">
+                <input type="number" id="new-personaggio-costo" placeholder="Costo Personaggio" required>
+                <button type="submit">Crea Personaggio</button>
+            </form>
+            <table id="character-table">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrizione</th>
+                    <th>Costo</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- Widget: Azioni Personaggi CAPIRE COME SISTEMARE STA MERDA FATTA DA GPT-->
+<!--        <div class="widget">-->
+<!--            <h2>Azioni Personaggi</h2>-->
+<!--            <button onclick="readAllCharacters()">Mostra Personaggi</button>-->
+<!--            <button onclick="readAllActions()">Aggiorna Azioni</button>-->
+<!--            <table id="character-action-table">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th>Personaggio</th>-->
+<!--                    <th>Azione</th>-->
+<!--                    <th>Assegna</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody></tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+
     </div>
+</div>
 
 </body>
 </html>

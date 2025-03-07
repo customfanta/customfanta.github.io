@@ -101,7 +101,7 @@ async function readAllCharacters() {
     try {
         const response = await fetch('https://customfantabe.onrender.com/read-personaggi');
         const data = await response.json();
-        const tableBody = document.querySelector("#character-action-table tbody");
+        const tableBody = document.querySelector("#character-table tbody");
         tableBody.innerHTML = "";
 
         data.forEach(character => {

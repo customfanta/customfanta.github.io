@@ -1,6 +1,8 @@
 const basePath = "https://customfantabe.onrender.com";
 //const basePath = "http://localhost:8080";
 
+getUtenteLoggato();
+
 async function handleRegister(event) {
     event.preventDefault();
 
@@ -61,3 +63,24 @@ async function handleLogin(event) {
     }
 }
 
+async function getUtenteLoggato() {
+    event.preventDefault();
+
+    try {
+        const response = await fetch(basePath + '/get-utente-loggato', {
+            method: 'GET',
+            credentials: "include"
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            localStorage.setItem('user', JSON.stringify(data));
+
+            window.location.href = "dashboard.html";
+        }
+
+    } catch (error) {
+        console.error("Errore:", error);
+    }
+}

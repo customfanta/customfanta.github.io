@@ -1,3 +1,7 @@
+const basePath = "https://customfantabe.onrender.com";
+//const basePath = "http://localhost:8080";
+
+
 document.addEventListener("DOMContentLoaded", async function () {
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -21,5 +25,9 @@ function goToAdminPanel() {
 
 function logout() {
     localStorage.removeItem("user");
+
+    const response = await fetch(basePath + '/logout', { method: 'GET', credentials: "include" });
+    const data = await response.json();
+
     window.location.href = "index.html";
 }

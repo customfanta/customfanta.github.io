@@ -64,8 +64,6 @@ async function handleLogin(event) {
 }
 
 async function getUtenteLoggato() {
-    event.preventDefault();
-
     try {
         const response = await fetch(basePath + '/get-utente-loggato', {
             method: 'GET',

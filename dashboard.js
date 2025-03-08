@@ -23,7 +23,7 @@ function goToAdminPanel() {
     window.location.href = "pannello-admin.html";
 }
 
-function logout() {
+async function logout() {
     localStorage.removeItem("user");
 
     const response = await fetch(basePath + '/logout', { method: 'GET', credentials: "include" });

@@ -143,3 +143,20 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+
+
+.create-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+.personaggio {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+#squadra-view {
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin: 20px;
+}

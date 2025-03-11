@@ -60,7 +60,7 @@ function displayCreateForm(username) {
             <input type="text" id="squadra-name" placeholder="Nome Squadra" required>
             <textarea id="squadra-desc" placeholder="Descrizione" required></textarea>
             <div id="personaggi-list"></div>
-            <div id="remaining-credits">Crediti rimanenti: 500</div>
+            <div id="remaining-credits">Crediti rimanenti: 160</div>
             <div id="selected-count">Selezionati: 0/5</div>
             <button id="create-btn" disabled>Creare Squadra</button>
         </div>
@@ -98,7 +98,7 @@ function displayCreateForm(username) {
             });
 
             let selected = [];
-            let credits = 500;
+            let credits = 160;
             let count = 0;
 
             checkboxes.forEach(checkbox => {

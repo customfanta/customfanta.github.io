@@ -1,6 +1,10 @@
 const basePath = "https://customfantabe.onrender.com";
 //const basePath = "http://localhost:8080";
 
+const fetchSquadra = (username) =>
+    fetch(`${basePath}/read-squadra/${username}`, { method: 'GET', credentials: "include" })
+        .then(response => (response.ok ? response.json() : null))
+
 document.addEventListener("DOMContentLoaded", async function () {
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -17,11 +21,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (user.profile === "ADMIN") {
         document.getElementById("admin-btn").style.display = "block";
     }
-
-    // Funzioni API con basePath
-    const fetchSquadra = (username) =>
-        fetch(`${basePath}/read-squadra/${username}`, { method: 'GET', credentials: "include" })
-            .then(response => (response.ok ? response.json() : null))
 
     fetchSquadra(username)
         .then(squadraData => {

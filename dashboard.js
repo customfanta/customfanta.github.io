@@ -23,9 +23,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         fetch(`${basePath}/read-squadra/${username}`, { method: 'GET', credentials: "include" })
             .then(response => (response.ok ? response.json() : null))
 
-    // Utilizziamo l'username già presente in localStorage
-    const username = user.username;
-
     fetchSquadra(username)
         .then(squadraData => {
             if (squadraData && squadraData.personaggi.length > 0) {

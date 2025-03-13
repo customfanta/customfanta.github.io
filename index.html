@@ -1,31 +1,58 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="login.css" />
     <script src="api.js" defer></script>
-</head>
-<body>
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="left-part">
+        <img src="assets/background.png" alt="Landscape" />
+      </div>
+      <div class="right-part">
+        <div class="login-container">
+          <img
+            class="image-container"
+            src="assets/landscape-placeholder.svg"
+            class="image"
+            alt="Image"
+          />
 
-<div class="container">
-    <h2>Login</h2>
-    <form onsubmit="handleLogin(event)">
-        <label for="username-log">Username:</label>
-        <input type="text" id="username-log" name="username">
+          <h2 class="login-text">Login</h2>
+          <form class="form-container" onsubmit="handleLogin(event)">
+            <input
+              class="text-input"
+              type="text"
+              id="username-log"
+              name="username"
+              placeholder="Username"
+            />
 
-        <label for="email-log">Email:</label>
-        <input type="email" id="email-log" name="email">
+            <input
+              class="text-input"
+              type="email"
+              id="email-log"
+              name="email"
+              placeholder="Email"
+            />
 
-        <label for="password-log">Password:</label>
-        <input type="password" id="password-log" name="password" required>
+            <input
+              class="text-input"
+              type="password"
+              id="password-log"
+              name="password"
+              placeholder="Password"
+              required
+            />
 
-        <button type="submit">Login</button>
-    </form>
-
-    <p>Non hai un account? <a href="register.html">Registrati qui</a></p>
-</div>
-
-</body>
+            <button type="submit">Login</button>
+          </form>
+          <p>Non hai un account? <a href="register.html">Registrati qui</a></p>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

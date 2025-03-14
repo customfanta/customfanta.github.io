@@ -12,7 +12,13 @@ const stompClient = Stomp.over(socket);
 stompClient.connect({}, (frame) => {
      console.log("Connesso a STOMP");
      stompClient.subscribe("/topic/test-ws", (message) => {
-         console.log("Messaggio dal server:", message.body);
+            console.log("Messaggio dal server:", message.body);
+
+            const user = JSON.parse(localStorage.getItem("user"));
+            const squadraData = await fetchSquadra(user.username);
+            if (squadraData) {
+                displaySquadra(squadraData);
+            }
      });
 });
 

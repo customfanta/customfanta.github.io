@@ -6,7 +6,7 @@ const fetchSquadra = (username) =>
         .then(response => (response.ok ? response.json() : null))
 
 
-const socket = new SockJS(basePath + "/ws");
+const socket = new SockJS(basePath + "/ws-endpoint");
 const stompClient = Stomp.over(socket);
 
 stompClient.connect({}, (frame) => {

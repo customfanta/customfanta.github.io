@@ -1,0 +1,132 @@
+body {
+  font-family: Tahoma, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.main-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  background-color: #e0e0e0;
+}
+
+.left-part {
+  width: 50%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.right-part {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 100%;
+  background-color: rgb(238, 242, 242);
+  box-shadow: -6px 0px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.auth-container {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  margin: 20px;
+}
+
+.auth-text {
+  color: rgb(10, 133, 130);
+}
+
+input,
+select {
+  width: calc(100% - 20px);
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button,
+.submit-button {
+  width: 100%;
+  padding: 10px 15px;
+  background-color: rgb(10, 133, 130);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover,
+.submit-button:hover {
+  background-color: rgb(7, 105, 103);
+}
+
+a {
+  color: rgb(75, 154, 209);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.image-container {
+  max-width: 50px;
+  max-height: 50px;
+}
+
+.text-input {
+  border-radius: 5px;
+  padding: 10px 15px;
+  max-width: 100%;
+}
+
+.title-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 80px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+  z-index: 20;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .left-part {
+    width: 0%;
+  }
+
+  .right-part {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+
+  .auth-container {
+    margin: 20px auto;
+  }
+}

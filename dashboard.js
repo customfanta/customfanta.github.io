@@ -20,9 +20,7 @@ const stompClient = Stomp.over(socket);
 
 stompClient.connect({}, (frame) => {
      console.log("Connesso a STOMP");
-     stompClient.subscribe("/topic/test-ws", async (message) => {
-            console.log("Messaggio dal server:", message.body);
-
+     stompClient.subscribe("/topic/azione-personaggio-aggiunta", async (message) => {
             const user = JSON.parse(localStorage.getItem("user"));
             const squadraData = await fetchSquadra(user.username);
             if (squadraData) {

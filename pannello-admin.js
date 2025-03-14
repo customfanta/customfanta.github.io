@@ -1,11 +1,15 @@
 const basePath = "https://customfantabe.onrender.com";
 //const basePath = "http://localhost:8080";
 
+
+
 let availableActions = [];
+let selectedCharacter = '';
 
 readAllUser();
 readAllActions();
 readAllCharacters();
+populateCharacterActionTable();
 
 /** Recupera tutti gli utenti */
 async function readAllUser() {
@@ -132,19 +136,60 @@ async function createPersonaggio(event) {
     }
 }
 
-/** Assegna un'azione a un personaggio */
-//async function assignAction(characterId) {
-//    const selectedAction = document.querySelector(`#action-select-${characterId}`).value;
-//
-//    try {
-//        await fetch(basePath + '/assign-action', {
-//            method: 'POST',
-//            headers: { 'Content-Type': 'application/json' },
-//            body: JSON.stringify({ characterId, actionName: selectedAction })
-//        });
-//
-//        alert("Azione assegnata!");
-//    } catch (error) {
-//        console.error("Errore nell'assegnazione dell'azione:", error);
-//    }
-//}
+
+    async function populateCharacterActionTable() {
+        try {
+            const response = await fetch(basePath + '/read-personaggi', { method: 'GET', credentials: "include" });
+            const data = await response.json();
+            const tableBody = document.querySelector("#character-action-table tbody");
+            tableBody.innerHTML = "";
+
+            data.forEach(character => {
+                const row = `<tr>
+                    <td>${character.nominativo}</td>
+                    <td><button onclick="openModal('${character.nominativo}')">+</button></td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+        } catch (error) {
+            console.error("Errore nel recupero personaggi:", error);
+        }
+    }
+
+    function openModal(charName) {
+        selectedCharacter = charName;
+        const modalTitle = document.querySelector('#assignModal h3');
+        modalTitle.textContent = `Assegna Azione a ${charName}`;
+        document.getElementById('assignModal').style.display = 'block';
+        populateActionSelect();
+    }
+
+    function closeModal() {
+        document.getElementById('assignModal').style.display = 'none';
+    }
+
+    function populateActionSelect() {
+        const select = document.getElementById('action-select');
+        select.innerHTML = '<option value="">Seleziona un\'azione</option>';
+        availableActions.forEach(action => {
+            const option = document.createElement('option');
+            option.value = action.azione;
+            option.textContent = action.azione;
+            select.appendChild(option);
+        });
+    }
+
+    function assignAction() {
+        const selectedAction = document.getElementById('action-select').value;
+        if (selectedAction) {
+            // Qui implementare la chiamata all'API
+            // Esempio:
+            // fetch(basePath + '/assign-action', {
+            //     method: 'POST',
+            //     headers: {'Content-Type': 'application/json'},
+            //     body: JSON.stringify({ character: selectedCharacter, action: selectedAction })
+            // });
+            console.log(`Assegnando ${selectedAction} a ${selectedCharacter}`);
+            closeModal();
+        }
+    }

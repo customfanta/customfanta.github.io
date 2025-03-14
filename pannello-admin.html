@@ -103,22 +103,33 @@
           </table>
         </div>
 
-        <!-- Widget: Azioni Personaggi CAPIRE COME SISTEMARE STA MERDA FATTA DA GPT-->
-        <!--        <div class="widget">-->
-        <!--            <h2>Azioni Personaggi</h2>-->
-        <!--            <button onclick="readAllCharacters()">Mostra Personaggi</button>-->
-        <!--            <button onclick="readAllActions()">Aggiorna Azioni</button>-->
-        <!--            <table id="character-action-table">-->
-        <!--                <thead>-->
-        <!--                <tr>-->
-        <!--                    <th>Personaggio</th>-->
-        <!--                    <th>Azione</th>-->
-        <!--                    <th>Assegna</th>-->
-        <!--                </tr>-->
-        <!--                </thead>-->
-        <!--                <tbody></tbody>-->
-        <!--            </table>-->
-        <!--        </div>-->
+        <div class="widget">
+          <h2>Gestione Azioni Personaggi</h2>
+          <table id="character-action-table">
+            <thead>
+            <tr>
+              <th>Nome Personaggio</th>
+              <th>Azione</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <!-- Modale per assegnazione azione -->
+        <div id="assignModal" class="modal">
+          <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>Assegna Azione a [Personaggio]</h3>
+            <select id="action-select">
+              <option value="">Seleziona un'azione</option>
+            </select>
+            <button onclick="assignAction()">Conferma</button>
+          </div>
+        </div>
+      </div>
+
+
       </div>
     </div>
   </body>

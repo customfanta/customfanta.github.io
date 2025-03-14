@@ -1,7 +1,7 @@
 const basePath = "https://customfantabe.onrender.com";
 //const basePath = "http://localhost:8080";
 
-const fetchSquadra = (username) =>
+const fetchSquadra = async (username) =>
     fetch(`${basePath}/read-squadra/${username}`, { method: 'GET', credentials: "include" })
         .then(response => (response.ok ? response.json() : null))
 

@@ -1,9 +1,18 @@
 const basePath = "https://customfantabe.onrender.com";
 //const basePath = "http://localhost:8080";
 
-const fetchSquadra = async (username) =>
-    fetch(`${basePath}/read-squadra/${username}`, { method: 'GET', credentials: "include" })
-        .then(response => (response.ok ? response.json() : null))
+const fetchSquadra = async (username) => {
+    try {
+        const response = await fetch(
+            `${basePath}/read-squadra/${username}`,
+            { method: 'GET', credentials: "include" }
+        );
+        return response.ok ? await response.json() : null;
+    } catch (error) {
+        console.error('Errore durante il recupero della squadra:', error);
+        return null;
+    }
+};
 
 
 const socket = new SockJS(basePath + "/ws-endpoint");
@@ -39,15 +48,16 @@ document.addEventListener("DOMContentLoaded", async function () {
         document.getElementById("admin-btn").style.display = "block";
     }
 
-    fetchSquadra(username)
-        .then(squadraData => {
-            if (squadraData && squadraData.personaggi.length > 0) {
-                displaySquadra(squadraData);
-            } else {
-                displayCreateForm(username);
-            }
-        })
-        .catch(error => console.error('Errore:', error));
+    try {
+        const squadraData = await fetchSquadra(username);
+        if (squadraData && squadraData.personaggi.length > 0) {
+            displaySquadra(squadraData);
+        } else {
+            displayCreateForm(username);
+        }
+    } catch (error) {
+        console.error('Errore durante il caricamento iniziale:', error);
+    }
 });
 
 function displaySquadra(data) {

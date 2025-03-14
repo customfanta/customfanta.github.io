@@ -10,6 +10,7 @@ readAllUser();
 readAllActions();
 readAllCharacters();
 populateCharacterActionTable();
+closeModal();
 
 /** Recupera tutti gli utenti */
 async function readAllUser() {

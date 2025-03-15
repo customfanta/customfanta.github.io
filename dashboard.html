@@ -1,28 +1,52 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="dashboard.css" />
 
+    <!-- MOCK -->
+    <!--
+    <script>
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ username: "Vinz", profile: "ADMIN" })
+      );
+    </script>
+
+    -->
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script></head>
-<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+  </head>
+  <body>
+    <script src="dashboard.js" defer></script>
 
-<script src="dashboard.js" defer></script>
+    <div class="container-dashboard">
+      <div class="header">
+        <div class="title"><h1>Benvenuto nella Dashboard</h1></div>
+        <div class="profile">
+          <div class="profile-name-container">
+            <div class="name">
+              <p id="user-info"></p>
+            </div>
+            <img src="assets/profile.svg" width="20px" />
+          </div>
+          <div class="toggle-menu-profile">
+            <button
+              id="admin-btn"
+              class="admin-button"
+              onclick="goToAdminPanel()"
+            >
+              Vai al pannello Admin
+            </button>
+            <button onclick="logout()" class="logout-button">Logout</button>
+          </div>
+        </div>
+      </div>
 
-<div class="container-dashboard">
-    <h1>Benvenuto nella Dashboard</h1>
-    <p id="user-info"></p>
-
-    <button id="admin-btn" style="display: none;" onclick="goToAdminPanel()">Vai al Pannello Admin</button>
-
-    <button onclick="logout()">Logout</button>
-
-    <div id="content"></div>
-
-</div>
-
-</body>
+      <div id="content"></div>
+    </div>
+  </body>
 </html>

@@ -10,6 +10,10 @@ document.addEventListener("DOMContentLoaded", async function () {
   const user = JSON.parse(localStorage.getItem("user"));
   const profileContainer = document.querySelector(".profile-name-container");
   const toggleMenu = document.querySelector(".toggle-menu-profile");
+  document
+    .getElementById("admin-btn")
+    .addEventListener("click", goToAdminPanel);
+  document.querySelector(".logout-button").addEventListener("click", logout);
 
   profileContainer.addEventListener("click", () => {
     toggleMenu.style.display =
@@ -267,7 +271,7 @@ function populatePersonaggiList(personaggi, username) {
 }
 
 // Funzioni già presenti nel tuo codice
-async function logout() {
+export async function logout() {
   localStorage.removeItem("user");
   const response = await fetch(basePath + "/logout", {
     method: "GET",
@@ -277,6 +281,6 @@ async function logout() {
   window.location.href = "index.html";
 }
 
-function goToAdminPanel() {
+export function goToAdminPanel() {
   window.location.href = "pannello-admin.html";
 }

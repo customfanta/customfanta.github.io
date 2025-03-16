@@ -1,3 +1,5 @@
+import "./features/char-card/char-card.js";
+
 const basePath = "https://customfantabe.onrender.com";
 //const basePath = "http://localhost:8080";
 const isLocal =
@@ -37,17 +39,19 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById("admin-btn").style.display = "block";
   }
 
-  //displayCreateForm(username); //MOCK
-
-  try {
-    const squadraData = await fetchSquadra(username);
-    if (squadraData && squadraData.personaggi.length > 0) {
-      displaySquadra(squadraData);
-    } else {
-      displayCreateForm(username);
+  if (isLocal) {
+    displayCreateForm(username); //MOCK
+  } else {
+    try {
+      const squadraData = await fetchSquadra(username);
+      if (squadraData && squadraData.personaggi.length > 0) {
+        displaySquadra(squadraData);
+      } else {
+        displayCreateForm(username);
+      }
+    } catch (error) {
+      console.error("Errore durante il caricamento iniziale:", error);
     }
-  } catch (error) {
-    console.error("Errore durante il caricamento iniziale:", error);
   }
 });
 
@@ -116,34 +120,24 @@ function displaySquadra(data) {
 }
 
 function displayCreateForm(username) {
-  const container = document.getElementById("content");
-  container.innerHTML = `
-          <div class="create-form">
-              <input type="text" id="squadra-name" placeholder="Nome Squadra" required>
-              <textarea id="squadra-desc" placeholder="Descrizione" required></textarea>
-              <div id="personaggi-list"></div>
-              <div id="remaining-credits">Crediti rimanenti: 160</div>
-              <div id="selected-count">Selezionati: 0/5</div>
-              <button id="create-btn" disabled>Creare Squadra</button>
-          </div>
-      `;
+  const container = document.getElementById("create-form-container");
+  container.style.display = "block";
 
   if (isLocal) {
-    //MOCK
     console.log("⚠️ Running in LOCAL mode - Using Mock Data ⚠️");
-
     const personaggi = [
-      { nominativo: "Laura Cagni", costo: 50 },
-      { nominativo: "Guerriero Spaziale", costo: 40 },
-      { nominativo: "Elfo Mistico", costo: 35 },
-      { nominativo: "Cyborg", costo: 60 },
-      { nominativo: "Necromante", costo: 45 },
+      { nominativo: "Personaggio Test 1", costo: 50 },
+      { nominativo: "Personaggio Test 2", costo: 20 },
+      { nominativo: "Personaggio Test 3", costo: 10 },
+      { nominativo: "Personaggio Test 4", costo: 30 },
+      { nominativo: "Personaggio Test 5", costo: 60 },
+      { nominativo: "Personaggio Test 6", costo: 40 },
+      { nominativo: "Personaggio Test 7", costo: 50 },
+      { nominativo: "Personaggio Test 8", costo: 80 },
     ];
-
     populatePersonaggiList(personaggi, username);
   } else {
     console.log("🌍 Running in PRODUCTION mode - Fetching Real Data 🌍");
-
     fetch(`${basePath}/read-personaggi`, {
       method: "GET",
       credentials: "include",
@@ -165,66 +159,64 @@ function displayCreateForm(username) {
 // Function to populate the UI with personaggi (works for both mock & real data)
 function populatePersonaggiList(personaggi, username) {
   const list = document.getElementById("personaggi-list");
-  const checkboxes = [];
-
-  personaggi.forEach((p) => {
-    const div = document.createElement("div");
-    div.className = "personaggio";
-
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.dataset.cost = p.costo;
-    checkbox.dataset.nominativo = p.nominativo;
-
-    const label = document.createElement("label");
-    label.textContent = `${p.nominativo} (Costo: ${p.costo})`;
-
-    div.appendChild(checkbox);
-    div.appendChild(label);
-    list.appendChild(div);
-
-    checkboxes.push(checkbox);
-  });
+  list.innerHTML = ""; // Pulisce la lista precedente
 
   let selected = [];
   let credits = 160;
   let count = 0;
 
-  checkboxes.forEach((checkbox) => {
-    checkbox.addEventListener("change", (e) => {
-      const target = e.target;
-      const cost = parseInt(target.dataset.cost);
-      const name = target.dataset.nominativo;
+  personaggi.forEach((p) => {
+    const charCard = document.createElement("char-card");
+    charCard.setAttribute("name", p.nominativo);
+    charCard.setAttribute("cost", p.costo);
+    charCard.setAttribute("selectable", ""); // Abilita la selezione
 
-      if (target.checked) {
+    // Ascolta l'evento `char-selected` dalla card
+    charCard.addEventListener("char-selected", (event) => {
+      const { name, cost, selected: isSelected } = event.detail;
+
+      if (isSelected) {
         if (count < 5 && credits >= cost) {
           selected.push({ name, cost });
           credits -= cost;
           count++;
         } else {
-          target.checked = false;
+          charCard.toggleSelection(true); // Deseleziona se non può essere selezionato
           alert("Crediti insufficienti o limite raggiunto");
         }
       } else {
-        const index = selected.findIndex((p) => p.name === name);
-        if (index !== -1) {
-          selected.splice(index, 1);
-          credits += cost;
-          count--;
-        }
+        selected = selected.filter((c) => c.name !== name);
+        credits += cost;
+        count--;
       }
 
       document.getElementById(
         "remaining-credits"
       ).textContent = `Crediti rimanenti: ${credits}`;
+      document.getElementById("selected-count").textContent = `${count}/5`;
+
+      let personaggiSelezionati = "";
+      selected.forEach((personaggio, index) => {
+        if (index !== selected.length - 1) {
+          personaggiSelezionati = personaggiSelezionati.concat(
+            personaggio.name + ", "
+          );
+        } else {
+          personaggiSelezionati = personaggiSelezionati.concat(
+            personaggio.name
+          );
+        }
+      });
       document.getElementById(
-        "selected-count"
-      ).textContent = `Selezionati: ${count}/5`;
+        "selected-personaggi"
+      ).textContent = `Personaggi selezionati: ${personaggiSelezionati}`;
 
       document.getElementById("create-btn").disabled = !(
         count === 5 && credits >= 0
       );
     });
+
+    list.appendChild(charCard);
   });
 
   document.getElementById("create-btn").addEventListener("click", () => {
@@ -241,7 +233,7 @@ function populatePersonaggiList(personaggi, username) {
       nomiPersonaggi: nominativi,
     };
 
-    if (window.location.hostname === "localhost") {
+    if (isLocal) {
       console.log("🛠 Mocked Squad Creation:", body);
       setTimeout(() => {
         alert("Squadra creata con successo! (Mock)");
@@ -258,7 +250,7 @@ function populatePersonaggiList(personaggi, username) {
         });
       }, 1000);
     } else {
-      // Real API call
+      // Utilizzo di basePath per la creazione
       fetch(`${basePath}/create-squadra/${username}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

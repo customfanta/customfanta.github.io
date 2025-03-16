@@ -58,3 +58,51 @@
   display: none;
   text-align: end;
 }
+
+.scrollable-list {
+  display: flex;
+  gap: 33px;
+  overflow-x: auto;
+  padding: 10px 0px;
+  white-space: nowrap;
+}
+
+.scrollable-list::-webkit-scrollbar {
+  display: none;
+}
+
+.title {
+  max-width: 300px;
+  padding-right: 100px;
+}
+
+.nome-squadra {
+  max-width: 300px;
+}
+
+.squadra-desc {
+  resize: none;
+}
+
+.squadra-info-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.text-info-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.selected-count-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.selected-count {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px;
+  border-radius: 20px;
+}

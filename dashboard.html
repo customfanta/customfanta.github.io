@@ -21,7 +21,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
   </head>
   <body>
-    <script src="dashboard.js" defer></script>
+    <script type="module" src="dashboard.js" defer></script>
 
     <div class="container-dashboard">
       <div class="header">
@@ -46,7 +46,43 @@
         </div>
       </div>
 
-      <div id="content"></div>
+      <div id="content">
+        <!-- FORM Container per creazione squadra-->
+        <div
+          id="create-form-container"
+          class="create-form"
+          style="display: none"
+        >
+          <h2>Crea la tua squadra!</h2>
+          <div class="squadra-info-container">
+            <div class="text-info-container">
+              <input
+                class="nome-squadra"
+                type="text"
+                id="squadra-name"
+                placeholder="Nome Squadra"
+                required
+              />
+              <textarea
+                class="squadra-desc"
+                id="squadra-desc"
+                placeholder="Descrizione"
+                rows="5"
+                cols="33"
+                required
+              ></textarea>
+            </div>
+            <div class="selecte-count-container">
+              <div class="selected-count" id="selected-count">0/5</div>
+            </div>
+          </div>
+          <div id="personaggi-list" class="scrollable-list"></div>
+          <div id="remaining-credits">Crediti rimanenti: 160</div>
+          <div id="selected-personaggi"></div>
+
+          <button id="create-btn" disabled>Creare Squadra</button>
+        </div>
+      </div>
     </div>
   </body>
 </html>

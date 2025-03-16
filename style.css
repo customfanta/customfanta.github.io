@@ -1,3 +1,11 @@
+:root {
+  --primary-color: #088582;
+  --secondary-color: #2ca6a4;
+  --accent-color: #9dd9d2;
+  --background-color: rgba(235, 235, 235);
+  --text-color: #0000;
+}
+
 /* STILE GENERALE */
 body {
   font-family: Tahoma, sans-serif;
@@ -5,7 +13,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f4f4f4;
+  background-color: var(--background-color);
   margin: 0;
   padding: 20px;
 }
@@ -151,10 +159,6 @@ a:hover {
   text-decoration: underline;
 }
 
-.create-form {
-  max-width: 600px;
-  margin: 0 auto;
-}
 .personaggio {
   display: flex;
   align-items: center;

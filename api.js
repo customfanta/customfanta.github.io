@@ -55,7 +55,7 @@ async function handleLogin(event) {
         if (response.ok) {
             localStorage.setItem('user', JSON.stringify(data));
 
-            window.location.href = "dashboard.html";
+            window.location.href = "campionati.html";
         }
 
     } catch (error) {
@@ -75,7 +75,7 @@ async function getUtenteLoggato() {
         if (response.ok) {
             localStorage.setItem('user', JSON.stringify(data));
 
-            window.location.href = "dashboard.html";
+            window.location.href = "campionati.html";
         }
 
     } catch (error) {

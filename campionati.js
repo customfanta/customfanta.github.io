@@ -146,6 +146,7 @@ function createForm(username) {
 }
 
 // Inizializzazione dell'interfaccia
+// Inizializzazione dell'interfaccia
 async function init() {
   const user = await getLoggedUser();
   if (!user) {
@@ -154,6 +155,7 @@ async function init() {
   }
 
   const campionati = await getCampionati();
+  const inviti = await getInvitiRicevuti();
 
   // Crea contenitore principale
   const container = document.createElement('div');
@@ -163,12 +165,120 @@ async function init() {
   const form = createForm(user.username);
   container.appendChild(form);
 
-  // Crea tabella
-  const table = createTable(campionati);
-  container.appendChild(table);
+  // Crea tabella campionati
+  const tableContainer = document.createElement('div');
+  tableContainer.id = 'table-container';
+  const campionatiTable = createTable(campionati);
+  tableContainer.appendChild(campionatiTable);
+  container.appendChild(tableContainer);
+
+  // Crea sezione per gli inviti
+  const invitiSection = document.createElement('div');
+  invitiSection.className = 'inviti-section';
+
+  const invitiHeader = document.createElement('h2');
+  invitiHeader.textContent = 'Inviti ricevuti';
+  invitiSection.appendChild(invitiHeader);
+
+  const invitiTable = createInvitiTable(inviti);
+  invitiSection.appendChild(invitiTable);
+
+  container.appendChild(invitiSection);
 
   // Aggiungi contenitore al body
   document.body.appendChild(container);
+}
+
+
+// Ottiene gli inviti ricevuti dall'utente
+async function getInvitiRicevuti() {
+  try {
+    const response = await fetch(`${basePath}/read-inviti-ricevuti`);
+    return await response.json();
+  } catch (error) {
+    console.error("Errore nel recupero degli inviti ricevuti:", error);
+    return [];
+  }
+}
+
+
+// Funzione per creare la tabella degli inviti ricevuti
+function createInvitiTable(inviti) {
+  const table = document.createElement('table');
+  const thead = document.createElement('thead');
+  const tbody = document.createElement('tbody');
+
+  // Intestazioni tabella
+  const headers = ['Campionato', 'Ruolo', 'Da Utente', 'Azioni'];
+  const headerRow = document.createElement('tr');
+  headers.forEach(headerText => {
+    const th = document.createElement('th');
+    th.textContent = headerText;
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+
+  // Righe dei dati
+  inviti.forEach(invito => {
+    const row = document.createElement('tr');
+
+    // Dati dell'invito
+    const campionato = invito.campionato;
+    const cells = [
+      campionato.nome,
+      invito.ruoloInvito,
+      invito.usernameUtenteCheHaInvitato
+    ];
+
+    // Crea celle
+    cells.forEach(cellText => {
+      const td = document.createElement('td');
+      td.textContent = cellText;
+      row.appendChild(td);
+    });
+
+    // Cella per le azioni (accetta/rifiuta)
+    const actionsTd = document.createElement('td');
+
+    // Bottone Accetta
+    const acceptBtn = document.createElement('button');
+    acceptBtn.className = 'accept-btn';
+    acceptBtn.textContent = 'Accetta';
+    acceptBtn.addEventListener('click', () => acceptInvito(invito.chiave));
+
+    // Bottone Rifiuta (da implementare)
+    const rejectBtn = document.createElement('button');
+    rejectBtn.className = 'reject-btn';
+    rejectBtn.textContent = 'Rifiuta';
+
+    actionsTd.appendChild(acceptBtn);
+    actionsTd.appendChild(rejectBtn);
+
+    row.appendChild(actionsTd);
+
+    tbody.appendChild(row);
+  });
+  table.appendChild(tbody);
+  return table;
+}
+
+// Funzione per accettare un invito
+async function acceptInvito(chiaveInvito) {
+  try {
+    const response = await fetch(`${basePath}/accetta-invito/${chiaveInvito}`, {
+      method: 'GET'
+    });
+
+    if (response.ok) {
+      // Aggiorna le liste
+      await init(); // Ricarica tutto per semplicità
+    } else {
+      console.error("Errore nell'accettazione dell'invito");
+    }
+  } catch (error) {
+    console.error("Errore durante l'accettazione dell'invito:", error);
+  }
 }
 
 // Avvia l'inizializzazione

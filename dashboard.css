@@ -1,3 +1,9 @@
+.creazione-squadra-container {
+  background-color: white;
+  padding: 15px;
+  border-radius: 15px;
+}
+
 .container-dashboard {
   position: relative;
   width: 100%;
@@ -61,14 +67,10 @@
 
 .scrollable-list {
   display: flex;
+  flex-wrap: wrap;
   gap: 33px;
-  overflow-x: auto;
-  padding: 10px 0px;
-  white-space: nowrap;
-}
-
-.scrollable-list::-webkit-scrollbar {
-  display: none;
+  padding: 10px 0;
+  width: 100%;
 }
 
 .title {
@@ -86,12 +88,21 @@
 
 .squadra-info-container {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  width: 300px;
+}
+
+.footer-info-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .text-info-container {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
 
 .selected-count-container {
@@ -105,4 +116,14 @@
   color: white;
   padding: 10px;
   border-radius: 20px;
+}
+
+.creazione-squadra-container {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}
+
+.lista-container {
+  align-items: center;
 }

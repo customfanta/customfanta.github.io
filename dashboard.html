@@ -50,33 +50,38 @@
           style="display: none"
         >
           <h2>Crea la tua squadra!</h2>
-          <div class="squadra-info-container">
-            <div class="text-info-container">
-              <input
-                class="nome-squadra"
-                type="text"
-                id="squadra-name"
-                placeholder="Nome Squadra"
-                required
-              />
-              <textarea
-                class="squadra-desc"
-                id="squadra-desc"
-                placeholder="Descrizione"
-                rows="5"
-                cols="33"
-                required
-              ></textarea>
+          <div class="creazione-squadra-container">
+            <div class="squadra-info-container">
+              <div class="text-info-container">
+                <input
+                  class="nome-squadra"
+                  type="text"
+                  id="squadra-name"
+                  placeholder="Nome Squadra"
+                  required
+                />
+                <textarea
+                  class="squadra-desc"
+                  id="squadra-desc"
+                  placeholder="Descrizione"
+                  rows="5"
+                  cols="33"
+                  required
+                ></textarea>
+                <div id="selected-personaggi"></div>
+              </div>
+              <div class="footer-info-container">
+                <div id="remaining-credits">Crediti rimanenti: 160</div>
+                <button id="create-btn" disabled>Creare Squadra</button>
+              </div>
             </div>
-            <div class="selecte-count-container">
-              <div class="selected-count" id="selected-count">0/5</div>
+            <div class="lista-container">
+              <div class="selected-count-container">
+                <div class="selected-count" id="selected-count">0/5</div>
+              </div>
+              <div id="personaggi-list" class="scrollable-list"></div>
             </div>
           </div>
-          <div id="personaggi-list" class="scrollable-list"></div>
-          <div id="remaining-credits">Crediti rimanenti: 160</div>
-          <div id="selected-personaggi"></div>
-
-          <button id="create-btn" disabled>Creare Squadra</button>
         </div>
       </div>
     </div>

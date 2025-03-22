@@ -38,7 +38,7 @@ async function handleLogin(event) {
 
     const form = event.target;
     const username = form.username.value;
-    const email = form.email.value;
+//    const email = form.email.value;
     const password = form.password.value;
 
     try {
@@ -46,7 +46,7 @@ async function handleLogin(event) {
             method: 'POST',
             credentials: "include",
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, mail: email, password })
+            body: JSON.stringify({ usernameMail: username, password })
         });
 
         const data = await response.json();

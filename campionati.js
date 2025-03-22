@@ -3,7 +3,10 @@ const basePath = window.location.hostname === "" || window.location.hostname ===
 // Recupera l'utente loggato
 async function getLoggedUser() {
   try {
-    const response = await fetch(`${basePath}/get-utente-loggato`);
+    const response = await fetch(basePath + '/get-utente-loggato', {
+                         method: 'GET',
+                         credentials: "include"
+                     });
     return await response.json();
   } catch (error) {
     console.error("Errore nel recupero dell'utente loggato:", error);
@@ -14,7 +17,11 @@ async function getLoggedUser() {
 // Ottiene la lista dei campionati dell'utente
 async function getCampionati() {
   try {
-    const response = await fetch(`${basePath}/campionati-utente`);
+    const response = await fetch(basePath + '/campionati-utente', {
+                             method: 'GET',
+                             credentials: "include"
+                         });
+
     return await response.json();
   } catch (error) {
     console.error("Errore nel recupero dei campionati:", error);
@@ -29,7 +36,8 @@ async function createCampionato(nome, descrizione) {
   try {
     const response = await fetch(`${basePath}/crea-campionato`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json'credentials: "include" },
+      credentials: "include",
       body: JSON.stringify(campionato)
     });
     if (response.ok) {
@@ -148,6 +156,9 @@ async function init() {
     return;
   }
 
+//TODO: disattivare funzionalità se non certificata
+//  user.mailCertificata
+
   const campionati = await getCampionati();
   const inviti = await getInvitiRicevuti();
 
@@ -261,7 +272,8 @@ function createInvitiTable(inviti) {
 async function acceptInvito(chiaveInvito) {
   try {
     const response = await fetch(`${basePath}/accetta-invito/${chiaveInvito}`, {
-      method: 'GET'
+      method: 'GET',
+      credentials: "include"
     });
 
     if (response.ok) {

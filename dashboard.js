@@ -298,11 +298,11 @@ export function openInvitaUtenteModal() {
     document.getElementById('invitaUtenteModal').style.display = 'block';
 }
 
-export function closeModal() {
+function closeModal() {
     document.getElementById('invitaUtenteModal').style.display = 'none';
 }
 
-export function invitaUtente() {
+function invitaUtente() {
     const usernameDaInvitare = document.getElementById('usernameUtenteDaInvitare').value;
 
     const body = {

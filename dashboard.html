@@ -1,93 +1,89 @@
 <!DOCTYPE html>
 <html lang="it">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="dashboard.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="dashboard.css" />
 
-    <!-- MOCK -->
-    <!--
-    <script>
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ username: "Vinz", profile: "ADMIN" })
-      );
-    </script>
+  <!-- MOCK -->
+  <!--
+  <script>
+    localStorage.setItem(
+      "user",
+      JSON.stringify({ username: "Vinz", profile: "ADMIN" })
+    );
+  </script>
 
-    -->
-    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-  </head>
-  <body>
-    <script type="module" src="dashboard.js" defer></script>
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+<script type="module" src="dashboard.js" defer></script>
 
-    <div class="container-dashboard">
-      <div class="header">
-        <div class="title"><h1>Benvenuto nella Dashboard</h1></div>
-        <div class="profile">
-          <div class="profile-name-container">
-            <div class="name">
-              <p id="user-info"></p>
-            </div>
-            <img src="assets/profile.svg" width="20px" />
+<div class="container-dashboard">
+  <div class="header">
+    <div class="title"><h1>Benvenuto nella Dashboard</h1></div>
+    <div class="profile">
+      <div class="profile-name-container">
+        <div class="name">
+          <p id="user-info"></p>
+        </div>
+        <img src="assets/profile.svg" width="20px" />
+      </div>
+      <div class="toggle-menu-profile">
+        <button id="admin-btn" class="admin-button">
+          Vai al pannello Admin
+        </button>
+        <button class="logout-button">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="content">
+    <!-- FORM Container per creazione squadra-->
+    <div
+            id="create-form-container"
+            class="create-form"
+            style="display: none"
+    >
+      <h2>Crea la tua squadra!</h2>
+      <div class="creazione-squadra-container">
+        <div class="squadra-info-container">
+          <div class="text-info-container">
+            <input
+                    class="nome-squadra"
+                    type="text"
+                    id="squadra-name"
+                    placeholder="Nome Squadra"
+                    required
+            />
+            <textarea
+                    class="squadra-desc"
+                    id="squadra-desc"
+                    placeholder="Descrizione"
+                    rows="5"
+                    cols="33"
+                    required
+            ></textarea>
+            <div id="selected-personaggi"></div>
           </div>
-          <div class="toggle-menu-profile">
-            <button id="admin-btn" class="admin-button">
-              Vai al pannello Admin
-            </button>
-            <button class="invita-utente-button">Invita Utente</button>
-            <button class="logout-button">Logout</button>
+          <div class="footer-info-container">
+            <div id="remaining-credits">Crediti rimanenti: 160</div>
+            <button id="create-btn" disabled>Creare Squadra</button>
           </div>
         </div>
-      </div>
-
-      <div id="content">
-        <!-- FORM Container per creazione squadra-->
-        <div
-          id="create-form-container"
-          class="create-form"
-          style="display: none"
-        >
-          <h2>Crea la tua squadra!</h2>
-          <div class="creazione-squadra-container">
-            <div class="squadra-info-container">
-              <div class="text-info-container">
-                <input
-                  class="nome-squadra"
-                  type="text"
-                  id="squadra-name"
-                  placeholder="Nome Squadra"
-                  required
-                />
-                <textarea
-                  class="squadra-desc"
-                  id="squadra-desc"
-                  placeholder="Descrizione"
-                  rows="5"
-                  cols="33"
-                  required
-                ></textarea>
-                <div id="selected-personaggi"></div>
-              </div>
-              <div class="footer-info-container">
-                <div id="remaining-credits">Crediti rimanenti: 160</div>
-                <button id="create-btn" disabled>Creare Squadra</button>
-              </div>
-            </div>
-            <div class="lista-container">
-              <div class="selected-count-container">
-                <div class="selected-count" id="selected-count">0/5</div>
-              </div>
-              <div id="personaggi-list" class="scrollable-list"></div>
-            </div>
+        <div class="lista-container">
+          <div class="selected-count-container">
+            <div class="selected-count" id="selected-count">0/5</div>
           </div>
+          <div id="personaggi-list" class="scrollable-list"></div>
         </div>
       </div>
     </div>
-    </div>
-
-
-  </body>
+  </div>
+</div>
+</body>
 </html>

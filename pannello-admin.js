@@ -5,6 +5,9 @@ const basePath = window.location.hostname === "" || window.location.hostname ===
 let availableActions = [];
 let selectedCharacter = '';
 
+
+const campionato = JSON.parse(localStorage.getItem("campionato"));
+
 readAllUser();
 readAllActions();
 readAllCharacters();
@@ -14,7 +17,7 @@ closeModal();
 /** Recupera tutti gli utenti */
 async function readAllUser() {
     try {
-        const response = await fetch(basePath + '/read-all-user', { method: 'GET', credentials: "include" });
+        const response = await fetch(basePath + '/utenti-campionato/' + campionato.chiaveCampionato, { method: 'GET', credentials: "include" });
         const data = await response.json();
         const tableBody = document.querySelector("#user-table tbody");
         tableBody.innerHTML = "";
@@ -36,17 +39,16 @@ async function readAllUser() {
 
 async function makeUserAdmin(username) {
     try {
-        await fetch(basePath + '/make-user-admin/'+ username, { method: 'GET', credentials: "include" });
+        await fetch(basePath + '/make-utente-admin/'+ username + '/' + campionato.chiaveCampionato, { method: 'GET', credentials: "include" });
         readAllUser();
     } catch (error) {
         console.error("Errore nell'eliminazione utente:", error);
     }
 }
 
-/** Elimina un utente per ID (dalla tabella) */
 async function deleteUserByIdFromList(username) {
     try {
-        await fetch(basePath + '/delete-user/'+ username, { method: 'GET', credentials: "include" });
+        await fetch(basePath + '/rimuovi-utetente-campionato/'+ username + '/' + campionato.chiaveCampionato, { method: 'GET', credentials: "include" });
         readAllUser();
     } catch (error) {
         console.error("Errore nell'eliminazione utente:", error);
@@ -56,7 +58,7 @@ async function deleteUserByIdFromList(username) {
 /** Recupera tutte le azioni */
 async function readAllActions() {
     try {
-        const response = await fetch(basePath + '/read-all-azioni', { method: 'GET', credentials: "include" });
+        const response = await fetch(basePath + '/read-all-azioni/' + campionato.chiaveCampionato, { method: 'GET', credentials: "include" });
         availableActions = await response.json();
         const tableBody = document.querySelector("#action-table tbody");
         tableBody.innerHTML = "";
@@ -85,8 +87,8 @@ async function createAction(event) {
         await fetch(basePath + '/create-azione', {
             method: 'POST',
             credentials: "include",
-            headers: { 'Content-Type': 'application/json', 'profilo': 'ADMIN' },
-            body: JSON.stringify({ azione, descrizione, punteggio })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ azione, descrizione, punteggio, chiaveCampionato: campionato.chiaveCampionato })
         });
         readAllActions();
     } catch (error) {
@@ -97,7 +99,7 @@ async function createAction(event) {
 /** Recupera tutti i personaggi */
 async function readAllCharacters() {
     try {
-        const response = await fetch(basePath + '/read-personaggi', { method: 'GET', credentials: "include" });
+        const response = await fetch(basePath + '/read-personaggi/' + campionato.chiaveCampionato, { method: 'GET', credentials: "include" });
         const data = await response.json();
         const tableBody = document.querySelector("#character-table tbody");
         tableBody.innerHTML = "";
@@ -127,8 +129,8 @@ async function createPersonaggio(event) {
         await fetch(basePath + '/create-personaggio', {
             method: 'POST',
             credentials: "include",
-            headers: { 'Content-Type': 'application/json', 'profilo': 'ADMIN' },
-            body: JSON.stringify({ nominativo, descrizione, costo })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nominativo, descrizione, costo, chiaveCampionato: campionato.chiaveCampionato })
         });
         readAllCharacters();
     } catch (error) {
@@ -139,7 +141,7 @@ async function createPersonaggio(event) {
 
     async function populateCharacterActionTable() {
         try {
-            const response = await fetch(basePath + '/read-personaggi', { method: 'GET', credentials: "include" });
+            const response = await fetch(basePath + '/read-personaggi/' + campionato.chiaveCampionato, { method: 'GET', credentials: "include" });
             const data = await response.json();
             const tableBody = document.querySelector("#character-action-table tbody");
             tableBody.innerHTML = "";

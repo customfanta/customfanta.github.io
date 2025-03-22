@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   document.getElementById("user-info").textContent = `${username}`;
 
-  if (user.profile === "ADMIN") {
+  if (campionato.ruoloUtente === "ADMIN" || campionato.ruoloUtente === "OWNER") {
     document.getElementById("admin-btn").style.display = "block";
   }
 

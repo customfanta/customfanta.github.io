@@ -18,9 +18,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   document
     .getElementById("invita-utente-button")
-    .addEventListener("click", openInvitaUtenteModel);
+    .addEventListener("click", openInvitaUtenteModal);
 
-  document.querySelector(".logout-button").addEventListener("click", logout);
+  document.getElementById("logout-button").addEventListener("click", logout);
 
   profileContainer.addEventListener("click", () => {
     toggleMenu.style.display =
@@ -294,7 +294,7 @@ export function goToAdminPanel() {
 }
 
 
-export function openInvitaUtenteModel() {
+export function openInvitaUtenteModal() {
     document.getElementById('invitaUtenteModal').style.display = 'block';
 }
 

@@ -2,6 +2,12 @@ const basePath = window.location.hostname === "" || window.location.hostname ===
 
 const user = JSON.parse(localStorage.getItem("user"));
 
+if (!user) {
+    alert("Accesso non autorizzato. Effettua il login.");
+    window.location.href = "index.html";
+    return;
+}
+
 const socket = new SockJS(basePath + "/ws-endpoint");
 const stompClient = Stomp.over(socket);
 
@@ -24,6 +30,10 @@ document.getElementById("logout-button").addEventListener("click", logout);
 profileContainer.addEventListener("click", () => {
     toggleMenu.style.display = toggleMenu.style.display === "flex" ? "none" : "flex";
 });
+
+const username = user.username;
+
+document.getElementById("user-info").textContent = `${username}`;
 
 // Recupera l'utente loggato
 async function getLoggedUser() {

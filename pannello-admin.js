@@ -26,8 +26,8 @@ async function readAllUser() {
             const row = `<tr>
                 <td>${user.usernameUtente}</td>
                 <td>${user.ruoloUtente}</td>
-                <td><button onclick="deleteUserByIdFromList('${user.username}')">❌</button></td>
-                <td><button onclick="makeUserAdmin('${user.username}')">AddAdmin</button></td>
+                <td><button onclick="deleteUserByIdFromList('${user.usernameUtente}')">❌</button></td>
+                <td><button onclick="makeUserAdmin('${user.usernameUtente}')">AddAdmin</button></td>
             </tr>`;
             tableBody.innerHTML += row;
         });

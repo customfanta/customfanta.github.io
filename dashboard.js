@@ -4,6 +4,9 @@ const basePath = window.location.hostname === "" || window.location.hostname ===
 
 const isLocal = false;
 
+const campionato = JSON.parse(localStorage.getItem("campionato"));
+const chiaveCampionato = campionato.chiaveCampionato;
+
 document.addEventListener("DOMContentLoaded", async function () {
   const user = JSON.parse(localStorage.getItem("user"));
   const campionato = JSON.parse(localStorage.getItem("campionato"));
@@ -35,7 +38,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   const username = user.username;
-  const chiaveCampionato = campionato.chiaveCampionato;
 
   document.getElementById("user-info").textContent = `${username}`;
 

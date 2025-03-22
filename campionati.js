@@ -52,13 +52,17 @@ async function createCampionato(nome, descrizione) {
 }
 
 // Funzione per creare la tabella dei campionati
-function createTable(campionati) {
+function createTable(campionati, mailCertificata) {
   const table = document.createElement('table');
   const thead = document.createElement('thead');
   const tbody = document.createElement('tbody');
 
   // Intestazioni tabella
   const headers = ['Nome', 'Descrizione', 'Owner', 'Ruolo'];
+  if(mailCertificata) {
+    headers.put('Accedi');
+  }
+
   const headerRow = document.createElement('tr');
   headers.forEach(headerText => {
     const th = document.createElement('th');
@@ -68,22 +72,42 @@ function createTable(campionati) {
   thead.appendChild(headerRow);
   table.appendChild(thead);
 
-  // Righe dei dati
-  campionati.forEach(campionato => {
+campionati.forEach(campionato => {
     const row = document.createElement('tr');
-    const cells = [
-      campionato.nomeCampionato,
-      campionato.descrizioneCampionato,
-      campionato.ownerCampionato,
-      campionato.ruoloUtente
-    ];
-    cells.forEach(cellText => {
-      const td = document.createElement('td');
-      td.textContent = cellText;
-      row.appendChild(td);
-    });
+
+    // Crea le celle normali
+    const nomeTd = document.createElement('td');
+    nomeTd.textContent = campionato.nomeCampionato;
+    row.appendChild(nomeTd);
+
+    const descrizioneTd = document.createElement('td');
+    descrizioneTd.textContent = campionato.descrizioneCampionato;
+    row.appendChild(descrizioneTd);
+
+    const ownerTd = document.createElement('td');
+    ownerTd.textContent = campionato.ownerCampionato;
+    row.appendChild(ownerTd);
+
+    const ruoloTd = document.createElement('td');
+    ruoloTd.textContent = campionato.ruoloUtente;
+    row.appendChild(ruoloTd);
+
+    if (mailCertificata) {
+        const buttonTd = document.createElement('td');
+        const button = document.createElement('button');
+        button.textContent = 'Apri';
+
+        button.onclick = () => {
+            localStorage.setItem('campionato', JSON.stringify(campionato));
+            window.location.href = 'dashboard.html';
+        };
+
+        buttonTd.appendChild(button);
+        row.appendChild(buttonTd);
+    }
+
     tbody.appendChild(row);
-  });
+});
   table.appendChild(tbody);
   return table;
 }
@@ -135,7 +159,7 @@ function createForm(username) {
     if (nuovoCampionato) {
       // Aggiorna la tabella
       const campionati = await getCampionati();
-      const table = createTable(campionati);
+      const table = createTable(campionati, true);
       document.getElementById('table-container').replaceChild(table, document.getElementById('table-container').firstChild);
 
       // Pulisci il form
@@ -147,8 +171,6 @@ function createForm(username) {
   return form;
 }
 
-// Inizializzazione dell'interfaccia
-// Inizializzazione dell'interfaccia
 async function init() {
   const user = await getLoggedUser();
   if (!user) {
@@ -167,13 +189,15 @@ async function init() {
   container.id = 'main-container';
 
   // Crea form
-  const form = createForm(user.username);
-  container.appendChild(form);
+  if(user.mailCertificata) {
+      const form = createForm(user.username);
+      container.appendChild(form);
+  }
 
   // Crea tabella campionati
   const tableContainer = document.createElement('div');
   tableContainer.id = 'table-container';
-  const campionatiTable = createTable(campionati);
+  const campionatiTable = createTable(campionati, user.mailCertificata);
   tableContainer.appendChild(campionatiTable);
   container.appendChild(tableContainer);
 

@@ -6,6 +6,7 @@ const isLocal = false;
 
 document.addEventListener("DOMContentLoaded", async function () {
   const user = JSON.parse(localStorage.getItem("user"));
+  const campionato = JSON.parse(localStorage.getItem("campionato"));
   const profileContainer = document.querySelector(".profile-name-container");
   const toggleMenu = document.querySelector(".toggle-menu-profile");
   document
@@ -34,6 +35,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   const username = user.username;
+  const chiaveCampionato = campionato.chiave;
 
   document.getElementById("user-info").textContent = `${username}`;
 
@@ -45,7 +47,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     displayCreateForm(username); //MOCK
   } else {
     try {
-      const squadraData = await fetchSquadra(username);
+      const squadraData = await fetchSquadra(username, chiaveCampionato);
       if (squadraData && squadraData.personaggi.length > 0) {
         displaySquadra(squadraData);
       } else {
@@ -57,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 });
 
-const fetchSquadra = async (username) => {
+const fetchSquadra = async (username, chiaveCampionato) => {
   if (isLocal) {
     return {
       squadra: {
@@ -73,7 +75,7 @@ const fetchSquadra = async (username) => {
   }
 
   try {
-    const response = await fetch(`${basePath}/read-squadra/${username}`, {
+    const response = await fetch(`${basePath}/read-squadra/${username}/${chiaveCampionato}`, {
       method: "GET",
       credentials: "include",
     });
@@ -93,7 +95,8 @@ stompClient.connect({}, (frame) => {
     "/topic/azione-personaggio-aggiunta",
     async (message) => {
       const user = JSON.parse(localStorage.getItem("user"));
-      const squadraData = await fetchSquadra(user.username);
+      const campionato = JSON.parse(localStorage.getItem("campionato"));
+      const squadraData = await fetchSquadra(user.username, campionato.chiave);
       if (squadraData) {
         displaySquadra(squadraData);
       }
@@ -224,15 +227,15 @@ function populatePersonaggiList(personaggi, username) {
   document.getElementById("create-btn").addEventListener("click", () => {
     const squadraName = document.getElementById("squadra-name").value;
     const squadraDesc = document.getElementById("squadra-desc").value;
-    const nominativi = selected.map((p) => p.name);
+    const nominativi = selected.map((p) => p.chiave);
 
     const body = {
       squadra: {
         nome: squadraName,
         descrizione: squadraDesc,
-        usernameUser: username,
+        chiaveCampionato: chiaveCampionato,
       },
-      nomiPersonaggi: nominativi,
+      chiaviPersonaggi: nominativi,
     };
 
     if (isLocal) {
@@ -252,14 +255,13 @@ function populatePersonaggiList(personaggi, username) {
         });
       }, 1000);
     } else {
-      // Utilizzo di basePath per la creazione
-      fetch(`${basePath}/create-squadra/${username}`, {
+      fetch(`${basePath}/crea-squadra`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
         credentials: "include",
       })
-        .then(() => fetchSquadra(username))
+        .then(() => fetchSquadra(username, chiaveCampionato))
         .then((data) =>
           data ? displaySquadra(data) : alert("Errore creazione")
         )

@@ -36,7 +36,7 @@ async function createCampionato(nome, descrizione) {
   try {
     const response = await fetch(`${basePath}/crea-campionato`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json'credentials: "include" },
+      headers: { 'Content-Type': 'application/json', credentials: "include" },
       credentials: "include",
       body: JSON.stringify(campionato)
     });

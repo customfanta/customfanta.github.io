@@ -15,6 +15,11 @@ document.addEventListener("DOMContentLoaded", async function () {
   document
     .getElementById("admin-btn")
     .addEventListener("click", goToAdminPanel);
+
+  document
+    .getElementById("invita-utente-button")
+    .addEventListener("click", openInvitaUtenteModel);
+
   document.querySelector(".logout-button").addEventListener("click", logout);
 
   profileContainer.addEventListener("click", () => {
@@ -286,4 +291,32 @@ export async function logout() {
 
 export function goToAdminPanel() {
   window.location.href = "pannello-admin.html";
+}
+
+
+export function openInvitaUtenteModel() {
+    document.getElementById('invitaUtenteModal').style.display = 'block';
+}
+
+export function closeModal() {
+    document.getElementById('invitaUtenteModal').style.display = 'none';
+}
+
+export function invitaUtente() {
+    const usernameDaInvitare = document.getElementById('usernameUtenteDaInvitare').value;
+
+    const body = {
+      usernameUtenteInvitato: usernameDaInvitare,
+      ruoloInvito: 'PLAYER',
+      chiaveCampionato: chiaveCampionato
+    };
+
+    fetch(`${basePath}/invita-utente`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+            credentials: "include",
+          })
+
+    closeModal();
 }

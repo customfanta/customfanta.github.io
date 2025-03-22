@@ -24,9 +24,11 @@ class CharacterCard extends HTMLElement {
   }
 
   updateAttributes() {
+    const chiave = this.shadowRoot.getElementById("char-chiave");
     const name = this.shadowRoot.getElementById("char-name");
     const cost = this.shadowRoot.getElementById("char-cost");
 
+    if (this.hasAttribute("chiave")) chiave.textContent = this.getAttribute("chiave");
     if (this.hasAttribute("name")) name.textContent = this.getAttribute("name");
     if (this.hasAttribute("cost"))
       cost.textContent = `Costo: ${this.getAttribute("cost")}`;
@@ -41,6 +43,7 @@ class CharacterCard extends HTMLElement {
       this.dispatchEvent(
         new CustomEvent("char-selected", {
           detail: {
+            chiave: this.getAttribute("chiave"),
             name: this.getAttribute("name"),
             cost: parseInt(this.getAttribute("cost")),
             selected: this.selected,

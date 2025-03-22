@@ -222,7 +222,10 @@ async function init() {
 // Ottiene gli inviti ricevuti dall'utente
 async function getInvitiRicevuti() {
   try {
-    const response = await fetch(`${basePath}/read-inviti-ricevuti`);
+    const response = await fetch(`${basePath}/read-inviti-ricevuti`, {
+                                 method: "GET",
+                                 credentials: "include",
+                               });
     return await response.json();
   } catch (error) {
     console.error("Errore nel recupero degli inviti ricevuti:", error);

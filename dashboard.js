@@ -1,10 +1,8 @@
 import "./features/char-card/char-card.js";
 
-const basePath = "https://customfantabe.onrender.com";
-//const basePath = "http://localhost:8080";
-const isLocal =
-  window.location.hostname === "localhost" ||
-  window.location.hostname === "127.0.0.1";
+const basePath = window.location.hostname === "" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" ? "http://localhost:8080" : "https://customfantabe.onrender.com";
+
+const isLocal = false;
 
 document.addEventListener("DOMContentLoaded", async function () {
   const user = JSON.parse(localStorage.getItem("user"));

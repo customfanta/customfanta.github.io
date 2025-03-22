@@ -1,5 +1,4 @@
-const basePath = "https://customfantabe.onrender.com";
-//const basePath = "http://localhost:8080";
+const basePath = window.location.hostname === "" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" ? "http://localhost:8080" : "https://customfantabe.onrender.com";
 
 
 

@@ -1,5 +1,20 @@
 const basePath = window.location.hostname === "" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" ? "http://localhost:8080" : "https://customfantabe.onrender.com";
 
+const user = JSON.parse(localStorage.getItem("user"));
+
+const socket = new SockJS(basePath + "/ws-endpoint");
+const stompClient = Stomp.over(socket);
+
+stompClient.connect({}, (frame) => {
+  console.log("Connesso a STOMP");
+  stompClient.subscribe(
+    "/topic/nuovo-invito-ricevuto/"+user.username,
+    async (message) => {
+        init();
+    }
+  );
+});
+
 // Recupera l'utente loggato
 async function getLoggedUser() {
   try {
@@ -178,9 +193,6 @@ async function init() {
     return;
   }
 
-//TODO: disattivare funzionalità se non certificata
-//  user.mailCertificata
-
   const campionati = await getCampionati();
   const inviti = await getInvitiRicevuti();
 
@@ -305,7 +317,7 @@ async function acceptInvito(chiaveInvito) {
 
     if (response.ok) {
       // Aggiorna le liste
-      await init(); // Ricarica tutto per semplicità
+      await init();
     } else {
       console.error("Errore nell'accettazione dell'invito");
     }

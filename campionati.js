@@ -196,9 +196,15 @@ async function init() {
   const campionati = await getCampionati();
   const inviti = await getInvitiRicevuti();
 
-  // Crea contenitore principale
-  const container = document.createElement('div');
-  container.id = 'main-container';
+  let container = document.getElementById('main-container');
+  if (container) {
+    container.innerHTML = ''; // Pulisce il contenuto esistente
+  } else {
+    container = document.createElement('div');
+    container.id = 'main-container';
+    document.body.appendChild(container); // Aggiunge il contenitore solo se non esiste
+  }
+
 
   // Crea form
   if(user.mailCertificata) {
@@ -225,9 +231,6 @@ async function init() {
   invitiSection.appendChild(invitiTable);
 
   container.appendChild(invitiSection);
-
-  // Aggiungi contenitore al body
-  document.body.appendChild(container);
 }
 
 

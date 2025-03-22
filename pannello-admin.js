@@ -182,7 +182,7 @@ async function createPersonaggio(event) {
         });
     }
 
-    function assignAction() async {
+    async function assignAction() {
         const selectedAction = document.getElementById('action-select').value;
         if (selectedAction) {
             console.log(`Assegnando ${selectedAction} a ${selectedCharacter}`);

@@ -15,6 +15,8 @@ stompClient.connect({}, (frame) => {
   );
 });
 
+document.getElementById("logout-button").addEventListener("click", logout);
+
 // Recupera l'utente loggato
 async function getLoggedUser() {
   try {
@@ -327,6 +329,16 @@ async function acceptInvito(chiaveInvito) {
   } catch (error) {
     console.error("Errore durante l'accettazione dell'invito:", error);
   }
+}
+
+export async function logout() {
+  localStorage.removeItem("user");
+  const response = await fetch(basePath + "/logout", {
+    method: "GET",
+    credentials: "include",
+  });
+  const data = await response.json();
+  window.location.href = "index.html";
 }
 
 // Avvia l'inizializzazione

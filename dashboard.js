@@ -281,6 +281,7 @@ function populatePersonaggiList(personaggi, username) {
 // Funzioni già presenti nel tuo codice
 export async function logout() {
   localStorage.removeItem("user");
+  localStorage.removeItem("campionato");
   const response = await fetch(basePath + "/logout", {
     method: "GET",
     credentials: "include",

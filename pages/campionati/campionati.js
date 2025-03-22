@@ -61,8 +61,14 @@ async function getLoggedUser() {
 
 // Ottiene la lista dei campionati dell'utente
 async function getCampionati() {
+  const isLocal = basePath === "http://localhost:8080";
+
+  const apiUrl = isLocal
+    ? "../../mock/api/get-campionati.json"
+    : basePath + "/campionati-utente";
+
   try {
-    const response = await fetch(basePath + "/campionati-utente", {
+    const response = await fetch(apiUrl, {
       method: "GET",
       credentials: "include",
     });

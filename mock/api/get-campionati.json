@@ -1,0 +1,16 @@
+[
+  {
+    "chiaveCampionato": "Campionato di testVinzb639d53e-a106-4984-8c4f-c2743753d2ab",
+    "nomeCampionato": "Campionato 1",
+    "descrizioneCampionato": "Questo è un campionato",
+    "ownerCampionato": "Mock",
+    "ruoloUtente": "OWNER"
+  },
+  {
+    "chiaveCampionato": "Campionato di testVinzb639d53e-a106-4984-8c4f-c2743753d2ab",
+    "nomeCampionato": "Campionato 2",
+    "descrizioneCampionato": "Questo è un campionato",
+    "ownerCampionato": "Mock",
+    "ruoloUtente": "OWNER"
+  }
+]

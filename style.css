@@ -6,6 +6,11 @@
   --text-color: #0000;
 }
 
+body {
+  font-family: Tahoma, sans-serif;
+  margin: 0;
+}
+
 button {
   width: auto;
   padding: 10px 15px;

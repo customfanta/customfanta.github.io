@@ -69,8 +69,17 @@ async function handleLogin(event) {
 }
 
 async function getUtenteLoggato() {
+  const isLocal = basePath === "http://localhost:8080";
+
+  /* MOCK LOCALE MA NON SERVE
+  const apiUrl = isLocal
+    ? "../../mock/api/get-utente-loggato.json"
+    : basePath + "/get-utente-loggato";
+  */
+
+  const apiUrl = basePath + "/get-utente-loggato";
   try {
-    const response = await fetch(basePath + "/get-utente-loggato", {
+    const response = await fetch(apiUrl, {
       method: "GET",
       credentials: "include",
     });

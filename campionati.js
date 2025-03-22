@@ -60,7 +60,7 @@ function createTable(campionati, mailCertificata) {
   // Intestazioni tabella
   const headers = ['Nome', 'Descrizione', 'Owner', 'Ruolo'];
   if(mailCertificata) {
-    headers.put('Accedi');
+    headers.push('Accedi');
   }
 
   const headerRow = document.createElement('tr');

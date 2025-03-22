@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   const username = user.username;
-  const chiaveCampionato = campionato.chiave;
+  const chiaveCampionato = campionato.chiaveCampionato;
 
   document.getElementById("user-info").textContent = `${username}`;
 
@@ -96,7 +96,7 @@ stompClient.connect({}, (frame) => {
     async (message) => {
       const user = JSON.parse(localStorage.getItem("user"));
       const campionato = JSON.parse(localStorage.getItem("campionato"));
-      const squadraData = await fetchSquadra(user.username, campionato.chiave);
+      const squadraData = await fetchSquadra(user.username, campionato.chiaveCampionato);
       if (squadraData) {
         displaySquadra(squadraData);
       }

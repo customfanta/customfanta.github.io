@@ -44,14 +44,14 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   if (isLocal) {
-    displayCreateForm(username); //MOCK
+    displayCreateForm(username, chiaveCampionato); //MOCK
   } else {
     try {
       const squadraData = await fetchSquadra(username, chiaveCampionato);
       if (squadraData && squadraData.personaggi.length > 0) {
         displaySquadra(squadraData);
       } else {
-        displayCreateForm(username);
+        displayCreateForm(username, chiaveCampionato);
       }
     } catch (error) {
       console.error("Errore durante il caricamento iniziale:", error);
@@ -124,7 +124,7 @@ function displaySquadra(data) {
   });
 }
 
-function displayCreateForm(username) {
+function displayCreateForm(username, chiaveCampionato) {
   const container = document.getElementById("create-form-container");
   container.style.display = "block";
 
@@ -143,7 +143,7 @@ function displayCreateForm(username) {
     populatePersonaggiList(personaggi, username);
   } else {
     console.log("🌍 Running in PRODUCTION mode - Fetching Real Data 🌍");
-    fetch(`${basePath}/read-personaggi`, {
+    fetch(`${basePath}/read-personaggi/${chiaveCampionato}`, {
       method: "GET",
       credentials: "include",
     })

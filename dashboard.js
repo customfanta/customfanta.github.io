@@ -174,17 +174,18 @@ function populatePersonaggiList(personaggi, username) {
 
   personaggi.forEach((p) => {
     const charCard = document.createElement("char-card");
+    charCard.setAttribute("chiave", p.chiave);
     charCard.setAttribute("name", p.nominativo);
     charCard.setAttribute("cost", p.costo);
     charCard.setAttribute("selectable", ""); // Abilita la selezione
 
     // Ascolta l'evento `char-selected` dalla card
     charCard.addEventListener("char-selected", (event) => {
-      const { name, cost, selected: isSelected } = event.detail;
+      const { chiave, name, cost, selected: isSelected } = event.detail;
 
       if (isSelected) {
         if (count < 5 && credits >= cost) {
-          selected.push({ name, cost });
+          selected.push({ chiave, name, cost });
           credits -= cost;
           count++;
         } else {

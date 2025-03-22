@@ -1,10 +1,15 @@
-const basePath = window.location.hostname === "" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" ? "http://localhost:8080" : "https://customfantabe.onrender.com";
+const basePath =
+  window.location.hostname === "" ||
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1"
+    ? "http://localhost:8080"
+    : "https://customfantabe.onrender.com";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
 if (!user) {
-    alert("Accesso non autorizzato. Effettua il login.");
-    window.location.href = "index.html";
+  alert("Accesso non autorizzato. Effettua il login.");
+  window.location.href = "../../index.html";
 }
 
 const socket = new SockJS(basePath + "/ws-endpoint");
@@ -13,13 +18,12 @@ const stompClient = Stomp.over(socket);
 stompClient.connect({}, (frame) => {
   console.log("Connesso a STOMP");
   stompClient.subscribe(
-    "/topic/nuovo-invito-ricevuto/"+user.username,
+    "/topic/nuovo-invito-ricevuto/" + user.username,
     async (message) => {
-        init();
+      init();
     }
   );
 });
-
 
 const profileContainer = document.querySelector(".profile-name-container");
 const toggleMenu = document.querySelector(".toggle-menu-profile");
@@ -27,7 +31,8 @@ const toggleMenu = document.querySelector(".toggle-menu-profile");
 document.getElementById("logout-button").addEventListener("click", logout);
 
 profileContainer.addEventListener("click", () => {
-    toggleMenu.style.display = toggleMenu.style.display === "flex" ? "none" : "flex";
+  toggleMenu.style.display =
+    toggleMenu.style.display === "flex" ? "none" : "flex";
 });
 
 const username = user.username;
@@ -36,11 +41,17 @@ document.getElementById("user-info").textContent = `${username}`;
 
 // Recupera l'utente loggato
 async function getLoggedUser() {
+  const isLocal = basePath === "http://localhost:8080";
+
+  const apiUrl = isLocal
+    ? "../../mock/api/get-utente-loggato.json"
+    : basePath + "/get-utente-loggato";
+
   try {
-    const response = await fetch(basePath + '/get-utente-loggato', {
-                         method: 'GET',
-                         credentials: "include"
-                     });
+    const response = await fetch(apiUrl, {
+      method: "GET",
+      credentials: "include",
+    });
     return await response.json();
   } catch (error) {
     console.error("Errore nel recupero dell'utente loggato:", error);
@@ -51,10 +62,10 @@ async function getLoggedUser() {
 // Ottiene la lista dei campionati dell'utente
 async function getCampionati() {
   try {
-    const response = await fetch(basePath + '/campionati-utente', {
-                             method: 'GET',
-                             credentials: "include"
-                         });
+    const response = await fetch(basePath + "/campionati-utente", {
+      method: "GET",
+      credentials: "include",
+    });
 
     return await response.json();
   } catch (error) {
@@ -69,15 +80,15 @@ async function createCampionato(nome, descrizione) {
 
   try {
     const response = await fetch(`${basePath}/crea-campionato`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', credentials: "include" },
+      method: "POST",
+      headers: { "Content-Type": "application/json", credentials: "include" },
       credentials: "include",
-      body: JSON.stringify(campionato)
+      body: JSON.stringify(campionato),
     });
     if (response.ok) {
       return await response.json();
     } else {
-      throw new Error('Errore nella creazione del campionato');
+      throw new Error("Errore nella creazione del campionato");
     }
   } catch (error) {
     console.error("Errore durante la creazione del campionato:", error);
@@ -87,92 +98,92 @@ async function createCampionato(nome, descrizione) {
 
 // Funzione per creare la tabella dei campionati
 function createTable(campionati, mailCertificata) {
-  const table = document.createElement('table');
-  const thead = document.createElement('thead');
-  const tbody = document.createElement('tbody');
+  const table = document.createElement("table");
+  const thead = document.createElement("thead");
+  const tbody = document.createElement("tbody");
 
   // Intestazioni tabella
-  const headers = ['Nome', 'Descrizione', 'Owner', 'Ruolo'];
-  if(mailCertificata) {
-    headers.push('Accedi');
+  const headers = ["Nome", "Descrizione", "Owner", "Ruolo"];
+  if (mailCertificata) {
+    headers.push("Accedi");
   }
 
-  const headerRow = document.createElement('tr');
-  headers.forEach(headerText => {
-    const th = document.createElement('th');
+  const headerRow = document.createElement("tr");
+  headers.forEach((headerText) => {
+    const th = document.createElement("th");
     th.textContent = headerText;
     headerRow.appendChild(th);
   });
   thead.appendChild(headerRow);
   table.appendChild(thead);
 
-campionati.forEach(campionato => {
-    const row = document.createElement('tr');
+  campionati.forEach((campionato) => {
+    const row = document.createElement("tr");
 
     // Crea le celle normali
-    const nomeTd = document.createElement('td');
+    const nomeTd = document.createElement("td");
     nomeTd.textContent = campionato.nomeCampionato;
     row.appendChild(nomeTd);
 
-    const descrizioneTd = document.createElement('td');
+    const descrizioneTd = document.createElement("td");
     descrizioneTd.textContent = campionato.descrizioneCampionato;
     row.appendChild(descrizioneTd);
 
-    const ownerTd = document.createElement('td');
+    const ownerTd = document.createElement("td");
     ownerTd.textContent = campionato.ownerCampionato;
     row.appendChild(ownerTd);
 
-    const ruoloTd = document.createElement('td');
+    const ruoloTd = document.createElement("td");
     ruoloTd.textContent = campionato.ruoloUtente;
     row.appendChild(ruoloTd);
 
     if (mailCertificata) {
-        const buttonTd = document.createElement('td');
-        const button = document.createElement('button');
-        button.textContent = 'Apri';
+      const buttonTd = document.createElement("td");
+      const button = document.createElement("button");
+      button.textContent = "Apri";
 
-        button.onclick = () => {
-            localStorage.setItem('campionato', JSON.stringify(campionato));
-            window.location.href = 'dashboard.html';
-        };
+      button.onclick = () => {
+        localStorage.setItem("campionato", JSON.stringify(campionato));
+        window.location.href = "../../dashboard.html";
+      };
 
-        buttonTd.appendChild(button);
-        row.appendChild(buttonTd);
+      buttonTd.appendChild(button);
+      row.appendChild(buttonTd);
     }
 
     tbody.appendChild(row);
-});
+  });
   table.appendChild(tbody);
   return table;
 }
 
 // Funzione per creare il form di creazione
 function createForm(username) {
-  const form = document.createElement('form');
-  form.className = 'create-form';
+  const form = document.createElement("form");
+  form.className = "create-form";
 
   // Input Nome
-  const nomeLabel = document.createElement('label');
-  nomeLabel.textContent = 'Nome:';
-  const nomeInput = document.createElement('input');
-  nomeInput.type = 'text';
-  nomeInput.name = 'nome';
+  const nomeLabel = document.createElement("label");
+  nomeLabel.textContent = "Nome:";
+  const nomeInput = document.createElement("input");
+  nomeInput.type = "text";
+  nomeInput.name = "nome";
   nomeInput.required = true;
   nomeLabel.appendChild(nomeInput);
 
   // Input Descrizione
-  const descrizioneLabel = document.createElement('label');
-  descrizioneLabel.textContent = 'Descrizione:';
-  const descrizioneInput = document.createElement('input');
-  descrizioneInput.type = 'text';
-  descrizioneInput.name = 'descrizione';
+  const descrizioneLabel = document.createElement("label");
+  descrizioneLabel.textContent = "Descrizione:";
+  const descrizioneInput = document.createElement("input");
+  descrizioneInput.type = "text";
+  descrizioneInput.name = "descrizione";
   descrizioneInput.required = true;
   descrizioneLabel.appendChild(descrizioneInput);
 
   // Bottone submit
-  const submitButton = document.createElement('button');
-  submitButton.textContent = 'Crea Campionato';
-  submitButton.type = 'submit';
+  const submitButton = document.createElement("button");
+  submitButton.textContent = "Crea Campionato";
+  submitButton.type = "submit";
 
   // Aggiungi elementi al form
   form.appendChild(nomeLabel);
@@ -180,7 +191,7 @@ function createForm(username) {
   form.appendChild(submitButton);
 
   // Gestore per il submit del form
-  form.addEventListener('submit', async (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const nome = nomeInput.value;
@@ -194,11 +205,16 @@ function createForm(username) {
       // Aggiorna la tabella
       const campionati = await getCampionati();
       const table = createTable(campionati, true);
-      document.getElementById('table-container').replaceChild(table, document.getElementById('table-container').firstChild);
+      document
+        .getElementById("table-container")
+        .replaceChild(
+          table,
+          document.getElementById("table-container").firstChild
+        );
 
       // Pulisci il form
-      nomeInput.value = '';
-      descrizioneInput.value = '';
+      nomeInput.value = "";
+      descrizioneInput.value = "";
     }
   });
 
@@ -215,35 +231,34 @@ async function init() {
   const campionati = await getCampionati();
   const inviti = await getInvitiRicevuti();
 
-  let container = document.getElementById('main-container');
+  let container = document.getElementById("main-container");
   if (container) {
-    container.innerHTML = ''; // Pulisce il contenuto esistente
+    container.innerHTML = ""; // Pulisce il contenuto esistente
   } else {
-    container = document.createElement('div');
-    container.id = 'main-container';
+    container = document.createElement("div");
+    container.id = "main-container";
     document.body.appendChild(container); // Aggiunge il contenitore solo se non esiste
   }
 
-
   // Crea form
-  if(user.mailCertificata) {
-      const form = createForm(user.username);
-      container.appendChild(form);
+  if (user.mailCertificata) {
+    const form = createForm(user.username);
+    container.appendChild(form);
   }
 
   // Crea tabella campionati
-  const tableContainer = document.createElement('div');
-  tableContainer.id = 'table-container';
+  const tableContainer = document.createElement("div");
+  tableContainer.id = "table-container";
   const campionatiTable = createTable(campionati, user.mailCertificata);
   tableContainer.appendChild(campionatiTable);
   container.appendChild(tableContainer);
 
   // Crea sezione per gli inviti
-  const invitiSection = document.createElement('div');
-  invitiSection.className = 'inviti-section';
+  const invitiSection = document.createElement("div");
+  invitiSection.className = "inviti-section";
 
-  const invitiHeader = document.createElement('h2');
-  invitiHeader.textContent = 'Inviti ricevuti';
+  const invitiHeader = document.createElement("h2");
+  invitiHeader.textContent = "Inviti ricevuti";
   invitiSection.appendChild(invitiHeader);
 
   const invitiTable = createInvitiTable(inviti);
@@ -252,14 +267,13 @@ async function init() {
   container.appendChild(invitiSection);
 }
 
-
 // Ottiene gli inviti ricevuti dall'utente
 async function getInvitiRicevuti() {
   try {
     const response = await fetch(`${basePath}/read-inviti-ricevuti`, {
-                                 method: "GET",
-                                 credentials: "include",
-                               });
+      method: "GET",
+      credentials: "include",
+    });
     return await response.json();
   } catch (error) {
     console.error("Errore nel recupero degli inviti ricevuti:", error);
@@ -267,18 +281,17 @@ async function getInvitiRicevuti() {
   }
 }
 
-
 // Funzione per creare la tabella degli inviti ricevuti
 function createInvitiTable(inviti) {
-  const table = document.createElement('table');
-  const thead = document.createElement('thead');
-  const tbody = document.createElement('tbody');
+  const table = document.createElement("table");
+  const thead = document.createElement("thead");
+  const tbody = document.createElement("tbody");
 
   // Intestazioni tabella
-  const headers = ['Campionato', 'Ruolo', 'Da Utente', 'Azioni'];
-  const headerRow = document.createElement('tr');
-  headers.forEach(headerText => {
-    const th = document.createElement('th');
+  const headers = ["Campionato", "Ruolo", "Da Utente", "Azioni"];
+  const headerRow = document.createElement("tr");
+  headers.forEach((headerText) => {
+    const th = document.createElement("th");
     th.textContent = headerText;
     headerRow.appendChild(th);
   });
@@ -286,37 +299,37 @@ function createInvitiTable(inviti) {
   table.appendChild(thead);
 
   // Righe dei dati
-  inviti.forEach(invito => {
-    const row = document.createElement('tr');
+  inviti.forEach((invito) => {
+    const row = document.createElement("tr");
 
     // Dati dell'invito
     const campionato = invito.campionato;
     const cells = [
       campionato.nome,
       invito.ruoloInvito,
-      invito.usernameUtenteCheHaInvitato
+      invito.usernameUtenteCheHaInvitato,
     ];
 
     // Crea celle
-    cells.forEach(cellText => {
-      const td = document.createElement('td');
+    cells.forEach((cellText) => {
+      const td = document.createElement("td");
       td.textContent = cellText;
       row.appendChild(td);
     });
 
     // Cella per le azioni (accetta/rifiuta)
-    const actionsTd = document.createElement('td');
+    const actionsTd = document.createElement("td");
 
     // Bottone Accetta
-    const acceptBtn = document.createElement('button');
-    acceptBtn.className = 'accept-btn';
-    acceptBtn.textContent = 'Accetta';
-    acceptBtn.addEventListener('click', () => acceptInvito(invito.chiave));
+    const acceptBtn = document.createElement("button");
+    acceptBtn.className = "accept-btn";
+    acceptBtn.textContent = "Accetta";
+    acceptBtn.addEventListener("click", () => acceptInvito(invito.chiave));
 
     // Bottone Rifiuta (da implementare)
-    const rejectBtn = document.createElement('button');
-    rejectBtn.className = 'reject-btn';
-    rejectBtn.textContent = 'Rifiuta';
+    const rejectBtn = document.createElement("button");
+    rejectBtn.className = "reject-btn";
+    rejectBtn.textContent = "Rifiuta";
 
     actionsTd.appendChild(acceptBtn);
     actionsTd.appendChild(rejectBtn);
@@ -333,8 +346,8 @@ function createInvitiTable(inviti) {
 async function acceptInvito(chiaveInvito) {
   try {
     const response = await fetch(`${basePath}/accetta-invito/${chiaveInvito}`, {
-      method: 'GET',
-      credentials: "include"
+      method: "GET",
+      credentials: "include",
     });
 
     if (response.ok) {
@@ -355,7 +368,7 @@ async function logout() {
     credentials: "include",
   });
   const data = await response.json();
-  window.location.href = "index.html";
+  window.location.href = "../../index.html";
 }
 
 // Avvia l'inizializzazione

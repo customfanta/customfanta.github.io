@@ -1,0 +1,114 @@
+body {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.create-form {
+  margin-bottom: 20px;
+}
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+button {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+th,
+td {
+  border: 1px solid #dddddd;
+  padding: 8px;
+  text-align: left;
+}
+th {
+  background-color: #f2f2f2;
+}
+.inviti-section {
+  margin-top: 40px;
+}
+
+.accept-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.reject-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.profile {
+  margin-top: 0.67em;
+  position: absolute;
+  right: 1%;
+  top: 1%;
+  padding: 0px 20px;
+  box-shadow: -4px 4px 5px rgb(0, 0, 0, 0.1);
+  background-color: rgb(10, 133, 130);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
+.toggle-menu-profile {
+  align-items: end;
+  display: none;
+  flex-direction: column;
+  padding-bottom: 10px;
+}
+
+.profile-name-container {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  gap: 9px;
+  align-items: center;
+}
+
+.profile-name-container > img {
+  width: 20px;
+  height: 20px;
+  border: solid 2px;
+  border-radius: 100%;
+  border-color: white;
+  padding: 2px;
+}
+
+.name {
+  text-align: end;
+  color: white;
+}
+
+.admin-button {
+  display: none;
+  text-align: end;
+}

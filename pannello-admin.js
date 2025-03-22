@@ -185,8 +185,6 @@ async function createPersonaggio(event) {
     async function assignAction() {
         const selectedAction = document.getElementById('action-select').value;
         if (selectedAction) {
-            console.log(`Assegnando ${selectedAction} a ${selectedCharacter}`);
-
             try {
                 await fetch(basePath + '/add-azione-to-personaggio', {
                     method: 'POST',

@@ -298,9 +298,13 @@ export function openInvitaUtenteModal() {
     document.getElementById('invitaUtenteModal').style.display = 'block';
 }
 
+window.closeModal = closeModal;
+
 function closeModal() {
     document.getElementById('invitaUtenteModal').style.display = 'none';
 }
+
+window.invitaUtente = invitaUtente;
 
 function invitaUtente() {
     const usernameDaInvitare = document.getElementById('usernameUtenteDaInvitare').value;

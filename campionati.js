@@ -15,7 +15,15 @@ stompClient.connect({}, (frame) => {
   );
 });
 
+
+const profileContainer = document.querySelector(".profile-name-container");
+const toggleMenu = document.querySelector(".toggle-menu-profile");
+
 document.getElementById("logout-button").addEventListener("click", logout);
+
+profileContainer.addEventListener("click", () => {
+    toggleMenu.style.display = toggleMenu.style.display === "flex" ? "none" : "flex";
+});
 
 // Recupera l'utente loggato
 async function getLoggedUser() {

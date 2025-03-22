@@ -61,7 +61,7 @@ async function handleLogin(event) {
     if (response.ok) {
       localStorage.setItem("user", JSON.stringify(data));
 
-      window.location.href = "./pages/campionati/campionati.html";
+      window.location.href = "/pages/campionati/campionati.html";
     }
   } catch (error) {
     console.error("Errore:", error);
@@ -80,7 +80,7 @@ async function getUtenteLoggato() {
     if (response.ok) {
       localStorage.setItem("user", JSON.stringify(data));
 
-      window.location.href = "./pages/campionati/campionati.html";
+      window.location.href = "/pages/campionati/campionati.html";
     }
   } catch (error) {
     console.error("Errore:", error);

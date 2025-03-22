@@ -64,6 +64,61 @@
           padding: 8px 12px;
           cursor: pointer;
         }
+
+        .header {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: start;
+        }
+
+        .profile {
+          margin-top: 0.67em;
+          position: absolute;
+          right: 0;
+          top: 1%;
+          padding: 0px 20px;
+          box-shadow: -4px 4px 5px rgb(0, 0, 0, 0.1);
+          background-color: rgb(10, 133, 130);
+          border-radius: 10px;
+          display: flex;
+          flex-direction: column;
+          align-items: end;
+        }
+
+        .toggle-menu-profile {
+          align-items: end;
+          display: none;
+          flex-direction: column;
+          padding-bottom: 10px;
+        }
+
+        .profile-name-container {
+          cursor: pointer;
+          display: flex;
+          flex-direction: row;
+          gap: 9px;
+          align-items: center;
+        }
+
+        .profile-name-container > img {
+          width: 20px;
+          height: 20px;
+          border: solid 2px;
+          border-radius: 100%;
+          border-color: white;
+          padding: 2px;
+        }
+
+        .name {
+          text-align: end;
+          color: white;
+        }
+
+        .admin-button {
+          display: none;
+          text-align: end;
+        }
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>

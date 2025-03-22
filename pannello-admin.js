@@ -49,7 +49,7 @@ async function makeUserAdmin(username) {
 
 async function deleteUserByIdFromList(username) {
     try {
-        await fetch(basePath + '/rimuovi-utetente-campionato/'+ username + '/' + campionato.chiaveCampionato, { method: 'GET', credentials: "include" });
+        await fetch(basePath + '/rimuovi-utente-campionato/'+ username + '/' + campionato.chiaveCampionato, { method: 'GET', credentials: "include" });
         readAllUser();
     } catch (error) {
         console.error("Errore nell'eliminazione utente:", error);

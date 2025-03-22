@@ -331,7 +331,7 @@ async function acceptInvito(chiaveInvito) {
   }
 }
 
-export async function logout() {
+async function logout() {
   localStorage.removeItem("user");
   const response = await fetch(basePath + "/logout", {
     method: "GET",

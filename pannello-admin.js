@@ -24,7 +24,8 @@ async function readAllUser() {
 
         data.forEach(user => {
             const row = `<tr>
-                <td>${user.username}</td>
+                <td>${user.usernameUtente}</td>
+                <td>${user.ruoloUtente}</td>
                 <td><button onclick="deleteUserByIdFromList('${user.username}')">❌</button></td>
                 <td><button onclick="makeUserAdmin('${user.username}')">AddAdmin</button></td>
             </tr>`;
@@ -149,7 +150,7 @@ async function createPersonaggio(event) {
             data.forEach(character => {
                 const row = `<tr>
                     <td>${character.nominativo}</td>
-                    <td><button onclick="openModal('${character.nominativo}')">+</button></td>
+                    <td><button onclick="openModal('${character.nominativo}', '${character.chiave}')">+</button></td>
                 </tr>`;
                 tableBody.innerHTML += row;
             });
@@ -158,8 +159,8 @@ async function createPersonaggio(event) {
         }
     }
 
-    function openModal(charName) {
-        selectedCharacter = charName;
+    function openModal(charName, chiavePersonaggio) {
+        selectedCharacter = chiavePersonaggio;
         const modalTitle = document.querySelector('#assignModal h3');
         modalTitle.textContent = `Assegna Azione a ${charName}`;
         document.getElementById('assignModal').style.display = 'block';
@@ -175,7 +176,7 @@ async function createPersonaggio(event) {
         select.innerHTML = '<option value="">Seleziona un\'azione</option>';
         availableActions.forEach(action => {
             const option = document.createElement('option');
-            option.value = action.azione;
+            option.value = action.chiave;
             option.textContent = action.azione;
             select.appendChild(option);
         });
@@ -184,14 +185,18 @@ async function createPersonaggio(event) {
     function assignAction() {
         const selectedAction = document.getElementById('action-select').value;
         if (selectedAction) {
-            // Qui implementare la chiamata all'API
-            // Esempio:
-            // fetch(basePath + '/assign-action', {
-            //     method: 'POST',
-            //     headers: {'Content-Type': 'application/json'},
-            //     body: JSON.stringify({ character: selectedCharacter, action: selectedAction })
-            // });
             console.log(`Assegnando ${selectedAction} a ${selectedCharacter}`);
+
+            try {
+                await fetch(basePath + '/add-azione-to-personaggio', {
+                    method: 'POST',
+                    credentials: "include",
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chiaveAzione: selectedAction, chiavePersonaggio: selectedCharacter})
+                });
+            } catch (error) {
+                console.error("Errore nella assegnazione dell'azione:", error);
+            }
             closeModal();
         }
     }

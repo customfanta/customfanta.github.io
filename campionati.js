@@ -5,7 +5,6 @@ const user = JSON.parse(localStorage.getItem("user"));
 if (!user) {
     alert("Accesso non autorizzato. Effettua il login.");
     window.location.href = "index.html";
-    return;
 }
 
 const socket = new SockJS(basePath + "/ws-endpoint");

@@ -1,6 +1,6 @@
 const isLocalValue = window.location.hostname === "" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
 
-const serverHost = "https://customfantabe.onrender.com";
+export const serverHost = "https://customfantabe.onrender.com";
 
 
 export async function creaUtente(username, nome, mail, password) {

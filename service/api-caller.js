@@ -156,6 +156,18 @@ async function accettaInvito(chiaveInvito) {
     return makeGet(apiUrl);
 }
 
+async function recuperaConfigurazioniCampionato(chiaveCampionato) {
+    const apiUrl = isLocalValue ? "../../mock/api/recupera-configurazioni-campionato.json" : serverHost + "/recupera-configurazioni-campionato/${chiaveCampionato}";
+
+    return makeGet(apiUrl);
+}
+
+async function aggiungiConfigurazioneCampionato(chiaveCampionato, chiaveConfigurazione, valoreConfigurazione) {
+    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/aggiungi-configurazione-campionato";
+
+    return makePost(apiUrl, JSON.stringify({ chiaveCampionato, chiaveConfigurazione, valoreConfigurazione }));
+}
+
 
 
 async function makeGet(apiUrl) {

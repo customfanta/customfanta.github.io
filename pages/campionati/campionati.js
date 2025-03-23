@@ -124,7 +124,7 @@ export function createForm(username) {
   const descrizioneInput = document.createElement("input");
   descrizioneInput.type = "text";
   descrizioneInput.name = "descrizione";
-  descrizioneInput.required = true;
+  descrizioneInput.required = false;
   descrizioneLabel.appendChild(descrizioneInput);
 
   // Bottone submit

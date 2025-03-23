@@ -127,3 +127,11 @@
 .lista-container {
   align-items: center;
 }
+
+#create-btn:disabled {
+  background-color: #cccccc; /* Colore di sfondo grigio */
+  color: #666666; /* Colore del testo più scuro */
+  cursor: not-allowed; /* Cambia il cursore per indicare che non è cliccabile */
+  border: 1px solid #999999; /* Bordo più chiaro */
+  opacity: 0.6; /* Riduci l'opacità per dare un effetto "spento" */
+}

@@ -188,6 +188,7 @@ export async function populatePersonaggiList(personaggi, username) {
           );
         }
       });
+
       document.getElementById(
         "selected-personaggi"
       ).textContent = `Personaggi selezionati: ${personaggiSelezionati}`;
@@ -195,6 +196,7 @@ export async function populatePersonaggiList(personaggi, username) {
       document.getElementById("create-btn").disabled = !(
         count === numeroMassimoPersonaggi && credits >= 0
       );
+      
     });
 
     list.appendChild(charCard);

@@ -125,25 +125,27 @@ export async function displayCreateForm(username, chiaveCampionato) {
 window.populatePersonaggiList = populatePersonaggiList;
 export async function populatePersonaggiList(personaggi, username) {
   const list = document.getElementById("personaggi-list");
+
+
   list.innerHTML = ""; // Pulisce la lista precedente
 
-      const configurazioni = await apiCaller.recuperaConfigurazioniCampionato(campionato.chiaveCampionato);
-  
-      let numeroMassimoPersonaggi = parseInt(configurazioni.find(config => config.chiaveConfigurazione === "numero-personaggi-per-squadra")?.valoreConfigurazione, 10);
-      if(!numeroMassimoPersonaggi) {
-        numeroMassimoPersonaggi = 5;
-      } else {
+  const configurazioni = await apiCaller.recuperaConfigurazioniCampionato(campionato.chiaveCampionato);
 
-      }
-  
-      let credits = parseInt(configurazioni.find(config => config.chiaveConfigurazione === "budget-crediti")?.valoreConfigurazione, 10);
-      if(!credits) {
-        credits = 160;
-      }
+  let numeroMassimoPersonaggi = parseInt(configurazioni.find(config => config.chiaveConfigurazione === "numero-personaggi-per-squadra")?.valoreConfigurazione, 10);
+  if(!numeroMassimoPersonaggi) {
+    numeroMassimoPersonaggi = 5;
+  }
 
+  let credits = parseInt(configurazioni.find(config => config.chiaveConfigurazione === "budget-crediti")?.valoreConfigurazione, 10);
+  if(!credits) {
+    credits = 160;
+  }
 
   let selected = [];
   let count = 0;
+
+  document.getElementById("remaining-credits").textContent = `Crediti rimanenti: ${credits}`;
+  document.getElementById("selected-count").textContent = `${count}/${numeroMassimoPersonaggi}`;
 
   personaggi.forEach((p) => {
     const charCard = document.createElement("char-card");
@@ -171,9 +173,7 @@ export async function populatePersonaggiList(personaggi, username) {
         count--;
       }
 
-      document.getElementById(
-        "remaining-credits"
-      ).textContent = `Crediti rimanenti: ${credits}`;
+      document.getElementById("remaining-credits").textContent = `Crediti rimanenti: ${credits}`;
       document.getElementById("selected-count").textContent = `${count}/${numeroMassimoPersonaggi}`;
 
       let personaggiSelezionati = "";

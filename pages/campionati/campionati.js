@@ -2,7 +2,7 @@ import * as apiCaller from "/service/api-caller.js";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
-const socket = new SockJS(basePath + "/ws-endpoint");
+const socket = new SockJS(apiCaller.serverHost + "/ws-endpoint");
 const stompClient = Stomp.over(socket);
 
 stompClient.connect({}, (frame) => {

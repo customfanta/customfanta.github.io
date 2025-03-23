@@ -33,6 +33,12 @@ async function recuperaSquadra(username, chiaveCampionato) {
     return makeGet(apiUrl);
 }
 
+async function cancellaSquadra(username, chiaveCampionato) {
+    const apiUrl = isLocalValue ? "../../mock/api/delete-squadra.json" : serverHost + "/delete-squadra/${username}/${chiaveCampionato}";
+
+    return makeGet(apiUrl);
+}
+
 async function recuperaPersonaggi(chiaveCampionato) {
     const apiUrl = isLocalValue ? "../../mock/api/read-personaggi.json" : serverHost + "/read-personaggi/${chiaveCampionato}";
 
@@ -128,6 +134,18 @@ async function creaCampionato(nome, descrizione) {
 
 async function recuperaInvitiRicevuti() {
     const apiUrl = isLocalValue ? "../../mock/api/read-inviti-ricevuti.json" : serverHost + "/read-inviti-ricevuti";
+
+    return makeGet(apiUrl);
+}
+
+async function recuperaInvitiInviati() {
+    const apiUrl = isLocalValue ? "../../mock/api/read-inviti-inviati.json" : serverHost + "/read-inviti-inviati";
+
+    return makeGet(apiUrl);
+}
+
+async function recuperaInvitiCampionato(chiaveCampionato) {
+    const apiUrl = isLocalValue ? "../../mock/api/read-inviti-campionato.json" : serverHost + "/read-inviti-campionato/${chiaveCampionato}";
 
     return makeGet(apiUrl);
 }

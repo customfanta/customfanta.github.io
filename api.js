@@ -19,7 +19,7 @@ async function handleRegister(event) {
   const email = form.email.value;
   const password = form.password.value;
 
-  const esito = apiCaller.creaUtente(username, nome, email, password);
+  const esito = await apiCaller.creaUtente(username, nome, email, password);
 
   if ("OK" == esito) {
     window.location.href = "index.html";
@@ -38,7 +38,7 @@ async function handleLogin(event) {
   const username = form.username.value;
   const password = form.password.value;
 
-  const utente = apiCaller.effettuaAccesso(username, password);
+  const utente = await apiCaller.effettuaAccesso(username, password);
 
   if (utente.username) {
     localStorage.setItem("user", JSON.stringify(utente));
@@ -48,7 +48,7 @@ async function handleLogin(event) {
 }
 
 async function getUtenteLoggato() {
-  const utenteLoggato = apiCaller.recuperaUtenteLoggato();
+  const utenteLoggato = await apiCaller.recuperaUtenteLoggato();
 
   if(utenteLoggato.username) {
     localStorage.setItem("user", JSON.stringify(utenteLoggato));

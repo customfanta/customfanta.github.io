@@ -275,11 +275,10 @@ async function acceptInvito(chiaveInvito) {
   }
 }
 
-window.logout = logout;
-async function logout() {
+export async function logout() {
   localStorage.removeItem("user");
   await apiCaller.logOut();
-  window.location.href = "../../index.html";
+  window.location.href = "index.html";
 }
 
 

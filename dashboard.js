@@ -1,6 +1,5 @@
 import "./features/char-card/char-card.js";
-
-const basePath = window.location.hostname === "" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" ? "http://localhost:8080" : "https://customfantabe.onrender.com";
+import * as apiCaller from "/service/api-caller.js";
 
 const isLocal = false;
 
@@ -37,7 +36,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   });
 
   if (!user) {
-    alert("Accesso non autorizzato. Effettua il login.");
     window.location.href = "index.html";
     return;
   }
@@ -67,33 +65,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 const fetchSquadra = async (username, chiaveCampionato) => {
-  if (isLocal) {
-    return {
-      squadra: {
-        nome: "Mock Team",
-        descrizione: "Squadra generata",
-      },
-      punteggioSquadra: 2000,
-      personaggi: [
-        { nomePersonaggio: "Personaggio Test 1", punteggioAttuale: 400 },
-        { nomePersonaggio: "Personaggio Test 2", punteggioAttuale: 450 },
-      ],
-    };
-  }
-
-  try {
-    const response = await fetch(`${basePath}/read-squadra/${username}/${chiaveCampionato}`, {
-      method: "GET",
-      credentials: "include",
-    });
-    return response.ok ? await response.json() : null;
-  } catch (error) {
-    console.error("Errore durante il recupero della squadra:", error);
-    return null;
-  }
+  return await apiCaller.recuperaSquadra(username, chiaveCampionato);
 };
 
-const socket = new SockJS(basePath + "/ws-endpoint");
+const socket = new SockJS(apiCaller.serverHost + "/ws-endpoint");
 const stompClient = Stomp.over(socket);
 
 stompClient.connect({}, (frame) => {
@@ -135,36 +110,13 @@ function displayCreateForm(username, chiaveCampionato) {
   const container = document.getElementById("create-form-container");
   container.style.display = "block";
 
-  if (isLocal) {
-    console.log("⚠️ Running in LOCAL mode - Using Mock Data ⚠️");
-    const personaggi = [
-      { nominativo: "Personaggio Test 1", costo: 50 },
-      { nominativo: "Personaggio Test 2", costo: 20 },
-      { nominativo: "Personaggio Test 3", costo: 10 },
-      { nominativo: "Personaggio Test 4", costo: 30 },
-      { nominativo: "Personaggio Test 5", costo: 60 },
-      { nominativo: "Personaggio Test 6", costo: 40 },
-      { nominativo: "Personaggio Test 7", costo: 50 },
-      { nominativo: "Personaggio Test 8", costo: 80 },
-    ];
-    populatePersonaggiList(personaggi, username);
-  } else {
-    console.log("🌍 Running in PRODUCTION mode - Fetching Real Data 🌍");
-    fetch(`${basePath}/read-personaggi/${chiaveCampionato}`, {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((personaggi) => {
-        if (personaggi.length === 0) {
-          container.innerHTML = "Nessun personaggio disponibile";
-          return;
-        }
-        populatePersonaggiList(personaggi, username);
-      })
-      .catch((error) => {
-        console.error("Errore durante il recupero dei personaggi:", error);
-      });
+  const personaggi = await apiCaller.recuperaPersonaggi(chiaveCampionato);
+  if(personaggi) {
+    if (personaggi.length == 0) {
+        container.innerHTML = "Nessun personaggio disponibile";
+        return;
+      }
+      populatePersonaggiList(personaggi, username);
   }
 }
 
@@ -237,56 +189,16 @@ function populatePersonaggiList(personaggi, username) {
     const squadraDesc = document.getElementById("squadra-desc").value;
     const nominativi = selected.map((p) => p.chiave);
 
-    const body = {
-      squadra: {
-        nome: squadraName,
-        descrizione: squadraDesc,
-        chiaveCampionato: chiaveCampionato,
-      },
-      chiaviPersonaggi: nominativi,
-    };
-
-    if (isLocal) {
-      console.log("🛠 Mocked Squad Creation:", body);
-      setTimeout(() => {
-        alert("Squadra creata con successo! (Mock)");
-        displaySquadra({
-          squadra: {
-            nome: squadraName,
-            descrizione: squadraDesc,
-          },
-          punteggioSquadra: 0,
-          personaggi: selected.map((p) => ({
-            nomePersonaggio: p.name,
-            punteggioAttuale: 0,
-          })),
-        });
-      }, 1000);
-    } else {
-      fetch(`${basePath}/crea-squadra`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-        credentials: "include",
-      })
-        .then(() => fetchSquadra(username, chiaveCampionato))
-        .then((data) =>
-          data ? displaySquadra(data) : alert("Errore creazione")
-        )
-        .catch((error) => console.error("Errore:", error));
+    const squadra = await apiCaller.creaSquadra(squadraName, squadraDesc, chiaveCampionato, nominativi);
+    if(squadra) {
+        displaySquadra(data);
     }
-  });
 }
 
-// Funzioni già presenti nel tuo codice
 export async function logout() {
   localStorage.removeItem("user");
   localStorage.removeItem("campionato");
-  const response = await fetch(basePath + "/logout", {
-    method: "GET",
-    credentials: "include",
-  });
-  const data = await response.json();
+  await apiCaller.logOut();
   window.location.href = "index.html";
 }
 
@@ -294,34 +206,16 @@ export function goToAdminPanel() {
   window.location.href = "pannello-admin.html";
 }
 
-
 export function openInvitaUtenteModal() {
     document.getElementById('invitaUtenteModal').style.display = 'block';
 }
 
-window.closeModal = closeModal;
-
-function closeModal() {
+export function closeModal() {
     document.getElementById('invitaUtenteModal').style.display = 'none';
 }
 
-window.invitaUtente = invitaUtente;
-
-function invitaUtente() {
+export function invitaUtente() {
     const usernameDaInvitare = document.getElementById('usernameUtenteDaInvitare').value;
-
-    const body = {
-      usernameUtenteInvitato: usernameDaInvitare,
-      ruoloInvito: 'PLAYER',
-      chiaveCampionato: chiaveCampionato
-    };
-
-    fetch(`${basePath}/invita-utente`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body),
-            credentials: "include",
-          })
-
+    await apiCaller.invitaUtente(usernameDaInvitare, 'PLAYER', chiaveCampionato);
     closeModal();
 }

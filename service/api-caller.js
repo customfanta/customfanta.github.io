@@ -170,7 +170,7 @@ export async function makeGet(apiUrl) {
       credentials: "include",
     });
 
-    return await response.json();
+    return response.ok ? await response.json() : null;
 }
 
 export async function makePost(apiUrl, body) {
@@ -181,5 +181,5 @@ export async function makePost(apiUrl, body) {
       body: body,
     });
 
-    return await response.json();
+    return response.ok ? await response.json() : null;
 }

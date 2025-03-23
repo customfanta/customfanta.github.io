@@ -1,16 +1,6 @@
-const basePath =
-  window.location.hostname === "" ||
-  window.location.hostname === "localhost" ||
-  window.location.hostname === "127.0.0.1"
-    ? "http://localhost:8080"
-    : "https://customfantabe.onrender.com";
+import * as apiCaller from "/service/api-caller.js";
 
 const user = JSON.parse(localStorage.getItem("user"));
-
-if (!user) {
-  alert("Accesso non autorizzato. Effettua il login.");
-  window.location.href = "../../index.html";
-}
 
 const socket = new SockJS(basePath + "/ws-endpoint");
 const stompClient = Stomp.over(socket);
@@ -38,26 +28,6 @@ profileContainer.addEventListener("click", () => {
 const username = user.username;
 
 document.getElementById("user-info").textContent = `${username}`;
-
-// Recupera l'utente loggato
-async function getLoggedUser() {
-  const isLocal = basePath === "http://localhost:8080";
-
-  const apiUrl = isLocal
-    ? "../../mock/api/get-utente-loggato.json"
-    : basePath + "/get-utente-loggato";
-
-  try {
-    const response = await fetch(apiUrl, {
-      method: "GET",
-      credentials: "include",
-    });
-    return await response.json();
-  } catch (error) {
-    console.error("Errore nel recupero dell'utente loggato:", error);
-    return null;
-  }
-}
 
 // Ottiene la lista dei campionati dell'utente
 async function getCampionati() {
@@ -228,13 +198,8 @@ function createForm(username) {
 }
 
 async function init() {
-  const user = await getLoggedUser();
-  if (!user) {
-    console.error("Utente non trovato");
-    return;
-  }
 
-  const campionati = await getCampionati();
+  const campionati = await apiCaller.recuperaCampionati();
   const inviti = await getInvitiRicevuti();
 
   let container = document.getElementById("main-container");

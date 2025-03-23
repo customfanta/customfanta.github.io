@@ -165,29 +165,21 @@ export async function aggiungiConfigurazioneCampionato(chiaveCampionato, chiaveC
 
 
 export async function makeGet(apiUrl) {
-    try {
-        const response = await fetch(apiUrl, {
-          method: "GET",
-          credentials: "include",
-        });
+    const response = await fetch(apiUrl, {
+      method: "GET",
+      credentials: "include",
+    });
 
-        return await response.json();
-    } catch (error) {
-        return;
-    }
+    return await response.json();
 }
 
 export async function makePost(apiUrl, body) {
-    try {
-        const response = await fetch(apiUrl, {
-          method: "POST",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: body,
-        });
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: body,
+    });
 
-        return await response.json();
-    } catch (error) {
-        return;
-    }
+    return await response.json();
 }

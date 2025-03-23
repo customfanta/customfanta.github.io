@@ -33,50 +33,10 @@ const username = user.username;
 
 document.getElementById("user-info").textContent = `${username}`;
 
-// Ottiene la lista dei campionati dell'utente
-async function getCampionati() {
-  const isLocal = basePath === "http://localhost:8080";
 
-  const apiUrl = isLocal
-    ? "../../mock/api/get-campionati.json"
-    : basePath + "/campionati-utente";
+init();
 
-  try {
-    const response = await fetch(apiUrl, {
-      method: "GET",
-      credentials: "include",
-    });
 
-    return await response.json();
-  } catch (error) {
-    console.error("Errore nel recupero dei campionati:", error);
-    return [];
-  }
-}
-
-window.createCampionato = createCampionato;
-async function createCampionato(nome, descrizione) {
-  const campionato = { nome, descrizione };
-
-  try {
-    const response = await fetch(`${basePath}/crea-campionato`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", credentials: "include" },
-      credentials: "include",
-      body: JSON.stringify(campionato),
-    });
-    if (response.ok) {
-      return await response.json();
-    } else {
-      throw new Error("Errore nella creazione del campionato");
-    }
-  } catch (error) {
-    console.error("Errore durante la creazione del campionato:", error);
-    return null;
-  }
-}
-
-// Funzione per creare la tabella dei campionati
 function createTable(campionati, mailCertificata) {
   const table = document.createElement("table");
   const thead = document.createElement("thead");
@@ -137,7 +97,6 @@ function createTable(campionati, mailCertificata) {
   return table;
 }
 
-// Funzione per creare il form di creazione
 function createForm(username) {
   const form = document.createElement("form");
   form.className = "create-form";
@@ -179,11 +138,11 @@ function createForm(username) {
 
     if (!nome || !descrizione) return;
 
-    const nuovoCampionato = await createCampionato(nome, descrizione);
+    const nuovoCampionato = await apiCaller.creaCampionato(nome, descrizione);
 
     if (nuovoCampionato) {
       // Aggiorna la tabella
-      const campionati = await getCampionati();
+      const campionati = await apiCaller.recuperaCampionati();
       const table = createTable(campionati, true);
       document
         .getElementById("table-container")
@@ -204,7 +163,7 @@ function createForm(username) {
 async function init() {
 
   const campionati = await apiCaller.recuperaCampionati();
-  const inviti = await getInvitiRicevuti();
+  const inviti = await apiCaller.recuperaInvitiRicevuti();
 
   let container = document.getElementById("main-container");
   if (container) {
@@ -242,21 +201,6 @@ async function init() {
   container.appendChild(invitiSection);
 }
 
-// Ottiene gli inviti ricevuti dall'utente
-async function getInvitiRicevuti() {
-  try {
-    const response = await fetch(`${basePath}/read-inviti-ricevuti`, {
-      method: "GET",
-      credentials: "include",
-    });
-    return await response.json();
-  } catch (error) {
-    console.error("Errore nel recupero degli inviti ricevuti:", error);
-    return [];
-  }
-}
-
-// Funzione per creare la tabella degli inviti ricevuti
 function createInvitiTable(inviti) {
   const table = document.createElement("table");
   const thead = document.createElement("thead");
@@ -317,16 +261,11 @@ function createInvitiTable(inviti) {
   return table;
 }
 
-window.acceptInvito = acceptInvito;
 async function acceptInvito(chiaveInvito) {
   try {
-    const response = await fetch(`${basePath}/accetta-invito/${chiaveInvito}`, {
-      method: "GET",
-      credentials: "include",
-    });
+    const esito = await apiCaller.accettaInvito(chiaveInvito);
 
-    if (response.ok) {
-      // Aggiorna le liste
+    if ("OK" == esito) {
       await init();
     } else {
       console.error("Errore nell'accettazione dell'invito");
@@ -339,13 +278,8 @@ async function acceptInvito(chiaveInvito) {
 window.logout = logout;
 async function logout() {
   localStorage.removeItem("user");
-  const response = await fetch(basePath + "/logout", {
-    method: "GET",
-    credentials: "include",
-  });
-  const data = await response.json();
+  await apiCaller.logout();
   window.location.href = "../../index.html";
 }
 
-// Avvia l'inizializzazione
-init();
+

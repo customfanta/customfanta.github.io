@@ -2,7 +2,8 @@ import * as apiCaller from "/service/api-caller.js";
 
 getUtenteLoggato();
 
-export async function handleRegister(event) {
+window.handleRegister = handleRegister;
+async function handleRegister(event) {
   event.preventDefault();
 
   const form = event.target;
@@ -23,7 +24,8 @@ export async function handleRegister(event) {
   }
 }
 
-export async function handleLogin(event) {
+window.handleLogin = handleLogin;
+async function handleLogin(event) {
     event.preventDefault();
 
     const form = event.target;

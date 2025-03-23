@@ -28,19 +28,19 @@ export async function logOut() {
 }
 
 export async function recuperaSquadra(username, chiaveCampionato) {
-    const apiUrl = isLocalValue ? "../../mock/api/read-squadra.json" : serverHost + "/read-squadra/${username}/${chiaveCampionato}";
+    const apiUrl = isLocalValue ? "../../mock/api/read-squadra.json" : serverHost + "/read-squadra/" + username + "/" + chiaveCampionato;
 
     return makeGet(apiUrl);
 }
 
 export async function cancellaSquadra(username, chiaveCampionato) {
-    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/delete-squadra/${username}/${chiaveCampionato}";
+    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/delete-squadra/" + username + "/" + chiaveCampionato;
 
     return makeGet(apiUrl);
 }
 
 export async function recuperaPersonaggi(chiaveCampionato) {
-    const apiUrl = isLocalValue ? "../../mock/api/read-personaggi.json" : serverHost + "/read-personaggi/${chiaveCampionato}";
+    const apiUrl = isLocalValue ? "../../mock/api/read-personaggi.json" : serverHost + "/read-personaggi/" + chiaveCampionato;
 
     return makeGet(apiUrl);
 }
@@ -73,25 +73,25 @@ export async function invitaUtente(usernameDaInvitare, ruoloInvito, chiaveCampio
 }
 
 export async function recuperaUtentiCampionato(chiaveCampionato) {
-    const apiUrl = isLocalValue ? "../../mock/api/utenti-campionato.json" : serverHost + "/utenti-campionato/${chiaveCampionato}";
+    const apiUrl = isLocalValue ? "../../mock/api/utenti-campionato.json" : serverHost + "/utenti-campionato/" + chiaveCampionato;
 
     return makeGet(apiUrl);
 }
 
 export async function rendiUtenteAdmin(username, chiaveCampionato) {
-    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/make-utente-admin/${username}/${chiaveCampionato}";
+    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/make-utente-admin/" + username + "/" + chiaveCampionato;
 
     return makeGet(apiUrl);
 }
 
 export async function rimuoviUtenteCampionato(username, chiaveCampionato) {
-    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/rimuovi-utente-campionato/${username}/${chiaveCampionato}";
+    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/rimuovi-utente-campionato/" + username + "/" + chiaveCampionato;
 
     return makeGet(apiUrl);
 }
 
 export async function recuperaAzioni(chiaveCampionato) {
-    const apiUrl = isLocalValue ? "../../mock/api/read-all-azioni.json" : serverHost + "/read-all-azioni/${chiaveCampionato}";
+    const apiUrl = isLocalValue ? "../../mock/api/read-all-azioni.json" : serverHost + "/read-all-azioni/" + chiaveCampionato;
 
     return makeGet(apiUrl);
 }
@@ -139,7 +139,7 @@ export async function recuperaInvitiInviati() {
 }
 
 export async function recuperaInvitiCampionato(chiaveCampionato) {
-    const apiUrl = isLocalValue ? "../../mock/api/read-inviti-campionato.json" : serverHost + "/read-inviti-campionato/${chiaveCampionato}";
+    const apiUrl = isLocalValue ? "../../mock/api/read-inviti-campionato.json" : serverHost + "/read-inviti-campionato/" + chiaveCampionato;
 
     return makeGet(apiUrl);
 }
@@ -151,7 +151,7 @@ export async function accettaInvito(chiaveInvito) {
 }
 
 export async function recuperaConfigurazioniCampionato(chiaveCampionato) {
-    const apiUrl = isLocalValue ? "../../mock/api/recupera-configurazioni-campionato.json" : serverHost + "/recupera-configurazioni-campionato/${chiaveCampionato}";
+    const apiUrl = isLocalValue ? "../../mock/api/recupera-configurazioni-campionato.json" : serverHost + "/recupera-configurazioni-campionato/" + chiaveCampionato;
 
     return makeGet(apiUrl);
 }

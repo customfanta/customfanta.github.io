@@ -1,8 +1,6 @@
 import "./features/char-card/char-card.js";
 import * as apiCaller from "/service/api-caller.js";
 
-const isLocal = false;
-
 const campionato = JSON.parse(localStorage.getItem("campionato"));
 const chiaveCampionato = campionato.chiaveCampionato;
 
@@ -48,9 +46,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById("admin-btn").style.display = "block";
   }
 
-  if (isLocal) {
-    displayCreateForm(username, chiaveCampionato); //MOCK
-  } else {
     try {
       const squadraData = await fetchSquadra(username, chiaveCampionato);
       if (squadraData && squadraData.personaggi.length > 0) {
@@ -61,7 +56,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     } catch (error) {
       console.error("Errore durante il caricamento iniziale:", error);
     }
-  }
 });
 
 const fetchSquadra = async (username, chiaveCampionato) => {

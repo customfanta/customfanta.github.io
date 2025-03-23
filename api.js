@@ -21,7 +21,7 @@ async function handleRegister(event) {
 
   const esito = apiCaller.creaUtente(username, nome, email, password);
 
-  if (esito) {
+  if ("OK" == esito) {
     window.location.href = "index.html";
   } else {
     alert(
@@ -40,7 +40,7 @@ async function handleLogin(event) {
 
   const utente = apiCaller.effettuaAccesso(username, password);
 
-  if (utente) {
+  if (utente.username) {
     localStorage.setItem("user", JSON.stringify(utente));
 
     window.location.href = "/pages/campionati/campionati.html";
@@ -50,7 +50,7 @@ async function handleLogin(event) {
 async function getUtenteLoggato() {
   const utenteLoggato = apiCaller.recuperaUtenteLoggato();
 
-  if(utenteLoggato) {
+  if(utenteLoggato.username) {
     localStorage.setItem("user", JSON.stringify(utenteLoggato));
     window.location.href = "/pages/campionati/campionati.html";
   }

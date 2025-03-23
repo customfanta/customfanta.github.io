@@ -208,8 +208,15 @@ export async function populatePersonaggiList(personaggi, username) {
     const nominativi = selected.map((p) => p.chiave);
 
     const squadra = await apiCaller.creaSquadra(squadraName, squadraDesc, chiaveCampionato, nominativi);
-    if(squadra) {
-        displaySquadra(data);
+
+    let squadraData;
+    try {
+      squadraData = await fetchSquadra(username, chiaveCampionato);
+    } catch (error) {
+    }
+
+    if (squadraData && squadraData.personaggi.length > 0) {
+      displaySquadra(squadraData);
     }
   });
 }

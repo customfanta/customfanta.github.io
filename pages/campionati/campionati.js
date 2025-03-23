@@ -6,18 +6,20 @@ if (!user) {
   window.location.href = "../../index.html";
 }
 
-const socket = new SockJS(apiCaller.serverHost + "/ws-endpoint");
-const stompClient = Stomp.over(socket);
+if(!apiCaller.isLocalValue) {
+  const socket = new SockJS(apiCaller.serverHost + "/ws-endpoint");
+  const stompClient = Stomp.over(socket);
 
-stompClient.connect({}, (frame) => {
-  console.log("Connesso a STOMP");
-  stompClient.subscribe(
-    "/topic/nuovo-invito-ricevuto/" + user.username,
-    async (message) => {
-      init();
-    }
-  );
-});
+  stompClient.connect({}, (frame) => {
+    console.log("Connesso a STOMP");
+    stompClient.subscribe(
+      "/topic/nuovo-invito-ricevuto/" + user.username,
+      async (message) => {
+        init();
+      }
+    );
+  });
+}
 
 const profileContainer = document.querySelector(".profile-name-container");
 const toggleMenu = document.querySelector(".toggle-menu-profile");

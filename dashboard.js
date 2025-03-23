@@ -62,23 +62,25 @@ const fetchSquadra = async (username, chiaveCampionato) => {
   return await apiCaller.recuperaSquadra(username, chiaveCampionato);
 };
 
-const socket = new SockJS(apiCaller.serverHost + "/ws-endpoint");
-const stompClient = Stomp.over(socket);
+if(!apiCaller.isLocalValue) {
+  const socket = new SockJS(apiCaller.serverHost + "/ws-endpoint");
+  const stompClient = Stomp.over(socket);
 
-stompClient.connect({}, (frame) => {
-  console.log("Connesso a STOMP");
-  stompClient.subscribe(
-    "/topic/azione-personaggio-aggiunta",
-    async (message) => {
-      const user = JSON.parse(localStorage.getItem("user"));
-      const campionato = JSON.parse(localStorage.getItem("campionato"));
-      const squadraData = await fetchSquadra(user.username, campionato.chiaveCampionato);
-      if (squadraData) {
-        displaySquadra(squadraData);
+  stompClient.connect({}, (frame) => {
+    console.log("Connesso a STOMP");
+    stompClient.subscribe(
+      "/topic/azione-personaggio-aggiunta",
+      async (message) => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const campionato = JSON.parse(localStorage.getItem("campionato"));
+        const squadraData = await fetchSquadra(user.username, campionato.chiaveCampionato);
+        if (squadraData) {
+          displaySquadra(squadraData);
+        }
       }
-    }
-  );
-});
+    );
+  });
+}
 
 function displaySquadra(data) {
   const container = document.getElementById("content");

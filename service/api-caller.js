@@ -1,4 +1,4 @@
-const isLocalValue = window.location.hostname === "" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+export const isLocalValue = window.location.hostname === "" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
 
 export const serverHost = "https://customfantabe.onrender.com";
 

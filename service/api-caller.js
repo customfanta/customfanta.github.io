@@ -145,7 +145,7 @@ export async function recuperaInvitiCampionato(chiaveCampionato) {
 }
 
 export async function accettaInvito(chiaveInvito) {
-    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/accetta-invito/${chiaveInvito}";
+    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/accetta-invito/"+ chiaveInvito;
 
     return makeGet(apiUrl);
 }

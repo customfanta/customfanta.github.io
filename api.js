@@ -14,7 +14,7 @@ export async function handleRegister(event) {
 
   const esito = await apiCaller.creaUtente(username, nome, email, password);
 
-  if ("OK" == esito) {
+  if (esito && "OK" == esito.esito) {
     window.location.href = "index.html";
   } else {
     alert(

@@ -276,7 +276,7 @@ export async function acceptInvito(chiaveInvito) {
   try {
     const esito = await apiCaller.accettaInvito(chiaveInvito);
 
-    if ("OK" == esito) {
+    if (esito && "OK" == esito.esito) {
       await init();
     } else {
       console.error("Errore nell'accettazione dell'invito");

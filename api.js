@@ -40,7 +40,7 @@ async function handleLogin(event) {
 
   const utente = await apiCaller.effettuaAccesso(username, password);
 
-  if (utente.username) {
+  if (utente) {
     localStorage.setItem("user", JSON.stringify(utente));
 
     window.location.href = "/pages/campionati/campionati.html";
@@ -50,7 +50,7 @@ async function handleLogin(event) {
 async function getUtenteLoggato() {
   const utenteLoggato = await apiCaller.recuperaUtenteLoggato();
 
-  if(utenteLoggato.username) {
+  if(utenteLoggato) {
     localStorage.setItem("user", JSON.stringify(utenteLoggato));
     window.location.href = "/pages/campionati/campionati.html";
   }

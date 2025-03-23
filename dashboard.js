@@ -196,7 +196,7 @@ async function populatePersonaggiList(personaggi, username) {
     if(squadra) {
         displaySquadra(data);
     }
-  }
+  });
 }
 
 export async function logout() {

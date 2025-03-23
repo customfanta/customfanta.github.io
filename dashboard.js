@@ -125,6 +125,9 @@ async function populatePersonaggiList(personaggi, username) {
   const list = document.getElementById("personaggi-list");
   list.innerHTML = ""; // Pulisce la lista precedente
 
+    let numeroMassimoPersonaggi = 5;
+
+
   let selected = [];
   let credits = 160;
   let count = 0;
@@ -141,7 +144,7 @@ async function populatePersonaggiList(personaggi, username) {
       const { chiave, name, cost, selected: isSelected } = event.detail;
 
       if (isSelected) {
-        if (count < 5 && credits >= cost) {
+        if (count < numeroMassimoPersonaggi && credits >= cost) {
           selected.push({ chiave, name, cost });
           credits -= cost;
           count++;
@@ -158,7 +161,7 @@ async function populatePersonaggiList(personaggi, username) {
       document.getElementById(
         "remaining-credits"
       ).textContent = `Crediti rimanenti: ${credits}`;
-      document.getElementById("selected-count").textContent = `${count}/5`;
+      document.getElementById("selected-count").textContent = `${count}/${numeroMassimoPersonaggi}`;
 
       let personaggiSelezionati = "";
       selected.forEach((personaggio, index) => {
@@ -177,7 +180,7 @@ async function populatePersonaggiList(personaggi, username) {
       ).textContent = `Personaggi selezionati: ${personaggiSelezionati}`;
 
       document.getElementById("create-btn").disabled = !(
-        count === 5 && credits >= 0
+        count === numeroMassimoPersonaggi && credits >= 0
       );
     });
 
@@ -193,6 +196,7 @@ async function populatePersonaggiList(personaggi, username) {
     if(squadra) {
         displaySquadra(data);
     }
+  }
 }
 
 export async function logout() {

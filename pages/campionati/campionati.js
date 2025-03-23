@@ -144,7 +144,7 @@ export function createForm(username) {
     const nome = nomeInput.value;
     const descrizione = descrizioneInput.value;
 
-    if (!nome || !descrizione) return;
+    if (!nome) return;
 
     const nuovoCampionato = await apiCaller.creaCampionato(nome, descrizione);
 

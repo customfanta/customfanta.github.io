@@ -278,7 +278,7 @@ async function acceptInvito(chiaveInvito) {
 window.logout = logout;
 async function logout() {
   localStorage.removeItem("user");
-  await apiCaller.logout();
+  await apiCaller.logOut();
   window.location.href = "../../index.html";
 }
 

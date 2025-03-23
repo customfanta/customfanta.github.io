@@ -1,8 +1,9 @@
 [
     {
+        "laMiaSquadra": false,
         "squadra": {
-          "chiave": "FantaCAAntonio983d243e81-34ce-4e94-bfcc-cedbd1eae545VinzVinz Bomber",
-          "nome": "Vinz Bomber",
+          "chiave": "FantaCAAntonio983d243e81-34ce-4e94-bfcc-cedbd1eae545VinzSbirri",
+          "nome": "Sbirri",
           "descrizione": "",
           "usernameUtente": "Vinz",
           "chiaveCampionato": "FantaCAAntonio983d243e81-34ce-4e94-bfcc-cedbd1eae545"
@@ -32,9 +33,10 @@
         "punteggioSquadra": 5
       },
       {
+        "laMiaSquadra": true,
         "squadra": {
-          "chiave": "FantaCAAntonio983d243e81-34ce-4e94-bfcc-cedbd1eae545Antonio98Anto Bomber",
-          "nome": "Anto Bomber",
+          "chiave": "FantaCAAntonio983d243e81-34ce-4e94-bfcc-cedbd1eae545Antonio98Bomber",
+          "nome": "Bomber",
           "descrizione": "",
           "usernameUtente": "Antonio98",
           "chiaveCampionato": "FantaCAAntonio983d243e81-34ce-4e94-bfcc-cedbd1eae545"
@@ -62,5 +64,38 @@
           }
         ],
         "punteggioSquadra": 65
+      },
+      {
+        "laMiaSquadra": false,
+        "squadra": {
+          "chiave": "FantaCAAntonio983d243e81-34ce-4e94-bfcc-cedbd1eae545EmanueleI Gay",
+          "nome": "I Gay",
+          "descrizione": "",
+          "usernameUtente": "Emanuele",
+          "chiaveCampionato": "FantaCAAntonio983d243e81-34ce-4e94-bfcc-cedbd1eae545"
+        },
+        "personaggi": [
+          {
+            "nomePersonaggio": "Daniele Perrella",
+            "punteggioAttuale": -10
+          },
+          {
+            "nomePersonaggio": "Marco Omogrosso",
+            "punteggioAttuale": 0
+          },
+          {
+            "nomePersonaggio": "Vincenzo Curreri",
+            "punteggioAttuale": 0
+          },
+          {
+            "nomePersonaggio": "Gaia Musacchio",
+            "punteggioAttuale": 0
+          },
+          {
+            "nomePersonaggio": "Emanuele Bianchi",
+            "punteggioAttuale": 15
+          }
+        ],
+        "punteggioSquadra": 5
       }
 ]

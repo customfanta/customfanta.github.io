@@ -8,8 +8,8 @@
   },
   "personaggi": [
     {
-      "nomePersonaggio": "Daniele Perrella",
-      "punteggioAttuale": -10
+      "nomePersonaggio": "Antonio Pellegrino",
+      "punteggioAttuale": 50
     },
     {
       "nomePersonaggio": "Marco Omogrosso",
@@ -28,5 +28,5 @@
       "punteggioAttuale": 15
     }
   ],
-  "punteggioSquadra": 5
+  "punteggioSquadra": 65
 }

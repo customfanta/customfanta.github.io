@@ -87,23 +87,62 @@ if(!apiCaller.isLocalValue) {
 }
 
 window.displaySquadra = displaySquadra;
-export function displaySquadra(data) {
+export async function displaySquadra(data) {
   const container = document.getElementById("content");
   container.innerHTML = `
         <div id="squadra-view">
+            <h1>La tua Squadra</h1>
             <h2>${data.squadra.nome}</h2>
             <p>${data.squadra.descrizione}</p>
             <h3>Personaggi:</h3>
             <ul id="personaggi-list"></ul>
             <p>Punteggio Totale: ${data.punteggioSquadra}</p>
         </div>
+        <div id="all-squadre-view">
+            <h1>Le altre squadre</h2>
+        </div>
     `;
 
   const personaggiList = document.getElementById("personaggi-list");
   data.personaggi.forEach((p) => {
     const li = document.createElement("li");
-    li.textContent = `${p.nomePersonaggio} - ${p.punteggioAttuale}`;
+    li.textContent = `${p.nomePersonaggio} con ${p.punteggioAttuale} punti`;
     personaggiList.appendChild(li);
+  });
+
+  const allSquadreResponse = await apiCaller.recuperaSquadreCampionato(chiaveCampionato);
+
+  const allSquadreList = document.getElementById("all-squadre-view");
+  
+  allSquadreResponse.forEach((s) => {
+    if(!s.laMiaSquadra) {
+      let squadraDiv = document.createElement("div");
+      allSquadreList.appendChild(squadraDiv);
+
+      let h2El = document.createElement("h2");
+      h2El.textContent = `${s.squadra.nome} di ${s.squadra.usernameUtente}`;
+      squadraDiv.appendChild(h2El);
+
+      let pEl = document.createElement("p");
+      pEl.textContent = s.squadra.descrizione;
+      squadraDiv.appendChild(pEl);
+
+      let h3El = document.createElement("h3");
+      h3El.textContent = "Personaggi:";
+      squadraDiv.appendChild(h3El);
+
+      let persSquadUl = document.createElement("ul");
+      squadraDiv.appendChild(persSquadUl);
+      s.personaggi.forEach((p) => {
+        const li = document.createElement("li");
+        li.textContent = `${p.nomePersonaggio} con ${p.punteggioAttuale} punti`;
+        persSquadUl.appendChild(li);
+      });
+
+      let punteggioTotaleEl = document.createElement("p");
+      punteggioTotaleEl.textContent = `Punteggio Totale: ${s.punteggioSquadra}`;
+      squadraDiv.appendChild(punteggioTotaleEl);
+    }
   });
 }
 

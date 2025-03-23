@@ -50,7 +50,7 @@ async function getCampionati() {
   }
 }
 
-// Crea un nuovo campionato
+window.createCampionato = createCampionato;
 async function createCampionato(nome, descrizione) {
   const campionato = { nome, descrizione };
 
@@ -313,7 +313,7 @@ function createInvitiTable(inviti) {
   return table;
 }
 
-// Funzione per accettare un invito
+window.acceptInvito = acceptInvito;
 async function acceptInvito(chiaveInvito) {
   try {
     const response = await fetch(`${basePath}/accetta-invito/${chiaveInvito}`, {
@@ -332,6 +332,7 @@ async function acceptInvito(chiaveInvito) {
   }
 }
 
+window.logout = logout;
 async function logout() {
   localStorage.removeItem("user");
   const response = await fetch(basePath + "/logout", {

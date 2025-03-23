@@ -184,7 +184,7 @@ async function populatePersonaggiList(personaggi, username) {
     list.appendChild(charCard);
   });
 
-  document.getElementById("create-btn").addEventListener("click", () => {
+  document.getElementById("create-btn").addEventListener("click", async () => {
     const squadraName = document.getElementById("squadra-name").value;
     const squadraDesc = document.getElementById("squadra-desc").value;
     const nominativi = selected.map((p) => p.chiave);

@@ -107,6 +107,31 @@
           </table>
         </div>
 
+        <!-- Widget: Configurazioni Campionato -->
+        <div class="widget">
+          <h2>Configurazioni Campionato</h2>
+          <table id="configurazioni-campionato-table">
+            <thead>
+              <tr>
+                <th>Chiave</th>
+                <th>Valore</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Numero Personaggi per Squadra</td>
+                <td><input type="text" id="numero-personaggi-per-squadra" placeholder="5"/></td>
+              </tr>
+              <tr>
+                <td>Budget Crediti</td>
+                <td><input type="text" id="budget-crediti" placeholder="160"/></td>
+              </tr>
+            </tbody>
+          </table>
+          <button type="submit" onclick="aggiornaConfigurazione()">Aggiorna valori configurazione</button>
+        </div>
+
+        <!-- Widget: Gestione Azioni Personaggi -->
         <div class="widget">
           <h2>Gestione Azioni Personaggi</h2>
           <table id="character-action-table">
@@ -131,6 +156,8 @@
             <button onclick="assignAction()">Conferma</button>
           </div>
         </div>
+
+
       </div>
 
 

@@ -6,6 +6,7 @@ let selectedCharacter = '';
 
 const campionato = JSON.parse(localStorage.getItem("campionato"));
 
+initConfigurazioni();
 readAllUser();
 readAllActions();
 readAllCharacters();
@@ -155,3 +156,30 @@ export async function assignAction() {
         closeModal();
     }
 }
+
+window.initConfigurazioni = initConfigurazioni;
+export async function initConfigurazioni() {
+    const configurazioni = await apiCaller.recuperaConfigurazioniCampionato(campionato.chiaveCampionato);
+
+    const numeroPersonaggiPerSquadra = configurazioni.find(config => config.chiaveConfigurazione === "numero-personaggi-per-squadra")?.valoreConfigurazione;
+    document.getElementById('numero-personaggi-per-squadra').setAttribute("placeholder", numeroPersonaggiPerSquadra || "5");
+
+    const budgetCrediti = configurazioni.find(config => config.chiaveConfigurazione === "budget-crediti")?.valoreConfigurazione;
+    document.getElementById('budget-crediti').setAttribute("placeholder", budgetCrediti || "160");
+}
+
+window.aggiornaConfigurazione = aggiornaConfigurazione;
+export async function aggiornaConfigurazione() {
+    let elementNumPers = document.getElementById('numero-personaggi-per-squadra');
+    let numPers = elementNumPers.value;
+    if(numPers != "") {
+        await apiCaller.aggiungiConfigurazioneCampionato(campionato.chiaveCampionato, 'numero-personaggi-per-squadra', numPers);
+    }
+
+    let elementBudgCred = document.getElementById('budget-crediti');
+    let budgetCrediti = elementBudgCred.value;
+    if(budgetCrediti != "") {
+        await apiCaller.aggiungiConfigurazioneCampionato(campionato.chiaveCampionato, 'budget-crediti', budgetCrediti);
+    }
+}
+

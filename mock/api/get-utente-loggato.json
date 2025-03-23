@@ -3,6 +3,6 @@
   "nome": "null",
   "mail": "mock-user@mail.it",
   "password": null,
-  "mailCertificata": false,
+  "mailCertificata": true,
   "uuidMailCertificazione": null
 }

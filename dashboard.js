@@ -4,6 +4,8 @@ import * as apiCaller from "/service/api-caller.js";
 const campionato = JSON.parse(localStorage.getItem("campionato"));
 const chiaveCampionato = campionato.chiaveCampionato;
 
+closeModal();
+
 document.addEventListener("DOMContentLoaded", async function () {
   const user = JSON.parse(localStorage.getItem("user"));
   const campionato = JSON.parse(localStorage.getItem("campionato"));
@@ -46,16 +48,18 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById("admin-btn").style.display = "block";
   }
 
+  let squadraData;
     try {
-      const squadraData = await fetchSquadra(username, chiaveCampionato);
-      if (squadraData && squadraData.personaggi.length > 0) {
-        displaySquadra(squadraData);
-      } else {
-        displayCreateForm(username, chiaveCampionato);
-      }
+      squadraData = await fetchSquadra(username, chiaveCampionato);
     } catch (error) {
-      console.error("Errore durante il caricamento iniziale:", error);
     }
+
+    if (squadraData && squadraData.personaggi.length > 0) {
+      displaySquadra(squadraData);
+    } else {
+      displayCreateForm(username, chiaveCampionato);
+    }
+    
 });
 
 const fetchSquadra = async (username, chiaveCampionato) => {
@@ -123,11 +127,22 @@ export async function populatePersonaggiList(personaggi, username) {
   const list = document.getElementById("personaggi-list");
   list.innerHTML = ""; // Pulisce la lista precedente
 
-    let numeroMassimoPersonaggi = 5;
+      const configurazioni = await apiCaller.recuperaConfigurazioniCampionato(campionato.chiaveCampionato);
+  
+      let numeroMassimoPersonaggi = parseInt(configurazioni.find(config => config.chiaveConfigurazione === "numero-personaggi-per-squadra")?.valoreConfigurazione, 10);
+      if(!numeroMassimoPersonaggi) {
+        numeroMassimoPersonaggi = 5;
+      } else {
+
+      }
+  
+      let credits = parseInt(configurazioni.find(config => config.chiaveConfigurazione === "budget-crediti")?.valoreConfigurazione, 10);
+      if(!credits) {
+        credits = 160;
+      }
 
 
   let selected = [];
-  let credits = 160;
   let count = 0;
 
   personaggi.forEach((p) => {

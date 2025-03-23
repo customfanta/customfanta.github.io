@@ -38,8 +38,8 @@ document.getElementById("user-info").textContent = `${username}`;
 
 init();
 
-
-function createTable(campionati, mailCertificata) {
+window.createTable = createTable;
+export function createTable(campionati, mailCertificata) {
   const table = document.createElement("table");
   const thead = document.createElement("thead");
   const tbody = document.createElement("tbody");
@@ -99,7 +99,8 @@ function createTable(campionati, mailCertificata) {
   return table;
 }
 
-function createForm(username) {
+window.createForm = createForm;
+export function createForm(username) {
   const form = document.createElement("form");
   form.className = "create-form";
 
@@ -162,7 +163,8 @@ function createForm(username) {
   return form;
 }
 
-async function init() {
+window.init = init;
+export async function init() {
 
   const campionati = await apiCaller.recuperaCampionati();
   const inviti = await apiCaller.recuperaInvitiRicevuti();
@@ -203,7 +205,8 @@ async function init() {
   container.appendChild(invitiSection);
 }
 
-function createInvitiTable(inviti) {
+window.createInvitiTable = createInvitiTable;
+export function createInvitiTable(inviti) {
   const table = document.createElement("table");
   const thead = document.createElement("thead");
   const tbody = document.createElement("tbody");
@@ -263,7 +266,8 @@ function createInvitiTable(inviti) {
   return table;
 }
 
-async function acceptInvito(chiaveInvito) {
+window.acceptInvito = acceptInvito;
+export async function acceptInvito(chiaveInvito) {
   try {
     const esito = await apiCaller.accettaInvito(chiaveInvito);
 
@@ -277,6 +281,7 @@ async function acceptInvito(chiaveInvito) {
   }
 }
 
+window.logout = logout;
 export async function logout() {
   localStorage.removeItem("user");
   await apiCaller.logOut();

@@ -82,7 +82,8 @@ if(!apiCaller.isLocalValue) {
   });
 }
 
-function displaySquadra(data) {
+window.displaySquadra = displaySquadra;
+export function displaySquadra(data) {
   const container = document.getElementById("content");
   container.innerHTML = `
         <div id="squadra-view">
@@ -102,7 +103,8 @@ function displaySquadra(data) {
   });
 }
 
-async function displayCreateForm(username, chiaveCampionato) {
+window.displayCreateForm = displayCreateForm;
+export async function displayCreateForm(username, chiaveCampionato) {
   const container = document.getElementById("create-form-container");
   container.style.display = "block";
 
@@ -116,8 +118,8 @@ async function displayCreateForm(username, chiaveCampionato) {
   }
 }
 
-// Function to populate the UI with personaggi (works for both mock & real data)
-async function populatePersonaggiList(personaggi, username) {
+window.populatePersonaggiList = populatePersonaggiList;
+export async function populatePersonaggiList(personaggi, username) {
   const list = document.getElementById("personaggi-list");
   list.innerHTML = ""; // Pulisce la lista precedente
 
@@ -195,6 +197,7 @@ async function populatePersonaggiList(personaggi, username) {
   });
 }
 
+window.logout = logout;
 export async function logout() {
   localStorage.removeItem("user");
   localStorage.removeItem("campionato");
@@ -202,18 +205,22 @@ export async function logout() {
   window.location.href = "index.html";
 }
 
+window.goToAdminPanel = goToAdminPanel;
 export function goToAdminPanel() {
   window.location.href = "pannello-admin.html";
 }
 
+window.openInvitaUtenteModal = openInvitaUtenteModal;
 export function openInvitaUtenteModal() {
     document.getElementById('invitaUtenteModal').style.display = 'block';
 }
 
+window.closeModal = closeModal;
 export function closeModal() {
     document.getElementById('invitaUtenteModal').style.display = 'none';
 }
 
+window.invitaUtente = invitaUtente;
 export async function invitaUtente() {
     const usernameDaInvitare = document.getElementById('usernameUtenteDaInvitare').value;
     await apiCaller.invitaUtente(usernameDaInvitare, 'PLAYER', chiaveCampionato);

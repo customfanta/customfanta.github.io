@@ -1,6 +1,4 @@
-const basePath = window.location.hostname === "" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" ? "http://localhost:8080" : "https://customfantabe.onrender.com";
-
-
+import * as apiCaller from "/service/api-caller.js";
 
 let availableActions = [];
 let selectedCharacter = '';
@@ -14,15 +12,14 @@ readAllCharacters();
 populateCharacterActionTable();
 closeModal();
 
-/** Recupera tutti gli utenti */
-async function readAllUser() {
-    try {
-        const response = await fetch(basePath + '/utenti-campionato/' + campionato.chiaveCampionato, { method: 'GET', credentials: "include" });
-        const data = await response.json();
+window.readAllUser = readAllUser;
+export async function readAllUser() {
+    const utentiCampionato = await apiCaller.recuperaUtentiCampionato(campionato.chiaveCampionato);
+    if(utentiCampionato) {
         const tableBody = document.querySelector("#user-table tbody");
         tableBody.innerHTML = "";
 
-        data.forEach(user => {
+        utentiCampionato.forEach(user => {
             const row = `<tr>
                 <td>${user.usernameUtente}</td>
                 <td>${user.ruoloUtente}</td>
@@ -31,36 +28,26 @@ async function readAllUser() {
             </tr>`;
             tableBody.innerHTML += row;
         });
-
-    } catch (error) {
-        console.error("Errore nel recupero utenti:", error);
     }
 }
 
-
-async function makeUserAdmin(username) {
-    try {
-        await fetch(basePath + '/make-utente-admin/'+ username + '/' + campionato.chiaveCampionato, { method: 'GET', credentials: "include" });
-        readAllUser();
-    } catch (error) {
-        console.error("Errore nell'eliminazione utente:", error);
-    }
+window.makeUserAdmin = makeUserAdmin;
+export async function makeUserAdmin(username) {
+    await apiCaller.rendiUtenteAdmin(username, campionato.chiaveCampionato);
+    readAllUser();
 }
 
-async function deleteUserByIdFromList(username) {
-    try {
-        await fetch(basePath + '/rimuovi-utente-campionato/'+ username + '/' + campionato.chiaveCampionato, { method: 'GET', credentials: "include" });
-        readAllUser();
-    } catch (error) {
-        console.error("Errore nell'eliminazione utente:", error);
-    }
+window.deleteUserByIdFromList = deleteUserByIdFromList;
+export async function deleteUserByIdFromList(username) {
+    await apiCaller.rimuoviUtenteCampionato(username, campionato.chiaveCampionato);
+    readAllUser();
 }
 
-/** Recupera tutte le azioni */
-async function readAllActions() {
-    try {
-        const response = await fetch(basePath + '/read-all-azioni/' + campionato.chiaveCampionato, { method: 'GET', credentials: "include" });
-        availableActions = await response.json();
+window.readAllActions = readAllActions;
+export async function readAllActions() {
+    availableActions = await apiCaller.recuperaAzioni(campionato.chiaveCampionato);
+
+    if(availableActions) {
         const tableBody = document.querySelector("#action-table tbody");
         tableBody.innerHTML = "";
 
@@ -72,40 +59,29 @@ async function readAllActions() {
             </tr>`;
             tableBody.innerHTML += row;
         });
-    } catch (error) {
-        console.error("Errore nel recupero azioni:", error);
     }
 }
 
-/** Crea una nuova azione */
-async function createAction(event) {
+window.createAction = createAction;
+export async function createAction(event) {
     event.preventDefault();
     const azione = document.getElementById("new-action-name").value;
     const descrizione = document.getElementById("new-action-description").value;
     const punteggio = document.getElementById("new-action-punteggio").value;
 
-    try {
-        await fetch(basePath + '/create-azione', {
-            method: 'POST',
-            credentials: "include",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ azione, descrizione, punteggio, chiaveCampionato: campionato.chiaveCampionato })
-        });
-        readAllActions();
-    } catch (error) {
-        console.error("Errore nella creazione azione:", error);
-    }
+    await apiCaller.creaAzione(azione, descrizione, punteggio, campionato.chiaveCampionato);
+    readAllActions();
 }
 
-/** Recupera tutti i personaggi */
-async function readAllCharacters() {
-    try {
-        const response = await fetch(basePath + '/read-personaggi/' + campionato.chiaveCampionato, { method: 'GET', credentials: "include" });
-        const data = await response.json();
+window.readAllCharacters = readAllCharacters;
+export async function readAllCharacters() {
+    const personaggi = await apiCaller.recuperaPersonaggi(campionato.chiaveCampionato);
+
+    if(personaggi) {
         const tableBody = document.querySelector("#character-table tbody");
         tableBody.innerHTML = "";
 
-        data.forEach(character => {
+        personaggi.forEach(character => {
             const row = `<tr>
                 <td>${character.nominativo}</td>
                 <td>${character.descrizione}</td>
@@ -113,88 +89,69 @@ async function readAllCharacters() {
             </tr>`;
             tableBody.innerHTML += row;
         });
-
-    } catch (error) {
-        console.error("Errore nel recupero personaggi:", error);
     }
 }
 
-/** Crea un nuovo personaggio */
-async function createPersonaggio(event) {
+window.createPersonaggio = createPersonaggio;
+export async function createPersonaggio(event) {
     event.preventDefault();
     const nominativo = document.getElementById("new-personaggio-name").value;
     const descrizione = document.getElementById("new-personaggio-description").value;
     const costo = document.getElementById("new-personaggio-costo").value;
 
-    try {
-        await fetch(basePath + '/create-personaggio', {
-            method: 'POST',
-            credentials: "include",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nominativo, descrizione, costo, chiaveCampionato: campionato.chiaveCampionato })
-        });
-        readAllCharacters();
-    } catch (error) {
-        console.error("Errore nella creazione azione:", error);
-    }
+    await apiCaller.creaPersonaggio(nominativo, descrizione, costo, campionato.chiaveCampionato);
+    readAllCharacters();
 }
 
+window.populateCharacterActionTable = populateCharacterActionTable;
+export async function populateCharacterActionTable() {
+    const personaggi = await apiCaller.recuperaPersonaggi(campionato.chiaveCampionato);
 
-    async function populateCharacterActionTable() {
-        try {
-            const response = await fetch(basePath + '/read-personaggi/' + campionato.chiaveCampionato, { method: 'GET', credentials: "include" });
-            const data = await response.json();
-            const tableBody = document.querySelector("#character-action-table tbody");
-            tableBody.innerHTML = "";
+    if(personaggi) {
+        const tableBody = document.querySelector("#character-action-table tbody");
+        tableBody.innerHTML = "";
 
-            data.forEach(character => {
-                const row = `<tr>
-                    <td>${character.nominativo}</td>
-                    <td><button onclick="openModal('${character.nominativo}', '${character.chiave}')">+</button></td>
-                </tr>`;
-                tableBody.innerHTML += row;
-            });
-        } catch (error) {
-            console.error("Errore nel recupero personaggi:", error);
-        }
-    }
-
-    function openModal(charName, chiavePersonaggio) {
-        selectedCharacter = chiavePersonaggio;
-        const modalTitle = document.querySelector('#assignModal h3');
-        modalTitle.textContent = `Assegna Azione a ${charName}`;
-        document.getElementById('assignModal').style.display = 'block';
-        populateActionSelect();
-    }
-
-    function closeModal() {
-        document.getElementById('assignModal').style.display = 'none';
-    }
-
-    function populateActionSelect() {
-        const select = document.getElementById('action-select');
-        select.innerHTML = '<option value="">Seleziona un\'azione</option>';
-        availableActions.forEach(action => {
-            const option = document.createElement('option');
-            option.value = action.chiave;
-            option.textContent = action.azione;
-            select.appendChild(option);
+        personaggi.forEach(character => {
+            const row = `<tr>
+                <td>${character.nominativo}</td>
+                <td><button onclick="openModal('${character.nominativo}', '${character.chiave}')">+</button></td>
+            </tr>`;
+            tableBody.innerHTML += row;
         });
-    }
+    } 
+}
 
-    async function assignAction() {
-        const selectedAction = document.getElementById('action-select').value;
-        if (selectedAction) {
-            try {
-                await fetch(basePath + '/add-azione-to-personaggio', {
-                    method: 'POST',
-                    credentials: "include",
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chiaveAzione: selectedAction, chiavePersonaggio: selectedCharacter})
-                });
-            } catch (error) {
-                console.error("Errore nella assegnazione dell'azione:", error);
-            }
-            closeModal();
-        }
+window.openModal = openModal;
+export function openModal(charName, chiavePersonaggio) {
+    selectedCharacter = chiavePersonaggio;
+    const modalTitle = document.querySelector('#assignModal h3');
+    modalTitle.textContent = `Assegna Azione a ${charName}`;
+    document.getElementById('assignModal').style.display = 'block';
+    populateActionSelect();
+}
+
+window.closeModal = closeModal;
+export function closeModal() {
+    document.getElementById('assignModal').style.display = 'none';
+}
+
+window.populateActionSelect = populateActionSelect;
+export function populateActionSelect() {
+    const select = document.getElementById('action-select');
+    select.innerHTML = '<option value="">Seleziona un\'azione</option>';
+    availableActions.forEach(action => {
+        const option = document.createElement('option');
+        option.value = action.chiave;
+        option.textContent = action.azione;
+        select.appendChild(option);
+    });
+}
+
+window.assignAction = assignAction;
+export async function assignAction() {
+    const selectedAction = document.getElementById('action-select').value;
+    if (selectedAction) {
+        await apiCaller.aggiungiAzionePersonaggio(selectedAction, selectedCharacter);
+        closeModal();
     }
+}

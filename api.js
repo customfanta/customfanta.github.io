@@ -3,7 +3,7 @@ import * as apiCaller from "/service/api-caller.js";
 getUtenteLoggato();
 
 window.handleRegister = handleRegister;
-async function handleRegister(event) {
+export async function handleRegister(event) {
   event.preventDefault();
 
   const form = event.target;
@@ -25,7 +25,7 @@ async function handleRegister(event) {
 }
 
 window.handleLogin = handleLogin;
-async function handleLogin(event) {
+export async function handleLogin(event) {
     event.preventDefault();
 
     const form = event.target;
@@ -44,7 +44,8 @@ async function handleLogin(event) {
     }
 }
 
-async function getUtenteLoggato() {
+window.getUtenteLoggato = getUtenteLoggato;
+export async function getUtenteLoggato() {
     try {
       const utenteLoggato = await apiCaller.recuperaUtenteLoggato();
 

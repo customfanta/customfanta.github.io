@@ -1,0 +1,14 @@
+[
+  {
+    "chiave": "invito54321",
+    "ruoloInvito": "PLAYER",
+    "campionato": {
+      "chiave": "chiaveCampionato54321",
+      "nome": "MyNewFanta",
+      "descrizione": "MyNewFanta",
+      "usernameUtenteOwner": "UtenteTest"
+    },
+    "usernameUtenteInvitato": "Antonio98",
+    "usernameUtenteCheHaInvitato": "UtenteTest"
+  }
+]

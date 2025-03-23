@@ -1,0 +1,14 @@
+[
+  {
+    "chiave": "invito12345",
+    "ruoloInvito": "PLAYER",
+    "campionato": {
+      "chiave": "chiaveCampionato12345",
+      "nome": "SuperFanta",
+      "descrizione": "SuperFanta",
+      "usernameUtenteOwner": "Antonio98"
+    },
+    "usernameUtenteInvitato": "UtenteTest",
+    "usernameUtenteCheHaInvitato": "Antonio98"
+  }
+]

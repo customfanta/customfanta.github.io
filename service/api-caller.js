@@ -4,7 +4,7 @@ const serverHost = "https://customfantabe.onrender.com";
 
 
 async function creaUtente(username, nome, mail, password) {
-    const apiUrl = isLocalValue ? "../../mock/api/create-user.json" : serverHost + "/create-user";
+    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/create-user";
 
     return makePost(apiUrl, JSON.stringify({ username, nome, mail, password }));
 }
@@ -22,7 +22,7 @@ async function recuperaUtenteLoggato() {
 }
 
 async function logOut() {
-    const apiUrl = isLocalValue ? "../../mock/api/log-out.json" : serverHost + "/logout";
+    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/logout";
 
     return makeGet(apiUrl);
 }
@@ -34,7 +34,7 @@ async function recuperaSquadra(username, chiaveCampionato) {
 }
 
 async function cancellaSquadra(username, chiaveCampionato) {
-    const apiUrl = isLocalValue ? "../../mock/api/delete-squadra.json" : serverHost + "/delete-squadra/${username}/${chiaveCampionato}";
+    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/delete-squadra/${username}/${chiaveCampionato}";
 
     return makeGet(apiUrl);
 }
@@ -46,7 +46,7 @@ async function recuperaPersonaggi(chiaveCampionato) {
 }
 
 async function creaSquadra(nomeSquadra, descrizioneSquadra, chiaveCampionato, chiaviPersonaggi) {
-    const apiUrl = isLocalValue ? "../../mock/api/crea-squadra.json" : serverHost + "/crea-squadra";
+    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/crea-squadra";
 
     const body = {
       squadra: {
@@ -61,7 +61,7 @@ async function creaSquadra(nomeSquadra, descrizioneSquadra, chiaveCampionato, ch
 }
 
 async function invitaUtente(usernameDaInvitare, ruoloInvito, chiaveCampionato) {
-    const apiUrl = isLocalValue ? "../../mock/api/invita-utente.json" : serverHost + "/invita-utente";
+    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/invita-utente";
 
     const body = {
       usernameUtenteInvitato: usernameDaInvitare,
@@ -79,13 +79,13 @@ async function recuperaUtentiCampionato(chiaveCampionato) {
 }
 
 async function rendiUtenteAdmin(username, chiaveCampionato) {
-    const apiUrl = isLocalValue ? "../../mock/api/make-utente-admin.json" : serverHost + "/make-utente-admin/${username}/${chiaveCampionato}";
+    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/make-utente-admin/${username}/${chiaveCampionato}";
 
     return makeGet(apiUrl);
 }
 
 async function rimuoviUtenteCampionato(username, chiaveCampionato) {
-    const apiUrl = isLocalValue ? "../../mock/api/rimuovi-utente-campionato.json" : serverHost + "/rimuovi-utente-campionato/${username}/${chiaveCampionato}";
+    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/rimuovi-utente-campionato/${username}/${chiaveCampionato}";
 
     return makeGet(apiUrl);
 }
@@ -97,7 +97,7 @@ async function recuperaAzioni(chiaveCampionato) {
 }
 
 async function creaAzione(azione, descrizione, punteggio, chiaveCampionato) {
-    const apiUrl = isLocalValue ? "../../mock/api/create-azione.json" : serverHost + "/create-azione";
+    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/create-azione";
 
     return makePost(apiUrl, JSON.stringify({ azione, descrizione, punteggio, chiaveCampionato }));
 }
@@ -109,13 +109,13 @@ async function recuperaPersonaggi(chiaveCampionato) {
 }
 
 async function creaPersonaggio(nominativo, descrizione, costo, chiaveCampionato) {
-    const apiUrl = isLocalValue ? "../../mock/api/create-personaggio.json" : serverHost + "/create-personaggio";
+    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/create-personaggio";
 
     return makePost(apiUrl, JSON.stringify({ nominativo, descrizione, costo, chiaveCampionato }));
 }
 
 async function aggiungiAzionePersonaggio(chiaveAzione, chiavePersonaggio) {
-    const apiUrl = isLocalValue ? "../../mock/api/add-azione-to-personaggio.json" : serverHost + "/add-azione-to-personaggio";
+    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/add-azione-to-personaggio";
 
     return makePost(apiUrl, JSON.stringify({ chiaveAzione, chiavePersonaggio }));
 }
@@ -127,7 +127,7 @@ async function recuperaCampionati() {
 }
 
 async function creaCampionato(nome, descrizione) {
-    const apiUrl = isLocalValue ? "../../mock/api/crea-campionato.json" : serverHost + "/crea-campionato";
+    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/crea-campionato";
 
     return makePost(apiUrl, JSON.stringify({ nome, descrizione }));
 }

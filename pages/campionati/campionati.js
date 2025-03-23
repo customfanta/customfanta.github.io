@@ -21,6 +21,11 @@ if(!apiCaller.isLocalValue) {
   });
 }
 
+if (user.mailCertificata) {
+    document.getElementById('warning-box-mail-non-certificata').style.display = 'none';
+} else {
+    document.getElementById('warning-box-mail-non-certificata').style.display = 'block';
+}
 const profileContainer = document.querySelector(".profile-name-container");
 const toggleMenu = document.querySelector(".toggle-menu-profile");
 

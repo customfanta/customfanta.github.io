@@ -106,7 +106,7 @@ function displaySquadra(data) {
   });
 }
 
-function displayCreateForm(username, chiaveCampionato) {
+async function displayCreateForm(username, chiaveCampionato) {
   const container = document.getElementById("create-form-container");
   container.style.display = "block";
 
@@ -121,7 +121,7 @@ function displayCreateForm(username, chiaveCampionato) {
 }
 
 // Function to populate the UI with personaggi (works for both mock & real data)
-function populatePersonaggiList(personaggi, username) {
+async function populatePersonaggiList(personaggi, username) {
   const list = document.getElementById("personaggi-list");
   list.innerHTML = ""; // Pulisce la lista precedente
 

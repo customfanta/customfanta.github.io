@@ -114,6 +114,30 @@ async function aggiungiAzionePersonaggio(chiaveAzione, chiavePersonaggio) {
     return makePost(apiUrl, JSON.stringify({ chiaveAzione, chiavePersonaggio }));
 }
 
+async function recuperaCampionati() {
+    const apiUrl = isLocal ? "../../mock/api/campionati-utente.json" : basePath + "/campionati-utente";
+
+    return makeGet(apiUrl);
+}
+
+async function creaCampionato(nome, descrizione) {
+    const apiUrl = isLocal ? "../../mock/api/crea-campionato.json" : basePath + "/crea-campionato";
+
+    return makePost(apiUrl, JSON.stringify({ nome, descrizione }));
+}
+
+async function recuperaInvitiRicevuti() {
+    const apiUrl = isLocal ? "../../mock/api/read-inviti-ricevuti.json" : basePath + "/read-inviti-ricevuti";
+
+    return makeGet(apiUrl);
+}
+
+async function accettaInvito(chiaveInvito) {
+    const apiUrl = isLocal ? "../../mock/api/accetta-invito.json" : basePath + "/accetta-invito/${chiaveInvito}";
+
+    return makeGet(apiUrl);
+}
+
 
 
 async function makeGet(apiUrl) {

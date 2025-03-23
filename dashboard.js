@@ -218,7 +218,7 @@ export function closeModal() {
     document.getElementById('invitaUtenteModal').style.display = 'none';
 }
 
-export function invitaUtente() {
+export async function invitaUtente() {
     const usernameDaInvitare = document.getElementById('usernameUtenteDaInvitare').value;
     await apiCaller.invitaUtente(usernameDaInvitare, 'PLAYER', chiaveCampionato);
     closeModal();

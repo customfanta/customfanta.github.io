@@ -173,7 +173,6 @@ export async function makeGet(apiUrl) {
 
         return await response.json();
     } catch (error) {
-        console.error("Errore:", error);
         return;
     }
 }
@@ -189,7 +188,6 @@ export async function makePost(apiUrl, body) {
 
         return await response.json();
     } catch (error) {
-        console.error("Errore:", error);
         return;
     }
 }

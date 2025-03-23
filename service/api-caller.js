@@ -3,49 +3,49 @@ const isLocalValue = window.location.hostname === "" || window.location.hostname
 const serverHost = "https://customfantabe.onrender.com";
 
 
-async function creaUtente(username, nome, mail, password) {
+export async function creaUtente(username, nome, mail, password) {
     const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/create-user";
 
     return makePost(apiUrl, JSON.stringify({ username, nome, mail, password }));
 }
 
-async function effettuaAccesso(usernameMail, password) {
+export async function effettuaAccesso(usernameMail, password) {
     const apiUrl = isLocalValue ? "../../mock/api/make-login.json" : serverHost + "/make-login";
 
     return makePost(apiUrl, JSON.stringify({ usernameMail, password }));
 }
 
-async function recuperaUtenteLoggato() {
+export async function recuperaUtenteLoggato() {
     const apiUrl = isLocalValue ? "../../mock/api/get-utente-loggato.json" : serverHost + "/get-utente-loggato";
 
     return makeGet(apiUrl);
 }
 
-async function logOut() {
+export async function logOut() {
     const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/logout";
 
     return makeGet(apiUrl);
 }
 
-async function recuperaSquadra(username, chiaveCampionato) {
+export async function recuperaSquadra(username, chiaveCampionato) {
     const apiUrl = isLocalValue ? "../../mock/api/read-squadra.json" : serverHost + "/read-squadra/${username}/${chiaveCampionato}";
 
     return makeGet(apiUrl);
 }
 
-async function cancellaSquadra(username, chiaveCampionato) {
+export async function cancellaSquadra(username, chiaveCampionato) {
     const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/delete-squadra/${username}/${chiaveCampionato}";
 
     return makeGet(apiUrl);
 }
 
-async function recuperaPersonaggi(chiaveCampionato) {
+export async function recuperaPersonaggi(chiaveCampionato) {
     const apiUrl = isLocalValue ? "../../mock/api/read-personaggi.json" : serverHost + "/read-personaggi/${chiaveCampionato}";
 
     return makeGet(apiUrl);
 }
 
-async function creaSquadra(nomeSquadra, descrizioneSquadra, chiaveCampionato, chiaviPersonaggi) {
+export async function creaSquadra(nomeSquadra, descrizioneSquadra, chiaveCampionato, chiaviPersonaggi) {
     const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/crea-squadra";
 
     const body = {
@@ -60,7 +60,7 @@ async function creaSquadra(nomeSquadra, descrizioneSquadra, chiaveCampionato, ch
     return makePost(apiUrl, JSON.stringify(body));
 }
 
-async function invitaUtente(usernameDaInvitare, ruoloInvito, chiaveCampionato) {
+export async function invitaUtente(usernameDaInvitare, ruoloInvito, chiaveCampionato) {
     const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/invita-utente";
 
     const body = {
@@ -72,97 +72,91 @@ async function invitaUtente(usernameDaInvitare, ruoloInvito, chiaveCampionato) {
     return makePost(apiUrl, JSON.stringify(body));
 }
 
-async function recuperaUtentiCampionato(chiaveCampionato) {
+export async function recuperaUtentiCampionato(chiaveCampionato) {
     const apiUrl = isLocalValue ? "../../mock/api/utenti-campionato.json" : serverHost + "/utenti-campionato/${chiaveCampionato}";
 
     return makeGet(apiUrl);
 }
 
-async function rendiUtenteAdmin(username, chiaveCampionato) {
+export async function rendiUtenteAdmin(username, chiaveCampionato) {
     const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/make-utente-admin/${username}/${chiaveCampionato}";
 
     return makeGet(apiUrl);
 }
 
-async function rimuoviUtenteCampionato(username, chiaveCampionato) {
+export async function rimuoviUtenteCampionato(username, chiaveCampionato) {
     const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/rimuovi-utente-campionato/${username}/${chiaveCampionato}";
 
     return makeGet(apiUrl);
 }
 
-async function recuperaAzioni(chiaveCampionato) {
+export async function recuperaAzioni(chiaveCampionato) {
     const apiUrl = isLocalValue ? "../../mock/api/read-all-azioni.json" : serverHost + "/read-all-azioni/${chiaveCampionato}";
 
     return makeGet(apiUrl);
 }
 
-async function creaAzione(azione, descrizione, punteggio, chiaveCampionato) {
+export async function creaAzione(azione, descrizione, punteggio, chiaveCampionato) {
     const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/create-azione";
 
     return makePost(apiUrl, JSON.stringify({ azione, descrizione, punteggio, chiaveCampionato }));
 }
 
-async function recuperaPersonaggi(chiaveCampionato) {
-    const apiUrl = isLocalValue ? "../../mock/api/read-personaggi.json" : serverHost + "/read-personaggi/${chiaveCampionato}";
-
-    return makeGet(apiUrl);
-}
-
-async function creaPersonaggio(nominativo, descrizione, costo, chiaveCampionato) {
+export async function creaPersonaggio(nominativo, descrizione, costo, chiaveCampionato) {
     const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/create-personaggio";
 
     return makePost(apiUrl, JSON.stringify({ nominativo, descrizione, costo, chiaveCampionato }));
 }
 
-async function aggiungiAzionePersonaggio(chiaveAzione, chiavePersonaggio) {
+export async function aggiungiAzionePersonaggio(chiaveAzione, chiavePersonaggio) {
     const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/add-azione-to-personaggio";
 
     return makePost(apiUrl, JSON.stringify({ chiaveAzione, chiavePersonaggio }));
 }
 
-async function recuperaCampionati() {
+export async function recuperaCampionati() {
     const apiUrl = isLocalValue ? "../../mock/api/campionati-utente.json" : serverHost + "/campionati-utente";
 
     return makeGet(apiUrl);
 }
 
-async function creaCampionato(nome, descrizione) {
+export async function creaCampionato(nome, descrizione) {
     const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/crea-campionato";
 
     return makePost(apiUrl, JSON.stringify({ nome, descrizione }));
 }
 
-async function recuperaInvitiRicevuti() {
+export async function recuperaInvitiRicevuti() {
     const apiUrl = isLocalValue ? "../../mock/api/read-inviti-ricevuti.json" : serverHost + "/read-inviti-ricevuti";
 
     return makeGet(apiUrl);
 }
 
-async function recuperaInvitiInviati() {
+export async function recuperaInvitiInviati() {
     const apiUrl = isLocalValue ? "../../mock/api/read-inviti-inviati.json" : serverHost + "/read-inviti-inviati";
 
     return makeGet(apiUrl);
 }
 
-async function recuperaInvitiCampionato(chiaveCampionato) {
+export async function recuperaInvitiCampionato(chiaveCampionato) {
     const apiUrl = isLocalValue ? "../../mock/api/read-inviti-campionato.json" : serverHost + "/read-inviti-campionato/${chiaveCampionato}";
 
     return makeGet(apiUrl);
 }
 
-async function accettaInvito(chiaveInvito) {
+export async function accettaInvito(chiaveInvito) {
     const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/accetta-invito/${chiaveInvito}";
 
     return makeGet(apiUrl);
 }
 
-async function recuperaConfigurazioniCampionato(chiaveCampionato) {
+export async function recuperaConfigurazioniCampionato(chiaveCampionato) {
     const apiUrl = isLocalValue ? "../../mock/api/recupera-configurazioni-campionato.json" : serverHost + "/recupera-configurazioni-campionato/${chiaveCampionato}";
 
     return makeGet(apiUrl);
 }
 
-async function aggiungiConfigurazioneCampionato(chiaveCampionato, chiaveConfigurazione, valoreConfigurazione) {
+export async function aggiungiConfigurazioneCampionato(chiaveCampionato, chiaveConfigurazione, valoreConfigurazione) {
     const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/aggiungi-configurazione-campionato";
 
     return makePost(apiUrl, JSON.stringify({ chiaveCampionato, chiaveConfigurazione, valoreConfigurazione }));
@@ -170,7 +164,7 @@ async function aggiungiConfigurazioneCampionato(chiaveCampionato, chiaveConfigur
 
 
 
-async function makeGet(apiUrl) {
+export async function makeGet(apiUrl) {
     const response = await fetch(apiUrl, {
       method: "GET",
       credentials: "include",
@@ -179,7 +173,7 @@ async function makeGet(apiUrl) {
     return await response.json();
 }
 
-async function makePost(apiUrl, body) {
+export async function makePost(apiUrl, body) {
     const response = await fetch(apiUrl, {
       method: "POST",
       credentials: "include",

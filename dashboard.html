@@ -102,7 +102,10 @@
     <input type="text"
            id="usernameUtenteDaInvitare"
            name="usernameUtenteDaInvitare"
-           placeholder="Username"/>
+           placeholder="Username"
+           onkeyup="handleSearchInput(this.value)"/>
+
+    <div id="search-results" class="search-results"></div>
 
     <button onclick="invitaUtente()">Conferma</button>
   </div>

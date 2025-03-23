@@ -162,16 +162,36 @@ export async function aggiungiConfigurazioneCampionato(chiaveCampionato, chiaveC
     return makePost(apiUrl, JSON.stringify({ chiaveCampionato, chiaveConfigurazione, valoreConfigurazione }));
 }
 
+// export async function ricercaUtente(searchParam) {
+//     const apiUrl = isLocalValue ? "../../mock/api/ricerca-utente.json" : serverHost + "/ricerca-utente?searchParam=" + searchParam;
+
+//     return makeGet(apiUrl);
+// }
 
 
-export async function makeGet(apiUrl) {
+export async function ricercaUtente(searchParam, options = {}) {
+    const apiUrl = isLocalValue ? "../../mock/api/ricerca-utente.json" : serverHost + "/ricerca-utente?searchParam=" + searchParam;
+    return makeGet(apiUrl, options);
+  }
+  
+export async function makeGet(apiUrl, { signal } = {}) {
     const response = await fetch(apiUrl, {
       method: "GET",
       credentials: "include",
+      signal
     });
-
     return response.ok ? await response.json() : null;
-}
+  }
+
+
+// export async function makeGet(apiUrl) {
+//     const response = await fetch(apiUrl, {
+//       method: "GET",
+//       credentials: "include",
+//     });
+
+//     return response.ok ? await response.json() : null;
+// }
 
 export async function makePost(apiUrl, body) {
     const response = await fetch(apiUrl, {

@@ -246,7 +246,56 @@ export function closeModal() {
 
 window.invitaUtente = invitaUtente;
 export async function invitaUtente() {
-    const usernameDaInvitare = document.getElementById('usernameUtenteDaInvitare').value;
+    const usernameDaInvitare = document.getElementById('usernameUtenteDaInvitare').value.trim();
     await apiCaller.invitaUtente(usernameDaInvitare, 'PLAYER', chiaveCampionato);
     closeModal();
+}
+
+
+
+
+let currentRequest = null;
+
+window.handleSearchInput = handleSearchInput;
+export function handleSearchInput(searchTerm) {
+  const searchResults = document.getElementById("search-results");
+  searchResults.innerHTML = "";
+
+  if (searchTerm.length >= 3) {
+    if (currentRequest) {
+      currentRequest.abort();
+    }
+
+    currentRequest = new AbortController();
+    const signal = currentRequest.signal;
+
+    apiCaller.ricercaUtente(searchTerm, { signal })
+      .then(data => {
+        if (data && data.length > 0) {
+          displaySearchResults(data);
+        } else {
+          searchResults.innerHTML = "<div>Nessun utente trovato</div>";
+        }
+      })
+      .catch(error => {
+        if (error.name !== "AbortError") {
+          console.error("Errore durante la ricerca:", error);
+        }
+      });
+  }
+}
+
+function displaySearchResults(results) {
+  const searchResults = document.getElementById("search-results");
+  searchResults.innerHTML = "";
+
+  results.forEach(user => {
+    const div = document.createElement("div");
+    div.textContent = user.username;
+    div.onclick = () => {
+      document.getElementById("usernameUtenteDaInvitare").value = user.username;
+      searchResults.innerHTML = "";
+    };
+    searchResults.appendChild(div);
+  });
 }

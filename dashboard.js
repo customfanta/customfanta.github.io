@@ -235,7 +235,6 @@ export function showTooltip(element, nome, punteggio) {
   }
 
   const bodyMarginTop = parseInt(getComputedStyle(document.body).marginTop) || 0;
-  top += bodyMarginTop + 690;
 
   tooltip.style.left = `${left}px`;
   tooltip.style.top = `${top}px`;

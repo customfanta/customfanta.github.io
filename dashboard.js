@@ -88,62 +88,160 @@ if(!apiCaller.isLocalValue) {
 
 window.displaySquadra = displaySquadra;
 export async function displaySquadra(data) {
-  const container = document.getElementById("content");
-  container.innerHTML = `
-        <div id="squadra-view">
-            <h1>La tua Squadra</h1>
-            <h2>${data.squadra.nome}</h2>
-            <p>${data.squadra.descrizione}</p>
-            <h3>Personaggi:</h3>
-            <ul id="personaggi-list"></ul>
-            <p>Punteggio Totale: ${data.punteggioSquadra}</p>
-        </div>
-        <div id="all-squadre-view">
-            <h1>Le altre squadre</h2>
-        </div>
-    `;
-
-  const personaggiList = document.getElementById("personaggi-list");
-  data.personaggi.forEach((p) => {
-    const li = document.createElement("li");
-    li.textContent = `${p.nomePersonaggio} con ${p.punteggioAttuale} punti`;
-    personaggiList.appendChild(li);
-  });
-
+  
   const allSquadreResponse = await apiCaller.recuperaSquadreCampionato(chiaveCampionato);
 
-  const allSquadreList = document.getElementById("all-squadre-view");
-  
-  allSquadreResponse.forEach((s) => {
-    if(!s.laMiaSquadra) {
-      let squadraDiv = document.createElement("div");
-      allSquadreList.appendChild(squadraDiv);
+  document.getElementById("logo-nome-campionato").textContent = getInitials(campionato.nomeCampionato);
+  document.getElementById("nome-campionato").textContent = campionato.nomeCampionato;
 
-      let h2El = document.createElement("h2");
-      h2El.textContent = `${s.squadra.nome} di ${s.squadra.usernameUtente}`;
-      squadraDiv.appendChild(h2El);
+  document.getElementById("main-team").innerHTML =
+  `
+    <div class="row row-1">
+			<div class="position-badge">${data.posizioneClassifica}°</div>
+			<div class="team-icon">${getInitials(data.squadra.nome)}</div>
+			<div class="team-name">${data.squadra.nome}</div>
+			<div class="team-points">${data.punteggioSquadra} pt</div>
+		</div>
+		
+		<div class="row row-2">
+			  <div class="team-username">${data.squadra.usernameUtente}</div>
+			  <div id="team-members" class="team-members">
+			  </div>
+		</div>
+  `;
 
-      let pEl = document.createElement("p");
-      pEl.textContent = s.squadra.descrizione;
-      squadraDiv.appendChild(pEl);
+  let teamMembersElement = document.getElementById("team-members");
 
-      let h3El = document.createElement("h3");
-      h3El.textContent = "Personaggi:";
-      squadraDiv.appendChild(h3El);
+  data.personaggi.forEach((p) => {
+    let teamMemberElement = document.createElement("div");
+    teamMemberElement.setAttribute("class", "team-member-icon");
+    teamMemberElement.textContent = getInitials(p.nomePersonaggio);
 
-      let persSquadUl = document.createElement("ul");
-      squadraDiv.appendChild(persSquadUl);
-      s.personaggi.forEach((p) => {
-        const li = document.createElement("li");
-        li.textContent = `${p.nomePersonaggio} con ${p.punteggioAttuale} punti`;
-        persSquadUl.appendChild(li);
-      });
+    teamMemberElement.dataset.nome = p.nomePersonaggio;
+    teamMemberElement.dataset.punteggio = p.punteggioAttuale;
 
-      let punteggioTotaleEl = document.createElement("p");
-      punteggioTotaleEl.textContent = `Punteggio Totale: ${s.punteggioSquadra}`;
-      squadraDiv.appendChild(punteggioTotaleEl);
-    }
+    teamMemberElement.addEventListener('mouseover', (event) => {
+      showTooltip(
+        event.target,
+        teamMemberElement.dataset.nome,
+        teamMemberElement.dataset.punteggio
+      );
+    });
+    teamMemberElement.addEventListener('mouseout', hideTooltip);
+
+    teamMembersElement.appendChild(teamMemberElement);
   });
+
+
+
+  let bottomTeamGrid = document.getElementById("bottom-team-grid");
+
+  allSquadreResponse.forEach((s) => {
+    let teamOfGridElement = document.createElement("div");
+    teamOfGridElement.setAttribute("class", "bottom-team-item");
+
+    let row1El = document.createElement("div");
+    row1El.setAttribute("class", "row row-1");
+      let posBadEl = document.createElement("div");
+      posBadEl.setAttribute("class", "position-badge");
+      posBadEl.textContent = `${s.posizioneClassifica}°`;
+      row1El.appendChild(posBadEl);
+
+      let teamIconEl = document.createElement("div");
+      teamIconEl.setAttribute("class", "team-icon");
+      teamIconEl.textContent = getInitials(s.squadra.nome);
+      row1El.appendChild(teamIconEl);
+
+      let teamNameEl = document.createElement("div");
+      teamNameEl.setAttribute("class", "team-name");
+      teamNameEl.textContent = s.squadra.nome;
+      row1El.appendChild(teamNameEl);
+
+      let teamPointsEl = document.createElement("div");
+      teamPointsEl.setAttribute("class", "team-points");
+      teamPointsEl.textContent = `${s.punteggioSquadra} pt`;
+      row1El.appendChild(teamPointsEl);
+    teamOfGridElement.appendChild(row1El);
+
+    let row2El = document.createElement("div");
+    row2El.setAttribute("class", "row row-2");
+      let usernEl = document.createElement("div");
+      usernEl.setAttribute("class", "team-username");
+      usernEl.textContent = s.squadra.usernameUtente;
+      row2El.appendChild(usernEl);
+
+      let teamMembersEl = document.createElement("div");
+      teamMembersEl.setAttribute("class", "team-members");
+        s.personaggi.forEach((p) => {
+          let teamMemberEl = document.createElement("div");
+          teamMemberEl.setAttribute("class", "team-member-icon");
+          teamMemberEl.textContent = getInitials(p.nomePersonaggio);
+
+          teamMemberEl.dataset.nome = p.nomePersonaggio;
+          teamMemberEl.dataset.punteggio = p.punteggioAttuale;
+
+          teamMemberEl.addEventListener('mouseover', (event) => {
+            showTooltip(
+              event.target,
+              teamMemberEl.dataset.nome,
+              teamMemberEl.dataset.punteggio
+            );
+          });
+          teamMemberEl.addEventListener('mouseout', hideTooltip);
+
+          teamMembersEl.appendChild(teamMemberEl);
+        });
+      row2El.appendChild(teamMembersEl);
+    teamOfGridElement.appendChild(row2El);
+    bottomTeamGrid.appendChild(teamOfGridElement);
+  });
+  
+  document.getElementById("new-content").removeAttribute("style");
+}
+
+window.getInitials = getInitials;
+export function getInitials(str) {
+  return str
+    .trim()                     // Rimuove spazi iniziali e finali
+    .split(' ')                 // Dividi la stringa in parole
+    .filter(word => word)       // Rimuovi eventuali parole vuote (es. da spazi multipli)
+    .map(word => word[0].toUpperCase()) // Prendi la prima lettera maiuscola di ogni parola
+    .join('');                  // Unisci le iniziali in una stringa
+}
+
+
+const tooltip = document.createElement('div');
+tooltip.className = 'tooltip';
+document.body.appendChild(tooltip);
+
+window.showTooltip = showTooltip;
+export function showTooltip(element, nome, punteggio) {
+  tooltip.textContent = `${nome} - ${punteggio} pt`;
+  tooltip.style.display = 'block';
+
+  // Posiziona il tooltip sotto l'icona
+  const rect = element.getBoundingClientRect();
+  const tooltipWidth = tooltip.offsetWidth;
+  const tooltipHeight = tooltip.offsetHeight;
+
+  let left = rect.left + (rect.width / 2) - (tooltipWidth / 2);
+  let top = rect.bottom + 5; // 5px sotto l'icona
+
+  // Se il tooltip esce dallo schermo, lo posiziona sopra
+  if (top + tooltipHeight > window.innerHeight) {
+    top = rect.top - tooltipHeight - 5;
+  }
+
+  const bodyMarginTop = parseInt(getComputedStyle(document.body).marginTop) || 0;
+  top += bodyMarginTop + 690;
+
+  tooltip.style.left = `${left}px`;
+  tooltip.style.top = `${top}px`;
+}
+
+window.hideTooltip = hideTooltip;
+export function hideTooltip() {
+  tooltip.style.display = 'none';
 }
 
 window.displayCreateForm = displayCreateForm;

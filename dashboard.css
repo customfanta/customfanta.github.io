@@ -189,3 +189,246 @@
 .search-results div:hover {
   background-color: #f0f0f0;
 }
+
+
+
+/* NUOVA DASHBOARD */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.new-content {
+  font-family: 'Arial', sans-serif;
+  background-color: #121212;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  background-color: #fddc03;
+  color: black;
+  font-size: 36px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.row-1 {
+  gap: 10px;
+}
+
+.row-2 {
+  gap: 10px;
+  margin-top: auto;
+}
+
+.main-container .separator {
+  width: 100%;
+  height: 4px;
+  background-color: #fddc03;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.main-container {
+  width: 90%;
+  max-width: 700px;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.main-team {
+  flex-direction: column;
+  background-color: #2a2a2a;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 3px solid #fddc03;
+}
+
+.main-team .team-icon {
+  width: 20px;
+  height: 20px;
+  background-color: #fddc03;
+  color: black;
+  font-size: 8px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.main-team .team-member-icon {
+  width: 20px;
+  height: 20px;
+  background-color: #fddc03;
+  color: black;
+  font-size: 8px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.main-team .team-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.main-team .team-username {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.main-team .team-members {
+  display: flex;
+  gap: 5px;
+  margin-left: auto;
+}
+
+.main-team .team-members img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.main-team .team-points {
+  font-size: 16px;
+  color: #2ecc71;
+  margin-left: auto;
+}
+
+.bottom-team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.bottom-team-item {
+  flex-direction: column;
+  background-color: #2a2a2a;
+  border-radius: 5px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 3px solid #fddc03;
+}
+
+.bottom-team-item .team-icon {
+  width: 20px;
+  height: 20px;
+  background-color: #fddc03;
+  color: black;
+  font-size: 8px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.bottom-team-item .team-member-icon {
+  width: 20px;
+  height: 20px;
+  background-color: #fddc03;
+  color: black;
+  font-size: 8px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.bottom-team-item .team-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.bottom-team-item .team-username {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.bottom-team-item .team-members {
+  display: flex;
+  gap: 5px;
+  margin-left: auto;
+}
+
+.bottom-team-item .team-members img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.bottom-team-item .team-points {
+  font-size: 16px;
+  color: #2ecc71;
+  margin-left: auto;
+}
+
+.position-badge {
+  background-color: #fddc03;
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.tooltip {
+  position: absolute;
+  background-color: #333;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 1000;
+  display: none;
+  max-width: 200px;
+}

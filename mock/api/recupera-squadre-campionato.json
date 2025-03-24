@@ -30,7 +30,8 @@
             "punteggioAttuale": 15
           }
         ],
-        "punteggioSquadra": 5
+        "punteggioSquadra": 5,
+        "posizioneClassifica": 1
       },
       {
         "laMiaSquadra": true,
@@ -63,7 +64,8 @@
             "punteggioAttuale": 15
           }
         ],
-        "punteggioSquadra": 65
+        "punteggioSquadra": 65,
+        "posizioneClassifica": 2
       },
       {
         "laMiaSquadra": false,
@@ -96,6 +98,7 @@
             "punteggioAttuale": 15
           }
         ],
-        "punteggioSquadra": 5
+        "punteggioSquadra": 5,
+        "posizioneClassifica": 3
       }
 ]

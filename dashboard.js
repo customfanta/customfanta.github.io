@@ -48,14 +48,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById("admin-btn").style.display = "block";
   }
 
+  let allSquadreResponse;
   let squadraData;
     try {
-      squadraData = await fetchSquadra(username, chiaveCampionato);
+      allSquadreResponse = await apiCaller.recuperaSquadreCampionato(chiaveCampionato);
+      squadraData = allSquadreResponse.find(squadra => squadra.laMiaSquadra);
     } catch (error) {
     }
 
     if (squadraData && squadraData.personaggi.length > 0) {
-      displaySquadra(squadraData);
+      displaySquadra(allSquadreResponse, squadraData);
     } else {
       displayCreateForm(username, chiaveCampionato);
     }
@@ -77,21 +79,21 @@ if(!apiCaller.isLocalValue) {
       async (message) => {
         const user = JSON.parse(localStorage.getItem("user"));
         const campionato = JSON.parse(localStorage.getItem("campionato"));
-        const squadraData = await fetchSquadra(user.username, campionato.chiaveCampionato);
-        if (squadraData) {
-          displaySquadra(squadraData);
-        }
+        try {
+          const allSquadreResponse = await apiCaller.recuperaSquadreCampionato(chiaveCampionato);
+          const squadraData = allSquadreResponse.find(squadra => squadra.laMiaSquadra);
+          if (squadraData) {
+            displaySquadra(allSquadreResponse, squadraData);
+          }
+        } catch(error) {}
       }
     );
   });
 }
 
 window.displaySquadra = displaySquadra;
-export async function displaySquadra(data) {
-  
-  const allSquadreResponse = await apiCaller.recuperaSquadreCampionato(chiaveCampionato);
-
-  document.getElementById("logo-nome-campionato").textContent = getInitials(campionato.nomeCampionato);
+export async function displaySquadra(allSquadreResponse, data) {
+    document.getElementById("logo-nome-campionato").textContent = getInitials(campionato.nomeCampionato);
   document.getElementById("nome-campionato").textContent = campionato.nomeCampionato;
 
   document.getElementById("main-team").innerHTML =
@@ -348,12 +350,13 @@ export async function populatePersonaggiList(personaggi, username) {
 
     let squadraData;
     try {
-      squadraData = await fetchSquadra(username, chiaveCampionato);
+      const allSquadreResponse = await apiCaller.recuperaSquadreCampionato(chiaveCampionato);
+      squadraData = allSquadreResponse.find(squadra => squadra.laMiaSquadra);
     } catch (error) {
     }
 
     if (squadraData && squadraData.personaggi.length > 0) {
-      displaySquadra(squadraData);
+      displaySquadra(allSquadreResponse, squadraData);
     }
   });
 }

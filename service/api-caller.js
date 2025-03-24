@@ -27,12 +27,6 @@ export async function logOut() {
     return makeGet(apiUrl);
 }
 
-export async function recuperaSquadra(username, chiaveCampionato) {
-    const apiUrl = isLocalValue ? "../../mock/api/read-squadra.json" : serverHost + "/read-squadra/" + username + "/" + chiaveCampionato;
-
-    return makeGet(apiUrl);
-}
-
 export async function cancellaSquadra(username, chiaveCampionato) {
     const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/delete-squadra/" + username + "/" + chiaveCampionato;
 

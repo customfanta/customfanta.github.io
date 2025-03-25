@@ -137,6 +137,7 @@ export async function displaySquadra(allSquadreResponse, data) {
 
 
   let bottomTeamGrid = document.getElementById("bottom-team-grid");
+  bottomTeamGrid.innerHTML = ``;
 
   allSquadreResponse.forEach((s) => {
     let teamOfGridElement = document.createElement("div");
@@ -347,9 +348,10 @@ export async function populatePersonaggiList(personaggi, username) {
 
     const squadra = await apiCaller.creaSquadra(squadraName, squadraDesc, chiaveCampionato, nominativi);
 
+    let allSquadreResponse;
     let squadraData;
     try {
-      const allSquadreResponse = await apiCaller.recuperaSquadreCampionato(chiaveCampionato);
+      allSquadreResponse = await apiCaller.recuperaSquadreCampionato(chiaveCampionato);
       squadraData = allSquadreResponse.find(squadra => squadra.laMiaSquadra);
     } catch (error) {
     }

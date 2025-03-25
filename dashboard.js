@@ -219,7 +219,7 @@ document.body.appendChild(tooltip);
 
 window.showTooltip = showTooltip;
 export function showTooltip(element, nome, punteggio) {
-  tooltip.textContent = `${nome} - ${punteggio} pt`;
+  tooltip.textContent = `${nome} con ${punteggio} pt`;
   tooltip.style.display = 'block';
 
   // Posiziona il tooltip sotto l'icona

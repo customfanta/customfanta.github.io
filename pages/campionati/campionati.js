@@ -21,24 +21,8 @@ if(!apiCaller.isLocalValue) {
   });
 }
 
-if (user.mailCertificata) {
-    document.getElementById('warning-box-mail-non-certificata').style.display = 'none';
-} else {
-    document.getElementById('warning-box-mail-non-certificata').style.display = 'block';
-}
-const profileContainer = document.querySelector(".profile-name-container");
-const toggleMenu = document.querySelector(".toggle-menu-profile");
-
 document.getElementById("logout-button").addEventListener("click", logout);
-
-profileContainer.addEventListener("click", () => {
-  toggleMenu.style.display =
-    toggleMenu.style.display === "flex" ? "none" : "flex";
-});
-
-const username = user.username;
-
-document.getElementById("user-info").textContent = `${username}`;
+document.getElementById("crea-campionato-button").addEventListener("click", showModelCreaCampionato);
 
 
 init();
@@ -104,68 +88,26 @@ export function createTable(campionati, mailCertificata) {
   return table;
 }
 
-window.createForm = createForm;
-export function createForm(username) {
-  const form = document.createElement("form");
-  form.className = "create-form";
+window.creaCampionato = creaCampionato;
+export async function creaCampionato() {
+  let nome = document.getElementById("nome-campionato-input").value;
+  let descrizione = document.getElementById("descrizione-campionato-input").value;
+  const nuovoCampionato = await apiCaller.creaCampionato(nome, descrizione);
 
-  // Input Nome
-  const nomeLabel = document.createElement("label");
-  nomeLabel.textContent = "Nome:";
-  const nomeInput = document.createElement("input");
-  nomeInput.type = "text";
-  nomeInput.name = "nome";
-  nomeInput.required = true;
-  nomeLabel.appendChild(nomeInput);
+  if (nuovoCampionato) {
+    const campionati = await apiCaller.recuperaCampionati();
+    const table = createTable(campionati, true);
+    document
+      .getElementById("table-container")
+      .replaceChild(
+        table,
+        document.getElementById("table-container").firstChild
+      );
 
-  // Input Descrizione
-  const descrizioneLabel = document.createElement("label");
-  descrizioneLabel.textContent = "Descrizione:";
-  const descrizioneInput = document.createElement("input");
-  descrizioneInput.type = "text";
-  descrizioneInput.name = "descrizione";
-  descrizioneInput.required = false;
-  descrizioneLabel.appendChild(descrizioneInput);
-
-  // Bottone submit
-  const submitButton = document.createElement("button");
-  submitButton.textContent = "Crea Campionato";
-  submitButton.type = "submit";
-
-  // Aggiungi elementi al form
-  form.appendChild(nomeLabel);
-  form.appendChild(descrizioneLabel);
-  form.appendChild(submitButton);
-
-  // Gestore per il submit del form
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    const nome = nomeInput.value;
-    const descrizione = descrizioneInput.value;
-
-    if (!nome) return;
-
-    const nuovoCampionato = await apiCaller.creaCampionato(nome, descrizione);
-
-    if (nuovoCampionato) {
-      // Aggiorna la tabella
-      const campionati = await apiCaller.recuperaCampionati();
-      const table = createTable(campionati, true);
-      document
-        .getElementById("table-container")
-        .replaceChild(
-          table,
-          document.getElementById("table-container").firstChild
-        );
-
-      // Pulisci il form
-      nomeInput.value = "";
-      descrizioneInput.value = "";
-    }
-  });
-
-  return form;
+    nomeInput.value = "";
+    descrizioneInput.value = "";
+  }
+  closeModaleCreaCampionato();
 }
 
 window.init = init;
@@ -174,24 +116,24 @@ export async function init() {
   const campionati = await apiCaller.recuperaCampionati();
   const inviti = await apiCaller.recuperaInvitiRicevuti();
 
-  let container = document.getElementById("main-container");
-  if (container) {
-    container.innerHTML = ""; // Pulisce il contenuto esistente
-  } else {
-    container = document.createElement("div");
-    container.id = "main-container";
-    document.body.appendChild(container); // Aggiunge il contenitore solo se non esiste
-  }
+  let container = document.getElementById("content-page");
 
-  // Crea form
   if (user.mailCertificata) {
-    const form = createForm(user.username);
-    container.appendChild(form);
+    document.getElementById('warning-box-mail-non-certificata').style.display = 'none';
+    document.getElementById("crea-campionato-button").style.display = "block";
+  } else {
+      document.getElementById('warning-box-mail-non-certificata').style.display = 'block';
+      document.getElementById("crea-campionato-button").style.display = "none";
   }
 
   // Crea tabella campionati
-  const tableContainer = document.createElement("div");
-  tableContainer.id = "table-container";
+  let tableContainer = document.getElementById("table-container");
+  if(tableContainer) {
+    tableContainer.innerHTML = "";
+  } else {
+    tableContainer = document.createElement("div");
+    tableContainer.id = "table-container";
+  }
   const campionatiTable = createTable(campionati, user.mailCertificata);
   tableContainer.appendChild(campionatiTable);
   container.appendChild(tableContainer);
@@ -202,6 +144,7 @@ export async function init() {
 
   const invitiHeader = document.createElement("h2");
   invitiHeader.textContent = "Inviti ricevuti";
+  invitiHeader.setAttribute("class", "title-table");
   invitiSection.appendChild(invitiHeader);
 
   const invitiTable = createInvitiTable(inviti);
@@ -294,3 +237,30 @@ export async function logout() {
 }
 
 
+window.showModelCreaCampionato = showModelCreaCampionato;
+export async function showModelCreaCampionato() {
+
+  document.getElementById('crea-campionato-modale').style.display = 'block';
+
+
+  // localStorage.removeItem("user");
+  // await apiCaller.logOut();
+  // window.location.href = "../../index.html";
+}
+
+
+
+
+window.openModal = openModal;
+export function openModal(charName, chiavePersonaggio) {
+    selectedCharacter = chiavePersonaggio;
+    const modalTitle = document.querySelector('#assignModal h3');
+    modalTitle.textContent = `Assegna Azione a ${charName}`;
+    document.getElementById('assignModal').style.display = 'block';
+    populateActionSelect();
+}
+
+window.closeModaleCreaCampionato = closeModaleCreaCampionato;
+export function closeModaleCreaCampionato() {
+    document.getElementById('crea-campionato-modale').style.display = 'none';
+}

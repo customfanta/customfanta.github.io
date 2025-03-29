@@ -1,8 +1,9 @@
 {
-  "username": "Antonio98",
-  "nome": "null",
-  "mail": "mock-user@mail.it",
-  "password": null,
-  "mailCertificata": true,
-  "uuidMailCertificazione": null
-}
+    "username": "Antonio98",
+    "nome": "null",
+    "mail": "mock-user@mail.it",
+    "password": null,
+    "mailCertificata": true,
+    "uuidMailCertificazione": null
+  }
+  

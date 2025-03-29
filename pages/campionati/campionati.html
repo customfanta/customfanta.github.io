@@ -14,8 +14,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
   </head>
   <body>
+
+    <div id="inviti-sidebar" class="inviti-sidebar">
+      <div class="inviti-header">
+        <h3>Inviti ricevuti</h3>
+        <span class="material-symbols-outlined close-inviti" onclick="toggleInvitiSidebar()">close</span>
+      </div>
+      <div id="inviti-content"></div>
+    </div>
+
     <div class="header">
       <div class="title-table"><h2>Campionati</h2></div>
+
+      <div class="notification-icon" onclick="toggleInvitiSidebar()">
+        <span class="material-symbols-outlined">notifications</span>
+        <span id="inviti-count" class="inviti-count" style="display: none;">0</span>
+      </div>
       <!-- <div class="profile">
         <div class="profile-name-container">
           <div class="name">

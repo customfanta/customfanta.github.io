@@ -139,80 +139,93 @@ export async function init() {
   container.appendChild(tableContainer);
 
   // Crea sezione per gli inviti
-  const invitiSection = document.createElement("div");
-  invitiSection.className = "inviti-section";
+  // const invitiSection = document.createElement("div");
+  // invitiSection.className = "inviti-section";
 
-  const invitiHeader = document.createElement("h2");
-  invitiHeader.textContent = "Inviti ricevuti";
-  invitiHeader.setAttribute("class", "title-table");
-  invitiSection.appendChild(invitiHeader);
+  // const invitiHeader = document.createElement("h2");
+  // invitiHeader.textContent = "Inviti ricevuti";
+  // invitiHeader.setAttribute("class", "title-table");
+  // invitiSection.appendChild(invitiHeader);
 
-  const invitiTable = createInvitiTable(inviti);
-  invitiSection.appendChild(invitiTable);
+  // const invitiTable = createInvitiTable(inviti);
+  // invitiSection.appendChild(invitiTable);
 
-  container.appendChild(invitiSection);
+  // container.appendChild(invitiSection);
+
+
+
+
+  const invitiContent = document.getElementById("inviti-content");
+  invitiContent.innerHTML = "";
+  if (inviti.length > 0) {
+    const invitiTable = createInvitiTable(inviti);
+    invitiContent.appendChild(invitiTable);
+  } else {
+    invitiContent.textContent = "Nessun invito ricevuto";
+  }
+
 }
 
-window.createInvitiTable = createInvitiTable;
-export function createInvitiTable(inviti) {
-  const table = document.createElement("table");
-  const thead = document.createElement("thead");
-  const tbody = document.createElement("tbody");
+// window.createInvitiTable = createInvitiTable;
+// export function createInvitiTable(inviti) {
+//   const table = document.createElement("table");
+//   const thead = document.createElement("thead");
+//   const tbody = document.createElement("tbody");
 
-  // Intestazioni tabella
-  const headers = ["Campionato", "Ruolo", "Da Utente", "Azioni"];
-  const headerRow = document.createElement("tr");
-  headers.forEach((headerText) => {
-    const th = document.createElement("th");
-    th.textContent = headerText;
-    headerRow.appendChild(th);
-  });
-  thead.appendChild(headerRow);
-  table.appendChild(thead);
+//   // Intestazioni tabella
+//   const headers = ["Campionato", "Ruolo", "Da Utente", "Azioni"];
+//   const headerRow = document.createElement("tr");
+//   headers.forEach((headerText) => {
+//     const th = document.createElement("th");
+//     th.textContent = headerText;
+//     headerRow.appendChild(th);
+//   });
+//   thead.appendChild(headerRow);
+//   table.appendChild(thead);
 
-  // Righe dei dati
-  inviti.forEach((invito) => {
-    const row = document.createElement("tr");
+//   // Righe dei dati
+//   inviti.forEach((invito) => {
+//     const row = document.createElement("tr");
 
-    // Dati dell'invito
-    const campionato = invito.campionato;
-    const cells = [
-      campionato.nome,
-      invito.ruoloInvito,
-      invito.usernameUtenteCheHaInvitato,
-    ];
+//     // Dati dell'invito
+//     const campionato = invito.campionato;
+//     const cells = [
+//       campionato.nome,
+//       invito.ruoloInvito,
+//       invito.usernameUtenteCheHaInvitato,
+//     ];
 
-    // Crea celle
-    cells.forEach((cellText) => {
-      const td = document.createElement("td");
-      td.textContent = cellText;
-      row.appendChild(td);
-    });
+//     // Crea celle
+//     cells.forEach((cellText) => {
+//       const td = document.createElement("td");
+//       td.textContent = cellText;
+//       row.appendChild(td);
+//     });
 
-    // Cella per le azioni (accetta/rifiuta)
-    const actionsTd = document.createElement("td");
+//     // Cella per le azioni (accetta/rifiuta)
+//     const actionsTd = document.createElement("td");
 
-    // Bottone Accetta
-    const acceptBtn = document.createElement("button");
-    acceptBtn.className = "accept-btn";
-    acceptBtn.textContent = "Accetta";
-    acceptBtn.addEventListener("click", () => acceptInvito(invito.chiave));
+//     // Bottone Accetta
+//     const acceptBtn = document.createElement("button");
+//     acceptBtn.className = "accept-btn";
+//     acceptBtn.textContent = "Accetta";
+//     acceptBtn.addEventListener("click", () => acceptInvito(invito.chiave));
 
-    // Bottone Rifiuta (da implementare)
-    const rejectBtn = document.createElement("button");
-    rejectBtn.className = "reject-btn";
-    rejectBtn.textContent = "Rifiuta";
+//     // Bottone Rifiuta (da implementare)
+//     const rejectBtn = document.createElement("button");
+//     rejectBtn.className = "reject-btn";
+//     rejectBtn.textContent = "Rifiuta";
 
-    actionsTd.appendChild(acceptBtn);
-    actionsTd.appendChild(rejectBtn);
+//     actionsTd.appendChild(acceptBtn);
+//     actionsTd.appendChild(rejectBtn);
 
-    row.appendChild(actionsTd);
+//     row.appendChild(actionsTd);
 
-    tbody.appendChild(row);
-  });
-  table.appendChild(tbody);
-  return table;
-}
+//     tbody.appendChild(row);
+//   });
+//   table.appendChild(tbody);
+//   return table;
+// }
 
 window.acceptInvito = acceptInvito;
 export async function acceptInvito(chiaveInvito) {
@@ -221,6 +234,7 @@ export async function acceptInvito(chiaveInvito) {
 
     if (esito && "OK" == esito.esito) {
       await init();
+      toggleInvitiSidebar();
     } else {
       console.error("Errore nell'accettazione dell'invito");
     }
@@ -263,4 +277,88 @@ export function openModal(charName, chiavePersonaggio) {
 window.closeModaleCreaCampionato = closeModaleCreaCampionato;
 export function closeModaleCreaCampionato() {
     document.getElementById('crea-campionato-modale').style.display = 'none';
+}
+
+
+
+
+window.toggleInvitiSidebar = toggleInvitiSidebar;
+export function toggleInvitiSidebar() {
+  const sidebar = document.getElementById('inviti-sidebar');
+  sidebar.classList.toggle('open');
+}
+
+window.createInvitiTable = createInvitiTable;
+export function createInvitiTable(inviti) {
+  const table = document.createElement("table");
+  table.className = "inviti-table";
+  const thead = document.createElement("thead");
+  const tbody = document.createElement("tbody");
+
+  // Intestazioni tabella
+  const headers = ["Campionato", "Ruolo", "Da Utente", "Azioni"];
+  const headerRow = document.createElement("tr");
+  headers.forEach((headerText) => {
+    const th = document.createElement("th");
+    th.textContent = headerText;
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+
+  // Righe dei dati
+  inviti.forEach((invito) => {
+    const row = document.createElement("tr");
+
+    // Dati dell'invito
+    const campionato = invito.campionato;
+    const cells = [
+      campionato.nome,
+      invito.ruoloInvito,
+      invito.usernameUtenteCheHaInvitato,
+    ];
+
+    // Crea celle
+    cells.forEach((cellText) => {
+      const td = document.createElement("td");
+      td.textContent = cellText;
+      row.appendChild(td);
+    });
+
+    // Cella per le azioni (icone)
+    const actionsTd = document.createElement("td");
+    actionsTd.className = "inviti-actions";
+
+    // Icona Accetta
+    const acceptIcon = document.createElement("span");
+    acceptIcon.className = "material-symbols-outlined accept-icon";
+    acceptIcon.textContent = "check";
+    acceptIcon.title = "Accetta";
+    acceptIcon.addEventListener("click", () => acceptInvito(invito.chiave));
+
+    // Icona Rifiuta
+    const rejectIcon = document.createElement("span");
+    rejectIcon.className = "material-symbols-outlined reject-icon";
+    rejectIcon.textContent = "close";
+    rejectIcon.title = "Rifiuta";
+    rejectIcon.addEventListener("click", () => rejectInvito(invito.chiave));
+
+    actionsTd.appendChild(acceptIcon);
+    actionsTd.appendChild(rejectIcon);
+
+    row.appendChild(actionsTd);
+    tbody.appendChild(row);
+  });
+  table.appendChild(tbody);
+  
+  // Aggiorna il contatore degli inviti
+  const invitiCount = document.getElementById('inviti-count');
+  if (inviti.length > 0) {
+    invitiCount.textContent = inviti.length;
+    invitiCount.style.display = 'flex';
+  } else {
+    invitiCount.style.display = 'none';
+  }
+  
+  return table;
 }

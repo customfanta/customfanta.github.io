@@ -139,10 +139,10 @@ export async function init() {
   const invitiContent = document.getElementById("inviti-content");
   const invitiCount = document.getElementById('inviti-count');
   invitiContent.innerHTML = "";
+  invitiCount.textContent = inviti.length;
   if (inviti.length > 0) {
     const invitiTable = createInvitiTable(inviti);
     invitiContent.appendChild(invitiTable);
-    invitiCount.textContent = inviti.length;
     invitiCount.style.display = 'flex';
   } else {
     invitiContent.textContent = "Nessun invito ricevuto";

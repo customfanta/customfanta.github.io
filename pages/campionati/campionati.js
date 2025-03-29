@@ -136,94 +136,20 @@ export async function init() {
   tableContainer.appendChild(campionatiTable);
   container.appendChild(tableContainer);
 
-  // Crea sezione per gli inviti
-  // const invitiSection = document.createElement("div");
-  // invitiSection.className = "inviti-section";
-
-  // const invitiHeader = document.createElement("h2");
-  // invitiHeader.textContent = "Inviti ricevuti";
-  // invitiHeader.setAttribute("class", "title-table");
-  // invitiSection.appendChild(invitiHeader);
-
-  // const invitiTable = createInvitiTable(inviti);
-  // invitiSection.appendChild(invitiTable);
-
-  // container.appendChild(invitiSection);
-
-
-
-
   const invitiContent = document.getElementById("inviti-content");
+  const invitiCount = document.getElementById('inviti-count');
   invitiContent.innerHTML = "";
   if (inviti.length > 0) {
     const invitiTable = createInvitiTable(inviti);
     invitiContent.appendChild(invitiTable);
+    invitiCount.textContent = inviti.length;
+    invitiCount.style.display = 'flex';
   } else {
     invitiContent.textContent = "Nessun invito ricevuto";
+    invitiCount.style.display = 'none';
   }
 
 }
-
-// window.createInvitiTable = createInvitiTable;
-// export function createInvitiTable(inviti) {
-//   const table = document.createElement("table");
-//   const thead = document.createElement("thead");
-//   const tbody = document.createElement("tbody");
-
-//   // Intestazioni tabella
-//   const headers = ["Campionato", "Ruolo", "Da Utente", "Azioni"];
-//   const headerRow = document.createElement("tr");
-//   headers.forEach((headerText) => {
-//     const th = document.createElement("th");
-//     th.textContent = headerText;
-//     headerRow.appendChild(th);
-//   });
-//   thead.appendChild(headerRow);
-//   table.appendChild(thead);
-
-//   // Righe dei dati
-//   inviti.forEach((invito) => {
-//     const row = document.createElement("tr");
-
-//     // Dati dell'invito
-//     const campionato = invito.campionato;
-//     const cells = [
-//       campionato.nome,
-//       invito.ruoloInvito,
-//       invito.usernameUtenteCheHaInvitato,
-//     ];
-
-//     // Crea celle
-//     cells.forEach((cellText) => {
-//       const td = document.createElement("td");
-//       td.textContent = cellText;
-//       row.appendChild(td);
-//     });
-
-//     // Cella per le azioni (accetta/rifiuta)
-//     const actionsTd = document.createElement("td");
-
-//     // Bottone Accetta
-//     const acceptBtn = document.createElement("button");
-//     acceptBtn.className = "accept-btn";
-//     acceptBtn.textContent = "Accetta";
-//     acceptBtn.addEventListener("click", () => acceptInvito(invito.chiave));
-
-//     // Bottone Rifiuta (da implementare)
-//     const rejectBtn = document.createElement("button");
-//     rejectBtn.className = "reject-btn";
-//     rejectBtn.textContent = "Rifiuta";
-
-//     actionsTd.appendChild(acceptBtn);
-//     actionsTd.appendChild(rejectBtn);
-
-//     row.appendChild(actionsTd);
-
-//     tbody.appendChild(row);
-//   });
-//   table.appendChild(tbody);
-//   return table;
-// }
 
 window.acceptInvito = acceptInvito;
 export async function acceptInvito(chiaveInvito) {
@@ -266,34 +192,13 @@ export async function logout() {
 
 window.showModelCreaCampionato = showModelCreaCampionato;
 export async function showModelCreaCampionato() {
-
   document.getElementById('crea-campionato-modale').style.display = 'block';
-
-
-  // localStorage.removeItem("user");
-  // await apiCaller.logOut();
-  // window.location.href = "../../index.html";
-}
-
-
-
-
-window.openModal = openModal;
-export function openModal(charName, chiavePersonaggio) {
-    selectedCharacter = chiavePersonaggio;
-    const modalTitle = document.querySelector('#assignModal h3');
-    modalTitle.textContent = `Assegna Azione a ${charName}`;
-    document.getElementById('assignModal').style.display = 'block';
-    populateActionSelect();
 }
 
 window.closeModaleCreaCampionato = closeModaleCreaCampionato;
 export function closeModaleCreaCampionato() {
     document.getElementById('crea-campionato-modale').style.display = 'none';
 }
-
-
-
 
 window.toggleInvitiSidebar = toggleInvitiSidebar;
 export function toggleInvitiSidebar() {
@@ -363,15 +268,6 @@ export function createInvitiTable(inviti) {
     tbody.appendChild(row);
   });
   table.appendChild(tbody);
-  
-  // Aggiorna il contatore degli inviti
-  const invitiCount = document.getElementById('inviti-count');
-  if (inviti.length > 0) {
-    invitiCount.textContent = inviti.length;
-    invitiCount.style.display = 'flex';
-  } else {
-    invitiCount.style.display = 'none';
-  }
   
   return table;
 }

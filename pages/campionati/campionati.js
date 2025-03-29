@@ -91,6 +91,7 @@ export async function creaCampionato() {
   let nome = document.getElementById("nome-campionato-input").value;
   let descrizione = document.getElementById("descrizione-campionato-input").value;
   const nuovoCampionato = await apiCaller.creaCampionato(nome, descrizione);
+  closeModaleCreaCampionato();
 
   if (nuovoCampionato) {
     const campionati = await apiCaller.recuperaCampionati();
@@ -101,11 +102,7 @@ export async function creaCampionato() {
         table,
         document.getElementById("table-container").firstChild
       );
-
-    nomeInput.value = "";
-    descrizioneInput.value = "";
   }
-  closeModaleCreaCampionato();
 }
 
 window.init = init;

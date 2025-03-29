@@ -410,7 +410,7 @@ export function handleSearchInput(searchTerm) {
     currentRequest = new AbortController();
     const signal = currentRequest.signal;
 
-    apiCaller.ricercaUtente(searchTerm, { signal })
+    apiCaller.ricercaUtente(chiaveCampionato, searchTerm, { signal })
       .then(data => {
         if (data && data.length > 0) {
           displaySearchResults(data);

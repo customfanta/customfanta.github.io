@@ -162,8 +162,8 @@ export async function aggiungiConfigurazioneCampionato(chiaveCampionato, chiaveC
     return makePost(apiUrl, JSON.stringify({ chiaveCampionato, chiaveConfigurazione, valoreConfigurazione }));
 }
 
-export async function ricercaUtente(searchParam, options = {}) {
-    const apiUrl = isLocalValue ? "../../mock/api/ricerca-utente.json" : serverHost + "/ricerca-utente?searchParam=" + searchParam;
+export async function ricercaUtente(chiaveCampionato, searchParam, options = {}) {
+    const apiUrl = isLocalValue ? "../../mock/api/ricerca-utente.json" : serverHost + "/ricerca-utente/" + chiaveCampionato + "?searchParam=" + searchParam;
     return makeGet(apiUrl, options);
 }
 

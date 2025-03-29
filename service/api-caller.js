@@ -172,6 +172,12 @@ export async function recuperaSquadreCampionato(chiaveCampionato) {
 
     return makeGet(apiUrl);
 }
+
+export async function uploadAzioni(file) {
+    const apiUrl = isLocalValue ? "../../mock/api/esito.json" : serverHost + "/csv/upload-azioni";
+
+    return makePostFormData(apiUrl, file);
+}
   
 export async function makeGet(apiUrl, { signal } = {}) {
     const response = await fetch(apiUrl, {
@@ -188,6 +194,17 @@ export async function makePost(apiUrl, body) {
       credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: body,
+    });
+
+    return response.ok ? await response.json() : null;
+}
+
+export async function makePostFormData(apiUrl, formData) {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "multipart/form-data" },
+      body: formData,
     });
 
     return response.ok ? await response.json() : null;

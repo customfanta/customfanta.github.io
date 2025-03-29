@@ -44,6 +44,27 @@ export async function deleteUserByIdFromList(username) {
     readAllUser();
 }
 
+window.uploadAzioniFile = uploadAzioniFile;
+export async function uploadAzioniFile() {
+    const fileInput = document.getElementById('fileAzioniInput');
+    const file = fileInput.files[0];
+
+    await apiCaller.uploadAzioni(file);
+    readAllActions();
+}
+
+window.toggleButtonAzioniState = toggleButtonAzioniState;
+export function toggleButtonAzioniState() {
+    const fileInput = document.getElementById('fileAzioniInput');
+    const uploadButton = document.getElementById('uploadAzioniButton');
+    
+    if (fileInput.files.length > 0) {
+        uploadButton.removeAttribute('disabled'); // Abilita il pulsante
+    } else {
+        uploadButton.setAttribute('disabled', 'disabled'); // Disabilita il pulsante
+    }
+}
+
 window.readAllActions = readAllActions;
 export async function readAllActions() {
     availableActions = await apiCaller.recuperaAzioni(campionato.chiaveCampionato);

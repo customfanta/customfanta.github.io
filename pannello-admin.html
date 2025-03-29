@@ -60,6 +60,10 @@
             />
             <button type="submit">Crea Azione</button>
           </form>
+
+          <input type="file" id="fileAzioniInput" accept=".csv" onchange="toggleButtonAzioniState()">
+          <button id="uploadAzioniButton" onclick="uploadAzioniFile()" disabled>Carica Azioni</button>
+
           <table id="action-table">
             <thead>
               <tr>

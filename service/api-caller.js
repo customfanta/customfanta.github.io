@@ -203,7 +203,7 @@ export async function makePostFormData(apiUrl, formData) {
     const response = await fetch(apiUrl, {
       method: "POST",
       credentials: "include",
-      headers: { "Content-Type": "multipart/form-data" },
+    //   headers: { "Content-Type": "multipart/form-data" },
       body: formData,
     });
 

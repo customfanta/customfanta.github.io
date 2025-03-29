@@ -49,7 +49,10 @@ export async function uploadAzioniFile() {
     const fileInput = document.getElementById('fileAzioniInput');
     const file = fileInput.files[0];
 
-    await apiCaller.uploadAzioni(file);
+    const formData = new FormData();
+    formData.append('file', file);
+
+    await apiCaller.uploadAzioni(formData);
     readAllActions();
 }
 

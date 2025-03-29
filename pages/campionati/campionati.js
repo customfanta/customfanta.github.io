@@ -21,8 +21,6 @@ if(!apiCaller.isLocalValue) {
   });
 }
 
-document.getElementById("logout-button").addEventListener("click", logout);
-document.getElementById("crea-campionato-button").addEventListener("click", showModelCreaCampionato);
 
 
 init();
@@ -112,6 +110,9 @@ export async function creaCampionato() {
 
 window.init = init;
 export async function init() {
+
+  document.getElementById("logout-button").addEventListener("click", logout);
+  document.getElementById("crea-campionato-button").addEventListener("click", showModelCreaCampionato);
 
   const campionati = await apiCaller.recuperaCampionati();
   const inviti = await apiCaller.recuperaInvitiRicevuti();
@@ -243,6 +244,21 @@ export async function acceptInvito(chiaveInvito) {
   }
 }
 
+window.rejectInvito = rejectInvito;
+export async function rejectInvito(chiaveInvito) {
+  try {
+    const esito = await apiCaller.rifiutaInvito(chiaveInvito);
+    if (esito && "OK" == esito.esito) {
+      await init();
+      toggleInvitiSidebar();
+    } else {
+      console.error("Errore nel rifiuto dell'invito");
+    }
+  } catch (error) {
+    console.error("Errore durante il rifiuto dell'invito:", error);
+  }
+}
+
 window.logout = logout;
 export async function logout() {
   localStorage.removeItem("user");
@@ -362,3 +378,4 @@ export function createInvitiTable(inviti) {
   
   return table;
 }
+

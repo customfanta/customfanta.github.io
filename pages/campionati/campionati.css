@@ -5,8 +5,9 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
   margin: 0 auto;
+  width: 100vw;
+  height: 100vh;
   padding: 20px;
   background: linear-gradient(#051f30, #020b11);
 }
@@ -158,11 +159,6 @@ th {
   font-size: 24px;
 }
 
-
-
-
-
-
 .menu::-webkit-scrollbar {
   display: none;
 }
@@ -173,7 +169,7 @@ th {
   left: 0;
   width: 85px;
   height: 100%;
-  transition: .3s;
+  transition: 0.3s;
   scrollbar-width: none;
   overflow: hidden scroll;
   background: #ffffff12;
@@ -194,7 +190,7 @@ th {
 .menu-content li {
   list-style: none;
   border-radius: 0px 50px 50px 0;
-  transition: .3s;
+  transition: 0.3s;
   margin-bottom: 20px;
   padding-left: 20px;
 }
@@ -208,25 +204,20 @@ th {
 }
 
 a {
-    text-decoration: none;
-    color: rgb(213, 213, 213);
-    display: flex;
-    align-items: center;
-    font-family: 'calibri';
+  text-decoration: none;
+  color: rgb(213, 213, 213);
+  display: flex;
+  align-items: center;
+  font-family: "calibri";
 }
 
 .material-symbols-outlined {
-    padding: 10px;
-    font-size: 25px;
-    margin-right: 10px;
-    border-radius: 50%;
-    background: #0c0c0c;
+  padding: 10px;
+  font-size: 25px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: #0c0c0c;
 }
-
-
-
-
-
 
 .modal {
   display: none;
@@ -261,11 +252,6 @@ a {
   cursor: pointer;
 }
 
-
-
-
-
-
 /* Stili per l'icona notifiche */
 .notification-icon {
   position: relative;
@@ -279,7 +265,7 @@ a {
 .inviti-count {
   position: absolute;
   top: -8px;
-  right: -8px;
+  right: 5px;
   background-color: #dc3545;
   color: white;
   border-radius: 50%;
@@ -332,7 +318,7 @@ a {
   color: white;
 }
 
-.inviti-table th, 
+.inviti-table th,
 .inviti-table td {
   padding: 8px;
   text-align: left;

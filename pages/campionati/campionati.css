@@ -208,7 +208,7 @@ a {
   color: rgb(213, 213, 213);
   display: flex;
   align-items: center;
-  font-family: "calibri";
+  white-space: nowrap;
 }
 
 .material-symbols-outlined {

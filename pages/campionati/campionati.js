@@ -6,7 +6,7 @@ if (!user) {
   window.location.href = "../../index.html";
 }
 
-if(!apiCaller.isLocalValue) {
+if (!apiCaller.isLocalValue) {
   const socket = new SockJS(apiCaller.serverHost + "/ws-endpoint");
   const stompClient = Stomp.over(socket);
 
@@ -21,8 +21,6 @@ if(!apiCaller.isLocalValue) {
   });
 }
 
-
-
 init();
 
 window.createTable = createTable;
@@ -30,6 +28,8 @@ export function createTable(campionati, mailCertificata) {
   const table = document.createElement("table");
   const thead = document.createElement("thead");
   const tbody = document.createElement("tbody");
+
+  table.className = "styled-table";
 
   // Intestazioni tabella
   const headers = ["Nome", "Descrizione", "Owner", "Ruolo"];
@@ -69,6 +69,7 @@ export function createTable(campionati, mailCertificata) {
     if (mailCertificata) {
       const buttonTd = document.createElement("td");
       const button = document.createElement("button");
+      buttonTd.className = "table-button";
       button.textContent = "Apri";
 
       button.onclick = () => {
@@ -89,7 +90,9 @@ export function createTable(campionati, mailCertificata) {
 window.creaCampionato = creaCampionato;
 export async function creaCampionato() {
   let nome = document.getElementById("nome-campionato-input").value;
-  let descrizione = document.getElementById("descrizione-campionato-input").value;
+  let descrizione = document.getElementById(
+    "descrizione-campionato-input"
+  ).value;
   const nuovoCampionato = await apiCaller.creaCampionato(nome, descrizione);
   closeModaleCreaCampionato();
 
@@ -107,9 +110,10 @@ export async function creaCampionato() {
 
 window.init = init;
 export async function init() {
-
   document.getElementById("logout-button").addEventListener("click", logout);
-  document.getElementById("crea-campionato-button").addEventListener("click", showModelCreaCampionato);
+  document
+    .getElementById("crea-campionato-button")
+    .addEventListener("click", showModelCreaCampionato);
 
   const campionati = await apiCaller.recuperaCampionati();
   const inviti = await apiCaller.recuperaInvitiRicevuti();
@@ -117,16 +121,18 @@ export async function init() {
   let container = document.getElementById("content-page");
 
   if (user.mailCertificata) {
-    document.getElementById('warning-box-mail-non-certificata').style.display = 'none';
+    document.getElementById("warning-box-mail-non-certificata").style.display =
+      "none";
     document.getElementById("crea-campionato-button").style.display = "block";
   } else {
-      document.getElementById('warning-box-mail-non-certificata').style.display = 'block';
-      document.getElementById("crea-campionato-button").style.display = "none";
+    document.getElementById("warning-box-mail-non-certificata").style.display =
+      "block";
+    document.getElementById("crea-campionato-button").style.display = "none";
   }
 
   // Crea tabella campionati
   let tableContainer = document.getElementById("table-container");
-  if(tableContainer) {
+  if (tableContainer) {
     tableContainer.innerHTML = "";
   } else {
     tableContainer = document.createElement("div");
@@ -137,18 +143,17 @@ export async function init() {
   container.appendChild(tableContainer);
 
   const invitiContent = document.getElementById("inviti-content");
-  const invitiCount = document.getElementById('inviti-count');
+  const invitiCount = document.getElementById("inviti-count");
   invitiContent.innerHTML = "";
   invitiCount.textContent = inviti.length;
   if (inviti.length > 0) {
     const invitiTable = createInvitiTable(inviti);
     invitiContent.appendChild(invitiTable);
-    invitiCount.style.display = 'flex';
+    invitiCount.style.display = "flex";
   } else {
     invitiContent.textContent = "Nessun invito ricevuto";
-    invitiCount.style.display = 'none';
+    invitiCount.style.display = "none";
   }
-
 }
 
 window.acceptInvito = acceptInvito;
@@ -189,27 +194,27 @@ export async function logout() {
   window.location.href = "../../index.html";
 }
 
-
 window.showModelCreaCampionato = showModelCreaCampionato;
 export async function showModelCreaCampionato() {
-  document.getElementById('crea-campionato-modale').style.display = 'block';
+  document.getElementById("crea-campionato-modale").style.display = "block";
 }
 
 window.closeModaleCreaCampionato = closeModaleCreaCampionato;
 export function closeModaleCreaCampionato() {
-    document.getElementById('crea-campionato-modale').style.display = 'none';
+  document.getElementById("crea-campionato-modale").style.display = "none";
 }
 
 window.toggleInvitiSidebar = toggleInvitiSidebar;
 export function toggleInvitiSidebar() {
-  const sidebar = document.getElementById('inviti-sidebar');
-  sidebar.classList.toggle('open');
+  const sidebar = document.getElementById("inviti-sidebar");
+  sidebar.classList.toggle("open");
 }
 
 window.createInvitiTable = createInvitiTable;
 export function createInvitiTable(inviti) {
   const table = document.createElement("table");
-  table.className = "inviti-table";
+
+  table.className = "inviti-table styled-table";
   const thead = document.createElement("thead");
   const tbody = document.createElement("tbody");
 
@@ -268,7 +273,6 @@ export function createInvitiTable(inviti) {
     tbody.appendChild(row);
   });
   table.appendChild(tbody);
-  
+
   return table;
 }
-

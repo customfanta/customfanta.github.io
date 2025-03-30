@@ -26,33 +26,31 @@ export async function handleRegister(event) {
 
 window.handleLogin = handleLogin;
 export async function handleLogin(event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    const form = event.target;
-    const username = form.username.value;
-    const password = form.password.value;
+  const form = event.target;
+  const username = form.username.value;
+  const password = form.password.value;
 
-    try {
-      const utente = await apiCaller.effettuaAccesso(username, password);
+  try {
+    const utente = await apiCaller.effettuaAccesso(username, password);
 
-      if (utente) {
-        localStorage.setItem("user", JSON.stringify(utente));
+    if (utente) {
+      localStorage.setItem("user", JSON.stringify(utente));
 
-        window.location.href = "/pages/campionati/campionati.html";
-      }
-    } catch(error) {
+      window.location.href = "/pages/campionati/campionati.html";
     }
+  } catch (error) {}
 }
 
 window.getUtenteLoggato = getUtenteLoggato;
 export async function getUtenteLoggato() {
-    try {
-      const utenteLoggato = await apiCaller.recuperaUtenteLoggato();
+  try {
+    const utenteLoggato = await apiCaller.recuperaUtenteLoggato();
 
-      if(utenteLoggato) {
-        localStorage.setItem("user", JSON.stringify(utenteLoggato));
-        window.location.href = "/pages/campionati/campionati.html";
-      }
-    } catch(error) {
+    if (utenteLoggato) {
+      localStorage.setItem("user", JSON.stringify(utenteLoggato));
+      window.location.href = "/pages/campionati/campionati.html";
     }
+  } catch (error) {}
 }

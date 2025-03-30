@@ -1,8 +1,10 @@
 :root {
-  --primary-color: #088582;
-  --secondary-color: #2ca6a4;
-  --accent-color: #9dd9d2;
-  --background-color: rgba(235, 235, 235);
+  --primary-color: #0f40c5;
+  --secondary-color: #2a52e2;
+  --accent-color: #9eb3ff;
+  --background-color: #001657;
+  --dark-color: #041622;
+  --dark-accent-color: #20323d;
   --text-color: #0000;
 }
 
@@ -14,7 +16,7 @@ body {
 button {
   width: auto;
   padding: 10px 15px;
-  background-color: rgb(10, 133, 130);
+  background-color: var(--primary-color);
   color: white;
   border: none;
   border-radius: 5px;
@@ -23,7 +25,7 @@ button {
 }
 
 button:hover {
-  background-color: rgb(7, 105, 103);
+  background-color: var(--secondary-color);
 }
 /*
 body {

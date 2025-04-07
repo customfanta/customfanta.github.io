@@ -1,1 +1,1 @@
-import * as apiCaller from "/service/api-caller.js";
+import * as apiCaller from "./service/api-caller.js";

@@ -1,5 +1,5 @@
 import "./features/char-card/char-card.js";
-import * as apiCaller from "/service/api-caller.js";
+import * as apiCaller from "./service/api-caller.js";
 
 const campionato = JSON.parse(localStorage.getItem("campionato"));
 const chiaveCampionato = campionato.chiaveCampionato;

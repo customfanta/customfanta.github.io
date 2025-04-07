@@ -1,4 +1,4 @@
-import * as apiCaller from "/service/api-caller.js";
+import * as apiCaller from "../../service/api-caller.js";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
